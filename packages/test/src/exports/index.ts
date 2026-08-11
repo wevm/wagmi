@@ -1,4 +1,6 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
+export { Provider } from 'ox'
+
 export { chain, mainnet, mainnet2, optimism } from '../chains.js'
 export {
   mainnet2TestClient,
@@ -17,6 +19,10 @@ export {
   walletConnectProjectId,
 } from '../constants.js'
 
-export { addressRegex, transactionHashRegex } from '../regex.js'
+export {
+  addressRegex,
+  signedTransactionRegex,
+  transactionHashRegex,
+} from '../regex.js'
 
 export { wait } from '../utils.js'

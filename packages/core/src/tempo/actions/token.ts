@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 
 /**
  * Approves a spender to transfer TIP20 tokens on behalf of the caller.
@@ -53,7 +57,9 @@ export declare namespace approve {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.approve.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.approve.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -109,7 +115,9 @@ export declare namespace approveSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.approveSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.approveSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -162,7 +170,9 @@ export declare namespace burn {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.burn.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.burn.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -216,7 +226,9 @@ export declare namespace burnBlocked {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.burnBlocked.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.burnBlocked.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -273,9 +285,11 @@ export declare namespace burnBlockedSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.burnBlockedSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.burnBlockedSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -332,7 +346,9 @@ export declare namespace burnSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.burnSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.burnSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -385,9 +401,11 @@ export declare namespace changeTransferPolicy {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.changeTransferPolicy.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.changeTransferPolicy.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -444,9 +462,11 @@ export declare namespace changeTransferPolicySync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.changeTransferPolicySync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.changeTransferPolicySync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -501,7 +521,9 @@ export declare namespace create {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.create.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.create.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -558,7 +580,9 @@ export declare namespace createSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.createSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.createSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -610,9 +634,11 @@ export declare namespace updateQuoteToken {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.updateQuoteToken.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.updateQuoteToken.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -668,9 +694,11 @@ export declare namespace updateQuoteTokenSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.updateQuoteTokenSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.updateQuoteTokenSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1097,7 +1125,9 @@ export declare namespace grantRoles {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.grantRoles.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.grantRoles.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1154,9 +1184,11 @@ export declare namespace grantRolesSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.grantRolesSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.grantRolesSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1307,7 +1339,9 @@ export declare namespace mint {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.mint.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.mint.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1364,7 +1398,9 @@ export declare namespace mintSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.mintSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.mintSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1416,7 +1452,9 @@ export declare namespace pause {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.pause.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.pause.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1471,7 +1509,9 @@ export declare namespace pauseSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.pauseSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.pauseSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1524,7 +1564,12 @@ export declare namespace renounceRoles {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.renounceRoles.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.renounceRoles.Parameters<
+          config['chains'][number],
+          Account
+        >
+      >,
       'chain'
     >
 
@@ -1580,9 +1625,11 @@ export declare namespace renounceRolesSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.renounceRolesSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.renounceRolesSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1637,7 +1684,9 @@ export declare namespace revokeRoles {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.revokeRoles.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.revokeRoles.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1694,9 +1743,11 @@ export declare namespace revokeRolesSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.revokeRolesSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.revokeRolesSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1751,7 +1802,9 @@ export declare namespace setRoleAdmin {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.setRoleAdmin.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.setRoleAdmin.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1808,9 +1861,11 @@ export declare namespace setRoleAdminSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.setRoleAdminSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.setRoleAdminSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1864,7 +1919,9 @@ export declare namespace setSupplyCap {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.setSupplyCap.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.setSupplyCap.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1920,9 +1977,11 @@ export declare namespace setSupplyCapSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.setSupplyCapSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.setSupplyCapSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1976,7 +2035,9 @@ export declare namespace transfer {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.transfer.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.transfer.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -2032,7 +2093,9 @@ export declare namespace transferSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.transferSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.transferSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -2084,7 +2147,9 @@ export declare namespace unpause {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.unpause.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.unpause.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -2139,7 +2204,9 @@ export declare namespace unpauseSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.unpauseSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.token.unpauseSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -2192,9 +2259,11 @@ export declare namespace prepareUpdateQuoteToken {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.prepareUpdateQuoteToken.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.prepareUpdateQuoteToken.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -2251,9 +2320,11 @@ export declare namespace prepareUpdateQuoteTokenSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.token.prepareUpdateQuoteTokenSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.token.prepareUpdateQuoteTokenSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >

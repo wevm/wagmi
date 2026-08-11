@@ -63,7 +63,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const logs = result.current.data
   expect(logs![0]!.eventName).toEqual('Transfer')

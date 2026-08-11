@@ -14,7 +14,6 @@ test('exports', () => {
       "hardhat",
       "hardhatDefaultExcludes",
       "react",
-      "routescan",
       "sourcify",
     ]
   `)

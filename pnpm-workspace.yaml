@@ -1,19 +1,37 @@
+packages:
+  - packages/*
+  - packages/cli/src/plugins/__fixtures__/hardhat
+  - packages/register-tests/*
+  - playgrounds/*
+  - site
+
 auditConfig:
   ignoreGhsas:
-    - GHSA-g3ch-rx76-35fx # vue-template-compiler@>=2.0.0 <3.0.0
-    - GHSA-ffrw-9mx8-89p8 # fast-redact@<=3.5.0
-    - GHSA-qpm2-6cq5-7pq5 # happy-dom@<20.0.2
-    - GHSA-93m4-6634-74q7 # vite@>=7.1.0 <=7.1.10
-    - GHSA-29xp-372q-xqph # tar@=7.5.1
-    - GHSA-mh29-5h37-fv8m # js-yaml@>=4.1.1
-    - GHSA-5j98-mcp5-4vw2 # glob>=11.1.0
+    - GHSA-g3ch-rx76-35fx # vue-template-compiler: XSS via prototype pollution (Vue 2 EOL, no patch)
+    - GHSA-ffrw-9mx8-89p8 # fast-redact: prototype pollution (withdrawn advisory)
+    - GHSA-qpm2-6cq5-7pq5 # happy-dom: prototype pollution sandbox escape (dev-only)
+    - GHSA-93m4-6634-74q7 # vite: server.fs.deny bypass via backslash on Windows
+    - GHSA-29xp-372q-xqph # node-tar: race condition memory exposure in sync list
+    - GHSA-mh29-5h37-fv8m # js-yaml: prototype pollution via merge (<<)
+    - GHSA-h67p-54hq-rp68 # js-yaml: DoS via merge keys (gray-matter latest requires js-yaml v3)
+    - GHSA-gv7w-rqvm-qjhr # esbuild: Deno binary integrity verification (global override breaks VitePress)
+    - GHSA-g7r4-m6w7-qqqr # esbuild: Windows dev server arbitrary file read (global override breaks VitePress)
+    - GHSA-5j98-mcp5-4vw2 # glob CLI: command injection via -c/--cmd
+    - GHSA-92fh-27vv-894w # nanotar: path traversal in parseTar (no patch)
+    - GHSA-677m-j7p3-52f9 # socket.io-parser: unbounded binary attachments DoS
+    - GHSA-v2wj-q39q-566r # vite: server.fs.deny bypass with queries (patched versions blocked by minimumReleaseAge)
+    - GHSA-p9ff-h696-f583 # vite: arbitrary file read via dev server WebSocket (patched versions blocked by minimumReleaseAge)
+    - GHSA-4w7w-66w2-5vf9 # vite: path traversal in optimized deps .map handling (patched versions blocked by minimumReleaseAge)
+    - GHSA-f886-m6hf-6m8v # brace-expansion: zero-step sequence DoS (transitive via testcontainers)
+
 autoInstallPeers: false
+
 catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
-  '@gemini-wallet/core': 0.3.2
-  '@metamask/sdk': 0.33.1
-  '@nuxt/schema': 4.2.1
+  '@metamask/connect-evm': 2.1.0
+  '@nuxt/kit': 4.4.8
+  '@nuxt/schema': 4.4.8
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
   '@tanstack/query-core': 5.49.1
@@ -22,74 +40,124 @@ catalog:
   '@tanstack/vue-query': 5.49.1
   '@types/react': ^19.2.0
   '@types/react-dom': ^19.2.0
-  '@vitejs/plugin-react': ^4.3.3
-  '@vitejs/plugin-vue': 6.0.1
+  '@vitejs/plugin-react': ^6.0.1
+  '@vitejs/plugin-vue': 6.0.5
   '@walletconnect/ethereum-provider': 2.21.1
+  accounts: 0.12.0
   buffer: 6.0.3
+  nuxt: 4.4.8
   ox: 0.11.1
-  nuxt: 4.2.1
-  porto: 0.2.35
   react: 19.2.0
   react-dom: 19.2.0
   solid-js: 1.9.10
-  vite: 7.2.2
-  vite-plugin-solid: 2.11.10
-  vue: 3.4.27
+  vite: 8.0.16
+  vite-plugin-solid: 2.11.12
+  vue: 3.5.25
+
 linkWorkspacePackages: deep
+
 minimumReleaseAge: 1440
+
 minimumReleaseAgeExclude:
-  - '@gemini-wallet/core'
+  - '@metamask/analytics'
+  - '@metamask/connect-evm'
+  - '@metamask/connect-multichain'
   - '@wagmi/cli'
   - '@wagmi/connectors'
   - '@wagmi/core'
   - '@wagmi/test'
   - '@wagmi/solid'
   - '@wagmi/vue'
+  - accounts
   - abitype
+  - devalue
   - ox
-  - porto
+  - hono
+  - mppx
   - prool
+  - tmp
   - wagmi
   - viem
+  - vite
+  - vite-plugin-solid
+
 overrides:
+  '@isaacs/brace-expansion@<=5.0.0': 5.0.1
+  '@protobufjs/utf8@<=1.1.0': '>=1.1.1'
+  '@tanstack/start-server-core@<1.167.30': '>=1.167.30'
+  '@grpc/grpc-js@<1.14.4': 1.14.4
+  adm-zip@<0.6.0: 0.6.0
+  axios@<1.18.0: 1.18.1
+  bn.js@>=5.0.0 <5.2.3: 5.2.3
+  brace-expansion@<1.1.13: '>=1.1.13'
+  brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
+  brace-expansion@>=5.0.0 <5.0.9: 5.0.9
   cookie@<0.7.0: 0.7.0
-  lodash@>=4.0.0 <=4.17.22: '>=4.17.23'
-  devalue@>=5.1.0 <5.6.2: 5.6.2
-  devalue@>=5.3.0 <=5.6.1: 5.6.2
+  defu@<=6.1.4: '>=6.1.5'
+  devalue@<5.6.4: 5.6.4
+  devalue@>=5.6.3 <=5.8.0: '>=5.8.1'
   diff@<8.0.3: 8.0.3
   elliptic@<=6.6.0: '>=6.6.1'
-  esbuild@<=0.24.2: 0.25.0
+  '@babel/core@<=7.29.0': 7.29.7
+  follow-redirects@<=1.15.11: 1.16.0
+  form-data@>=4.0.0 <4.0.6: 4.0.6
   glob@>=10.2.0 <10.5.0: 10.5.0
-  h3@<=1.15.4: 1.15.5
-  happy-dom@<20.0.2: '>=20.0.2'
-  hono@<4.11.4: 4.11.4
+  h3-v2: npm:h3@2.0.1-rc.18
+  h3@<1.15.9: 1.15.9
+  happy-dom@<20.8.9: '>=20.8.9'
+  hono@<4.12.27: 4.12.27
+  js-cookie@<=3.0.5: 3.0.7
+  js-yaml@>=3.0.0 <3.15.0: 3.15.0
+  js-yaml@>=4.0.0 <4.3.0: 4.3.0
+  launch-editor@<=2.14.0: 2.14.1
+  linkify-it@<=5.0.1: 5.0.2
+  lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
+  markdown-it@>=13.0.0 <14.2.0: 14.2.0
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
+  minimatch@<3.1.4: 3.1.4
+  minimatch@5.1.8>brace-expansion: 5.0.9
+  minimatch@>=10.0.0 <10.2.3: 10.2.3
+  minimatch@>=5.0.0 <5.1.8: 5.1.8
+  minimatch@>=9.0.0 <9.0.7: 9.0.7
   nanoid@<3.3.8: 3.3.8
-  node-forge@<1.3.2: '>=1.3.2'
+  nitropack@<2.13.4: 2.13.4
+  node-forge@<1.4.0: '>=1.4.0'
+  picomatch@<2.3.2: '>=2.3.2'
+  picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
+  postcss@<8.5.23: 8.5.23
+  protobufjs@<8.6.6: 8.6.6
+  rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
-  serialize-javascript@>=6.0.0 <6.0.2: 6.0.2
-  seroval@<1.4.1: '>=1.4.1'
-  tar@<=7.5.3: 7.5.4
-  tmp@<=0.2.3: 0.2.4
-  undici@<6.23.0: 6.23.0
-  undici@>=7.0.0 <7.18.2: 7.18.2
-  vite@>=7.1.0 <=7.1.10: '>=7.1.11'
+  serialize-javascript@<7.0.5: '>=7.0.5'
+  seroval@<1.5.3: '>=1.5.3'
+  sharp@<0.35.0: 0.35.0
+  shell-quote@<=1.8.4: 1.9.0
+  simple-git@>=3.15.0 <3.36.0: 3.36.0
+  smol-toml@<1.6.1: '>=1.6.1'
+  srvx@<0.11.13: '>=0.11.13'
+  svgo@>=4.0.0 <4.0.2: 4.0.2
+  tar@<=7.5.20: 7.5.21
+  tmp@<0.2.7: 0.2.7
+  undici@<6.28.0: 6.28.0
+  undici@>=7.0.0 <7.29.0: 7.29.0
+  unhead@<2.1.13: 2.1.13
+  uuid@<14.0.0: 14.0.0
+  vite@>=5.0.0 <6.4.3: 6.4.3
+  vite@>=7.0.0 <7.3.5: 7.3.5
+  vite@>=8.0.0 <8.0.16: 8.0.16
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
-  ws@>=8.0.0 <8.17.1: 8.17.1
-packages:
-  - packages/*
-  - '!packages/register-tests'
-  - packages/cli/src/plugins/__fixtures__/hardhat
-  - packages/register-tests/*
-  - playgrounds/*
-  - site
+  ws@>=8.0.0 <8.21.0: 8.21.0
+  yaml@>=2.0.0 <2.8.3: '>=2.8.3'
+
 peerDependencyRules:
   ignoreMissing:
     - '@algolia/client-search'
     - react
     - react-native
     - search-insights
+
 trustPolicy: no-downgrade
+
 trustPolicyExclude:
   - '@coinbase/cdp-sdk@1.38.4'
   - '@noble/curves@1.8.0'
@@ -97,4 +165,6 @@ trustPolicyExclude:
   - chokidar@4.0.3
   - semver@6.3.1
   - undici@6.22.0
+  - serialize-javascript@7.0.3
+  - simple-git@3.32.3
   - vite@5.4.21 || 6.4.1

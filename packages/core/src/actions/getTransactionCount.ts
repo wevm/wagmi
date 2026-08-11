@@ -30,5 +30,9 @@ export async function getTransactionCount<config extends Config>(
     viem_getTransactionCount,
     'getTransactionCount',
   )
-  return action(blockNumber ? { address, blockNumber } : { address, blockTag })
+  return action(
+    blockNumber !== undefined
+      ? { address, blockNumber }
+      : { address, blockTag },
+  )
 }

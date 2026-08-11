@@ -69,7 +69,7 @@ Check out the [Safe docs](https://github.com/safe-global/safe-apps-sdk/tree/main
 import { safe } from '{{connectorsPackageName}}'
 
 const connector = safe({
-  allowedDomains: [/app.safe.global$/], // [!code focus]
+  allowedDomains: [/^app\.safe\.global$/], // [!code focus]
 })
 ```
 

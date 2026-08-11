@@ -100,7 +100,7 @@ View supported chains on the [Etherscan docs](https://docs.etherscan.io/ethersca
 
 ```ts
 import { defineConfig } from '@wagmi/cli'
-import { blockExplorer } from '@wagmi/cli/plugins'
+import { etherscan } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   plugins: [
@@ -160,13 +160,13 @@ export default defineConfig({
 
 ```ts
 import { defineConfig } from '@wagmi/cli'
-import { blockExplorer } from '@wagmi/cli/plugins'
+import { etherscan } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   plugins: [
     etherscan({
       apiKey: process.env.ETHERSCAN_API_KEY,
-      chainId: 1, 
+      chainId: 1,
       contracts: [
         {
           name: 'FiatToken',

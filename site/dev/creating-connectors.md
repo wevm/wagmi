@@ -87,6 +87,7 @@ The type error tells you what properties are missing from `createConnector`'s re
   - `disconnect`: Emitted when the connector disconnects.
   - `error`: Emitted when the connector receives an error.
   - `message`: Emitted when the connector receives a message.
+- `providers`: List of discovered [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) providers matching the connector's `rdns`. Empty if `multiInjectedProviderDiscovery` is disabled or no matching providers are discovered.
 - `storage`: Optional storage configured by the user. Defaults to wrapper around localStorage.
 
 ::: tip

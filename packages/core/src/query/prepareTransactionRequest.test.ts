@@ -225,6 +225,35 @@ test('parameters: type', () => {
   `)
 })
 
+test('parameters: calls without to', () => {
+  expect(
+    prepareTransactionRequestQueryOptions(config, {
+      calls: [
+        {
+          to: targetAccount,
+          data: '0xa9059cbb',
+        },
+      ],
+    }),
+  ).toMatchInlineSnapshot(`
+    {
+      "enabled": true,
+      "queryFn": [Function],
+      "queryKey": [
+        "prepareTransactionRequest",
+        {
+          "calls": [
+            {
+              "data": "0xa9059cbb",
+              "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+            },
+          ],
+        },
+      ],
+    }
+  `)
+})
+
 test('parameters: parameters', () => {
   expect(
     prepareTransactionRequestQueryOptions(config, {

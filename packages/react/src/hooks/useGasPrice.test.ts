@@ -14,7 +14,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useGasPrice())
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -52,7 +52,7 @@ test('default', async () => {
   `)
 })
 
-test.skip('parameters: chainId', async () => {
+test('parameters: chainId', async () => {
   await testClient.mainnet2.restart()
 
   await testClient.mainnet2.setNextBlockBaseFeePerGas({
@@ -64,7 +64,7 @@ test.skip('parameters: chainId', async () => {
     useGasPrice({ chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {

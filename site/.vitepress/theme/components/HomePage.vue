@@ -57,11 +57,7 @@ const teamMembers = [
                 <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" h8>
               </a>
             </div>
-            <div>
-              <a href="https://quicknode.com/?utm_source=wevm&utm_campaign=oss">
-                <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg" alt="Powered by QuickNode" h8>
-              </a>
-            </div>
+
           </div>
         </div>
       </main>

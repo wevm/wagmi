@@ -28,6 +28,17 @@ test('parameters: blockNumber', async () => {
   ).resolves.toBeTypeOf('number')
 })
 
+test('parameters: blockNumber 0 (genesis)', async () => {
+  // `blockNumber: 0n` is falsy but a valid block (genesis). Ensure it queries
+  // block 0 (nonce 0) instead of falling back to `blockTag: 'latest'`.
+  await testClient.mainnet.restart()
+  await testClient.mainnet.setNonce({ address, nonce: 69 })
+  await testClient.mainnet.mine({ blocks: 1 })
+  await expect(
+    getTransactionCount(config, { address, blockNumber: 0n }),
+  ).resolves.toBe(0)
+})
+
 test.each([
   { blockTag: 'earliest' },
   { blockTag: 'finalized' },

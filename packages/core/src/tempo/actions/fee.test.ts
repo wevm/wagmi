@@ -1,4 +1,4 @@
-import { connect } from '@wagmi/core'
+import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, queryClient } from '@wagmi/test/tempo'
 import { describe, expect, test } from 'vitest'
 import { getUserToken, setUserToken, setUserTokenSync } from './fee.js'
@@ -37,6 +37,8 @@ describe('getUserToken', () => {
 
 describe('setUserToken', () => {
   test('default', async () => {
+    await disconnect(config).catch(() => {})
+
     await connect(config, {
       connector: config.connectors[0]!,
     })
@@ -50,12 +52,14 @@ describe('setUserToken', () => {
 
 describe('setUserTokenSync', () => {
   test('default', async () => {
+    await disconnect(config).catch(() => {})
+
     await connect(config, {
       connector: config.connectors[0]!,
     })
     const result = await setUserTokenSync(config, {
       account,
-      token: '0x20C0000000000000000000000000000000000001',
+      token: 2n,
     })
     expect(result).toBeDefined()
   })

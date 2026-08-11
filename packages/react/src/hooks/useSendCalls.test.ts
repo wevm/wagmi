@@ -2,7 +2,7 @@ import { connect, disconnect } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useSendCalls } from './useSendCalls.js'
 
@@ -13,7 +13,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useSendCalls())
 
-  result.current.mutate({
+  const data = await result.current.mutateAsync({
     calls: [
       {
         data: '0xdeadbeef',
@@ -30,9 +30,8 @@ test('default', async () => {
       },
     ],
   })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
-  expect(result.current.data).toMatchInlineSnapshot(
+  expect(data).toMatchInlineSnapshot(
     `
     {
       "id": "0xb24b52a86aa2b0bae6f1e44868c3a13d2572e766a1f6364afd93d1757839b8a1",

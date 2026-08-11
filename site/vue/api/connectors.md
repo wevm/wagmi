@@ -1,7 +1,7 @@
 <script setup>
 import { getSidebar } from '../../.vitepress/sidebar'
 
-const connectors = getSidebar()['/react']
+const connectors = getSidebar()['/vue']
   .find(x => x.text.includes('Configuration')).items
   .find(x => x.text.includes('Connectors')).items
   .sort((a, b) => a.text.localeCompare(b.text))

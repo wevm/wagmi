@@ -1,4 +1,5 @@
-import type { FormEvent } from 'react'
+import { Cuer } from 'cuer'
+import { type FormEvent, useState } from 'react'
 import { formatEther, type Hex, parseAbi, parseEther, stringify } from 'viem'
 import {
   type BaseError,
@@ -86,8 +87,33 @@ function Connection() {
 
 function Connect() {
   const chainId = useChainId()
-  const connect = useConnect()
   const connectors = useConnectors()
+  const [qrUri, setQrUri] = useState<string>()
+
+  const connect = useConnect({
+    mutation: {
+      onMutate(variables) {
+        const connector = variables.connector
+        if (connector && typeof connector !== 'function') {
+          if (connector.id === 'walletConnect')
+            connector.emitter.on('message', (message) => {
+              if (message.type !== 'display_uri') return
+              if (typeof message.data !== 'string') return
+              setQrUri(message.data)
+            })
+          if (connector.id === 'metaMaskSDK')
+            connector.emitter.on('message', (message) => {
+              if (message.type !== 'display_uri') return
+              if (typeof message.data !== 'string') return
+              setQrUri(message.data)
+            })
+        }
+      },
+      onSettled() {
+        setQrUri(undefined)
+      },
+    },
+  })
 
   return (
     <div>
@@ -113,6 +139,23 @@ function Connect() {
       ))}
       <div>{connect.status}</div>
       <div>{connect.error?.message}</div>
+
+      {qrUri && (
+        <div
+          style={{
+            padding: 8,
+            background: 'white',
+            width: 200,
+            position: 'fixed',
+            bottom: 16,
+            left: 16,
+            zIndex: 99999,
+            borderRadius: 8,
+          }}
+        >
+          <Cuer value={qrUri} color="black" />
+        </div>
+      )}
     </div>
   )
 }
