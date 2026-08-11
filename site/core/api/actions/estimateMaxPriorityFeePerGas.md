@@ -1,7 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
 const actionName = 'estimateMaxPriorityFeePerGas'
-const typeName = 'EstimateFeesPerGas'
+const typeName = 'EstimateMaxPriorityFeePerGas'
 </script>
 
 # estimateMaxPriorityFeePerGas
@@ -29,7 +29,7 @@ const result = await estimateMaxPriorityFeePerGas(config)
 ## Parameters
 
 ```ts
-import { type EstimateFeesPerGasParameters } from '@wagmi/core'
+import { type EstimateMaxPriorityFeePerGasParameters } from '@wagmi/core'
 ```
 
 ### chainId
@@ -54,7 +54,7 @@ const result = await estimateMaxPriorityFeePerGas(config, {
 ## Return Type
 
 ```ts
-import { type EstimateFeesPerGasReturnType } from '@wagmi/core'
+import { type EstimateMaxPriorityFeePerGasReturnType } from '@wagmi/core'
 ```
 
 `bigint`
@@ -64,7 +64,7 @@ An estimate (in wei) for the max priority fee per gas.
 ## Error
 
 ```ts
-import { type EstimateFeesPerGasErrorType } from '@wagmi/core'
+import { type EstimateMaxPriorityFeePerGasErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->
