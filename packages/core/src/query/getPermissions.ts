@@ -5,10 +5,10 @@ import {
   getPermissions,
 } from '../actions/getPermissions.js'
 import type { Config } from '../createConfig.js'
-import { filterQueryOptions } from '../query/utils.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
+import { filterQueryOptions, structuralSharing } from './utils.js'
 
 export type GetPermissionsOptions<
   config extends Config = Config,
@@ -43,10 +43,14 @@ export function getPermissionsQueryOptions<
         throw new Error('connector is required')
       const [, { connectorUid: _, scopeKey: __, ...parameters }] =
         context.queryKey
-      const permissions = await getPermissions(config, parameters)
+      const permissions = await getPermissions(config, {
+        ...parameters,
+        connector: options.connector,
+      })
       return permissions
     },
     queryKey: getPermissionsQueryKey(options),
+    structuralSharing,
   }
 }
 

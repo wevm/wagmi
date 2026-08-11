@@ -1,12 +1,12 @@
 <script setup>
 const packageName = '@wagmi/core'
 const actionName = 'getPermissions'
-const typeName = 'getPermissions'
+const typeName = 'GetPermissions'
 </script>
 
 # getPermissions
 
-Action getting the connected wallet's current permissions.
+Action to get the connected wallet's current permissions.
 
 ## Import
 
@@ -55,13 +55,12 @@ const permissions = await getPermissions(config, {
 
 `Connector | undefined`
 
-[Connector](/core/api/connectors) to get permissions for.
+[Connector](/core/api/connectors) to get permissions with.
 
 ::: code-group
 ```ts [index.ts]
-import { getPermissions } from '@wagmi/core'
+import { getAccount, getPermissions } from '@wagmi/core'
 import { config } from './config'
-import { optimism } from '@wagmi/core/chains'
 
 const { connector } = getAccount(config)
 const permissions = await getPermissions(config, {
@@ -77,7 +76,7 @@ const permissions = await getPermissions(config, {
 import { type GetPermissionsReturnType } from '@wagmi/core'
 ```
 
-[`WalletPermission[]`](https://viem.sh/docs/glossary/types#walletpermission)
+`WalletPermission[]`
 
 The wallet permissions.
 
@@ -91,4 +90,4 @@ import { type GetPermissionsErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getPermissions`](https://viem.sh/docs/actions/wallet/getPermissions.html)
+- [`getPermissions`](https://viem.sh/docs/actions/wallet/getPermissions)

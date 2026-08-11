@@ -181,7 +181,7 @@ export function mock(parameters: MockParameters) {
           if (features.getPermissionsError) {
             if (typeof features.getPermissionsError === 'boolean')
               throw new UserRejectedRequestError(
-                new Error('Failed get permissions.'),
+                new Error('Failed to get permissions.'),
               )
             throw features.getPermissionsError
           }

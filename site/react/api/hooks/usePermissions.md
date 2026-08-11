@@ -1,6 +1,6 @@
 ---
 title: usePermissions
-description: Hook for return the connected wallet's current permissions.
+description: Hook for getting the connected wallet's current permissions.
 ---
 
 <script setup>
@@ -13,7 +13,7 @@ const TError = 'GetPermissionsErrorType'
 
 # usePermissions
 
-Hook for return the connected wallet's current permissions.
+Hook for getting the connected wallet's current permissions.
 
 ## Import
 
@@ -39,6 +39,7 @@ function App() {
 ```ts
 import { type UsePermissionsParameters } from 'wagmi'
 ```
+
 ### chainId
 
 `config['chains'][number]['id'] | undefined`
@@ -63,7 +64,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -81,19 +82,18 @@ function App() {
 
 ### connector
 
-`Config | undefined`
+`Connector | undefined`
 
-[``Connector | undefined``](/react/api/connectors) to get permissions for.
+[Connector](/react/api/connectors) to get permissions with.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useConnectorClient, usePermissions } from 'wagmi'
-import { config } from './config' // [!code focus]
+import { useConnections, usePermissions } from 'wagmi'
 
 function App() {
-  const { data: connector } = useConnectorClient()
+  const connections = useConnections()
   const result = usePermissions({
-    connector, // [!code focus]
+    connector: connections[0]?.connector, // [!code focus]
   })
 }
 ```
@@ -113,7 +113,7 @@ import { config } from './config'
 
 function App() {
   const result = usePermissions({
-    scopeKey: 'foo' // [!code focus]
+    scopeKey: 'foo', // [!code focus]
   })
 }
 ```

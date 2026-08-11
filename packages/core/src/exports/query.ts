@@ -248,6 +248,7 @@ export {
   type GetPermissionsOptions,
   type GetPermissionsQueryFnData,
   type GetPermissionsQueryKey,
+  type GetPermissionsQueryOptions,
   getPermissionsQueryKey,
   getPermissionsQueryOptions,
 } from '../query/getPermissions.js'

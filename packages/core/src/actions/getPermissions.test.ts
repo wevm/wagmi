@@ -27,3 +27,17 @@ test('default', async () => {
   `)
   await disconnect(config, { connector })
 })
+
+test('parameters: connector', async () => {
+  await connect(config, { connector })
+  await expect(getPermissions(config, { connector })).resolves.toHaveLength(1)
+  await disconnect(config, { connector })
+})
+
+test('behavior: not connected', async () => {
+  await expect(getPermissions(config)).rejects.toMatchInlineSnapshot(`
+    [ConnectorNotConnectedError: Connector not connected.
+
+    Version: @wagmi/core@x.y.z]
+  `)
+})

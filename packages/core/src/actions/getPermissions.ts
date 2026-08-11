@@ -5,31 +5,23 @@ import {
 } from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
-import type { BaseErrorType, ErrorType } from '../errors/base.js'
-
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import {
-  type GetConnectorClientErrorType,
-  type GetConnectorClientParameters,
-  getConnectorClient,
-} from './getConnectorClient.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type GetPermissionsParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = GetConnectorClientParameters<config, chainId>
+> = Compute<ChainIdParameter<config, chainId> & ConnectorParameter>
 
 export type GetPermissionsReturnType = viem_GetPermissionsReturnType
 
-export type GetPermissionsErrorType =
-  // getConnectorClient()
-  | GetConnectorClientErrorType
-  // base
-  | BaseErrorType
-  | ErrorType
-  // viem
-  | viem_GetPermissionsErrorType
+export type GetPermissionsErrorType = viem_GetPermissionsErrorType
 
 /** https://wagmi.sh/core/api/actions/getPermissions */
 export async function getPermissions<
