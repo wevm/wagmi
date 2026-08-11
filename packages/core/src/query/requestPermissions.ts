@@ -1,4 +1,4 @@
-import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
+import type { MutationOptions } from '@tanstack/query-core'
 import {
   type RequestPermissionsErrorType,
   type RequestPermissionsParameters,
@@ -8,6 +8,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
+import type { Mutate, MutateAsync } from './types.js'
 
 export type RequestPermissionsOptions<context = unknown> = MutationParameter<
   RequestPermissionsData,
@@ -16,11 +17,8 @@ export type RequestPermissionsOptions<context = unknown> = MutationParameter<
   context
 >
 
-export function requestPermissionsMutationOptions<
-  config extends Config,
-  context,
->(
-  config: config,
+export function requestPermissionsMutationOptions<context>(
+  config: Config,
   options: RequestPermissionsOptions<context> = {},
 ): RequestPermissionsMutationOptions {
   return {
@@ -38,34 +36,20 @@ export type RequestPermissionsMutationOptions = MutationOptions<
   RequestPermissionsVariables
 >
 
-export type RequestPermissionsData = Compute<RequestPermissionsReturnType>
+export type RequestPermissionsData = RequestPermissionsReturnType
 
-export type RequestPermissionsVariables = RequestPermissionsParameters
+export type RequestPermissionsVariables = Compute<RequestPermissionsParameters>
 
-export type RequestPermissionsMutate<context = unknown> = (
-  variables: RequestPermissionsVariables,
-  options?:
-    | Compute<
-        MutateOptions<
-          RequestPermissionsData,
-          RequestPermissionsErrorType,
-          Compute<RequestPermissionsVariables>,
-          context
-        >
-      >
-    | undefined,
-) => void
+export type RequestPermissionsMutate<context = unknown> = Mutate<
+  RequestPermissionsData,
+  RequestPermissionsErrorType,
+  RequestPermissionsVariables,
+  context
+>
 
-export type RequestPermissionsMutateAsync<context = unknown> = (
-  variables: RequestPermissionsVariables,
-  options?:
-    | Compute<
-        MutateOptions<
-          RequestPermissionsData,
-          RequestPermissionsErrorType,
-          Compute<RequestPermissionsVariables>,
-          context
-        >
-      >
-    | undefined,
-) => Promise<RequestPermissionsData>
+export type RequestPermissionsMutateAsync<context = unknown> = MutateAsync<
+  RequestPermissionsData,
+  RequestPermissionsErrorType,
+  RequestPermissionsVariables,
+  context
+>

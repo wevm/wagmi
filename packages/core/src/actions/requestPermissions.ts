@@ -30,8 +30,8 @@ export type RequestPermissionsErrorType =
   | viem_RequestPermissionsErrorType
 
 /** https://wagmi.sh/core/api/actions/requestPermissions */
-export async function requestPermissions<config extends Config>(
-  config: config,
+export async function requestPermissions(
+  config: Config,
   parameters: RequestPermissionsParameters,
 ): Promise<RequestPermissionsReturnType> {
   const { connector, ...rest } = parameters
