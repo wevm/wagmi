@@ -35,7 +35,7 @@ function App() {
   return (
     <button
       onClick={() => requestPermissions({
-        eth_accounts: {}
+        eth_accounts: {},
       })}
     >
       Request permissions

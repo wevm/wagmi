@@ -21,8 +21,8 @@ import { requestPermissions } from '@wagmi/core'
 import { requestPermissions } from '@wagmi/core'
 import { config } from './config'
 
-const permissions = await requestPermissions(config,  {
-  eth_accounts: {}
+const permissions = await requestPermissions(config, {
+  eth_accounts: {},
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -60,7 +60,7 @@ import { config } from './config'
 const { connector } = getAccount(config)
 const permissions = await requestPermissions(config, {
   connector, // [!code focus]
-  eth_accounts: {}
+  eth_accounts: {},
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
