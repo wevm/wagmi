@@ -1,7 +1,7 @@
 import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import type { DeepUnwrapRef } from '../types/ref.js'
 import {
@@ -130,4 +130,102 @@ test('loose parameters with refs', () => {
       },
     },
   })
+})
+
+test('computed args', () => {
+  const typedArgs = computed<readonly [Address]>(() => ['0x'])
+  const typedResult = useReadContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: typedArgs,
+  })
+  expectTypeOf(typedResult.data.value).toEqualTypeOf<bigint | undefined>()
+
+  const untypedArgs = computed(() => ['0x'])
+  const untypedResult = useReadContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: untypedArgs,
+  })
+  expectTypeOf(untypedResult.data.value).toEqualTypeOf<bigint | undefined>()
+})
+
+test('overloads with computed args', () => {
+  const zeroArgs = computed<readonly []>(() => [])
+  const zeroArgsResult = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: zeroArgs,
+  })
+  expectTypeOf(zeroArgsResult.data.value).toEqualTypeOf<number | undefined>()
+
+  const oneArg = computed<readonly [Address]>(() => ['0x'])
+  const oneArgResult = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: oneArg,
+  })
+  expectTypeOf(oneArgResult.data.value).toEqualTypeOf<string | undefined>()
+
+  const twoArgs = computed<readonly [Address, Address]>(() => ['0x', '0x'])
+  const twoArgsResult = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: twoArgs,
+  })
+  expectTypeOf(twoArgsResult.data.value).toEqualTypeOf<
+    | {
+        foo: `0x${string}`
+        bar: `0x${string}`
+      }
+    | undefined
+  >()
+})
+
+test('overloads with computed args select', () => {
+  const oneArg = computed<readonly [Address]>(() => ['0x'])
+  const result = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: oneArg,
+    query: {
+      select(data) {
+        expectTypeOf(data).toEqualTypeOf<string>()
+        return data.length
+      },
+    },
+  })
+  expectTypeOf(result.data.value).toEqualTypeOf<number | undefined>()
+})
+
+test('overloads with ref args', () => {
+  const oneArg = ref<readonly [Address]>(['0x'])
+  const oneArgResult = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: oneArg,
+  })
+  expectTypeOf(oneArgResult.data.value).toEqualTypeOf<string | undefined>()
+
+  const twoArgs = ref<readonly [Address, Address]>(['0x', '0x'])
+  const twoArgsResult = useReadContract({
+    address: '0x',
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+    args: twoArgs,
+  })
+  expectTypeOf(twoArgsResult.data.value).toEqualTypeOf<
+    | {
+        foo: `0x${string}`
+        bar: `0x${string}`
+      }
+    | undefined
+  >()
 })

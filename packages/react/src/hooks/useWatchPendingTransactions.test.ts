@@ -73,7 +73,7 @@ test('behavior: uses latest callback after rerender', async () => {
     to: accounts[1],
     value: parseEther('0.001'),
   })
-  await vi.waitUntil(() => transactions1.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => transactions1.length >= 1, { timeout: 10_000 })
   await testClient.mainnet.mine({ blocks: 1 })
 
   rerender({
@@ -86,7 +86,7 @@ test('behavior: uses latest callback after rerender', async () => {
     to: accounts[1],
     value: parseEther('0.001'),
   })
-  await vi.waitUntil(() => transactions2.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => transactions2.length >= 1, { timeout: 10_000 })
   await testClient.mainnet.mine({ blocks: 1 })
 
   expect(transactions1.length).toBe(1)

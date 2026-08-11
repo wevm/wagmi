@@ -2,15 +2,7 @@
 
 The ability for a user to connect their wallet is a core function for any Dapp. It allows users to perform tasks such as: writing to contracts, signing messages, or sending transactions.
 
-Wagmi contains everything you need to get started with building a Connect Wallet module. To get started, you can either use a [third-party library](#third-party-libraries) or [build your own](#build-your-own).
-
-## Third-party Libraries
-
-You can use a pre-built Connect Wallet module from a third-party library such as:
-
-- [AppKit](https://walletconnect.com/appkit) - [Guide](https://docs.walletconnect.com/appkit/vue/core/installation)
-
-The above libraries are all built on top of Wagmi, handle all the edge cases around wallet connection, and provide a seamless Connect Wallet UX that you can use in your Dapp.
+Wagmi contains everything you need to get started with building a Connect Wallet module. To get started, follow the [build your own](#build-your-own) walkthrough.
 
 ## Build Your Own
 
@@ -193,7 +185,7 @@ export const config = createConfig({
 
 ### 4. Display Connection
 
-Lastly, if an connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
+Lastly, if a connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
 
 Below, we are using hooks like `useConnection`, `useEnsAvatar` and `useEnsName` to extract this information.
 

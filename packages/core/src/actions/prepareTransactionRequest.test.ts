@@ -1,12 +1,18 @@
 import { accounts, config, privateKey } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { expect, test } from 'vitest'
+import { afterEach, expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { prepareTransactionRequest } from './prepareTransactionRequest.js'
 
 const connector = config.connectors[0]!
+
+afterEach(async () => {
+  if (config.state.current === connector.uid)
+    await disconnect(config, { connector })
+  else if (config.state.current) await disconnect(config)
+})
 
 test('default', async () => {
   await connect(config, { connector })
@@ -26,7 +32,10 @@ test('default', async () => {
   } = request
   expect(rest).toMatchInlineSnapshot(`
     {
-      "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+      "account": {
+        "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+        "type": "json-rpc",
+      },
       "chainId": 1,
       "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
@@ -34,8 +43,6 @@ test('default', async () => {
       "value": 1000000000000000000n,
     }
   `)
-
-  await disconnect(config, { connector })
 })
 
 test('parameters: account', async () => {
@@ -65,8 +72,6 @@ test('parameters: account', async () => {
       "value": 1000000000000000000n,
     }
   `)
-
-  await disconnect(config, { connector })
 })
 
 test('behavior: local account', async () => {

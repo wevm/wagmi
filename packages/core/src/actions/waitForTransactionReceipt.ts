@@ -1,5 +1,5 @@
 import type { Chain } from 'viem'
-import { hexToString } from 'viem'
+import { hexToString, withTimeout } from 'viem'
 import {
   call,
   getTransaction,
@@ -58,28 +58,36 @@ export async function waitForTransactionReceipt<
   const receipt = await action({ ...rest, timeout })
 
   if (receipt.status === 'reverted') {
-    const action_getTransaction = getAction(
-      client,
-      getTransaction,
-      'getTransaction',
+    throw await withTimeout(
+      async () => {
+        const action_getTransaction = getAction(
+          client,
+          getTransaction,
+          'getTransaction',
+        )
+        const { from: account, ...txn } = await action_getTransaction({
+          hash: receipt.transactionHash,
+        })
+        const action_call = getAction(client, call, 'call')
+        const code = await action_call({
+          ...(txn as any),
+          account,
+          data: txn.input,
+          gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
+          maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
+          maxPriorityFeePerGas:
+            txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
+        })
+        const reason = code?.data
+          ? hexToString(`0x${code.data.substring(138)}`)
+          : 'unknown reason'
+        return new Error(reason)
+      },
+      {
+        timeout: timeout > 0 ? Math.min(timeout, 10_000) : 10_000,
+        errorInstance: new Error('unknown reason'),
+      },
     )
-    const { from: account, ...txn } = await action_getTransaction({
-      hash: receipt.transactionHash,
-    })
-    const action_call = getAction(client, call, 'call')
-    const code = await action_call({
-      ...(txn as any),
-      account,
-      data: txn.input,
-      gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
-      maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
-      maxPriorityFeePerGas:
-        txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
-    })
-    const reason = code?.data
-      ? hexToString(`0x${code.data.substring(138)}`)
-      : 'unknown reason'
-    throw new Error(reason)
   }
 
   return {

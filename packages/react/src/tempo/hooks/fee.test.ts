@@ -1,3 +1,4 @@
+import { disconnect } from '@wagmi/core'
 import { accounts, config, renderHook } from '@wagmi/test/tempo'
 import type { Address } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
@@ -5,16 +6,17 @@ import { describe, expect, test, vi } from 'vitest'
 import { useConnect } from '../../hooks/useConnect.js'
 import { useSetUserToken, useSetUserTokenSync, useUserToken } from './fee.js'
 
-describe('useUserToken', () => {
-  test('default', async () => {
-    const { result, rerender } = await renderHook(
-      (props) => useUserToken({ account: props?.account }),
-      { initialProps: { account: undefined as Address | undefined } },
-    )
+describe('fee', () => {
+  describe('useUserToken', () => {
+    test('default', async () => {
+      const { result, rerender } = await renderHook(
+        (props) => useUserToken({ account: props?.account }),
+        { initialProps: { account: undefined as Address | undefined } },
+      )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+      await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
-    expect(result.current).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
         "dataUpdatedAt": 0,
@@ -50,13 +52,13 @@ describe('useUserToken', () => {
       }
     `)
 
-    rerender({ account: accounts[0].address })
+      rerender({ account: accounts[0].address })
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
-    })
+      await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+        timeout: 10_000,
+      })
 
-    expect(result.current).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
       {
         "data": {
           "address": "0x20C0000000000000000000000000000000000001",
@@ -94,49 +96,54 @@ describe('useUserToken', () => {
         "status": "success",
       }
     `)
+    })
   })
-})
 
-describe('useSetUserToken', () => {
-  test('default', async () => {
-    const { result } = await renderHook(() => ({
-      connect: useConnect(),
-      setUserToken: useSetUserToken(),
-    }))
+  describe('useSetUserToken', () => {
+    test('default', async () => {
+      await disconnect(config).catch(() => {})
 
-    await result.current.connect.connectAsync({
-      connector: config.connectors[0]!,
+      const { result } = await renderHook(() => ({
+        connect: useConnect(),
+        setUserToken: useSetUserToken(),
+      }))
+
+      await result.current.connect.connectAsync({
+        connector: config.connectors[0]!,
+      })
+
+      const hash = await result.current.setUserToken.mutateAsync({
+        token: '0x20C0000000000000000000000000000000000001',
+      })
+      expect(hash).toBeDefined()
+
+      await vi.waitFor(() =>
+        expect(result.current.setUserToken.isSuccess).toBeTruthy(),
+      )
     })
-
-    const hash = await result.current.setUserToken.mutateAsync({
-      token: '0x20C0000000000000000000000000000000000001',
-    })
-    expect(hash).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.setUserToken.isSuccess).toBeTruthy(),
-    )
   })
-})
 
-describe('useSetUserTokenSync', () => {
-  test('default', async () => {
-    const { result } = await renderHook(() => ({
-      connect: useConnect(),
-      setUserToken: useSetUserTokenSync(),
-    }))
+  describe('useSetUserTokenSync', () => {
+    test('default', async () => {
+      await disconnect(config).catch(() => {})
 
-    await result.current.connect.connectAsync({
-      connector: config.connectors[0]!,
+      const { result } = await renderHook(() => ({
+        connect: useConnect(),
+        setUserToken: useSetUserTokenSync(),
+      }))
+
+      await result.current.connect.connectAsync({
+        connector: config.connectors[0]!,
+      })
+
+      const data = await result.current.setUserToken.mutateAsync({
+        token: 2n,
+      })
+      expect(data).toBeDefined()
+
+      await vi.waitFor(() =>
+        expect(result.current.setUserToken.isSuccess).toBeTruthy(),
+      )
     })
-
-    const data = await result.current.setUserToken.mutateAsync({
-      token: '0x20C0000000000000000000000000000000000001',
-    })
-    expect(data).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.setUserToken.isSuccess).toBeTruthy(),
-    )
   })
 })

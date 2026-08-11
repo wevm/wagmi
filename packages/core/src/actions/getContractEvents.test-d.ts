@@ -80,17 +80,21 @@ test('behavior: no eventName', async () => {
     undefined,
     typeof config
   >
-  expectTypeOf<Result['args']>().toEqualTypeOf<
-    | {
-        from?: `0x${string}` | `0x${string}`[] | null | undefined
-        to?: `0x${string}` | `0x${string}`[] | null | undefined
-      }
-    | {
-        owner?: `0x${string}` | `0x${string}`[] | null | undefined
-        spender?: `0x${string}` | `0x${string}`[] | null | undefined
-      }
-    | undefined
-  >()
+  type Args = NonNullable<Result['args']>
+
+  expectTypeOf([
+    {
+      from: '0x',
+      to: '0x',
+    },
+    {
+      owner: '0x',
+      spender: '0x',
+    },
+  ]).toMatchTypeOf<Args[]>()
+
+  // @ts-expect-error
+  expectTypeOf({ foo: '0x' }).toEqualTypeOf<Args>()
 
   const logs = await getContractEvents(config, {
     address: '0x',

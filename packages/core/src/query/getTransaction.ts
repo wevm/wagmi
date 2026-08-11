@@ -36,7 +36,7 @@ export function getTransactionQueryOptions<
     ...options.query,
     enabled: Boolean(
       (options.hash ||
-        (options.index &&
+        (options.index !== undefined &&
           (options.blockHash || options.blockNumber || options.blockTag))) &&
         (options.query?.enabled ?? true),
     ),
@@ -45,7 +45,7 @@ export function getTransactionQueryOptions<
       if (
         !(
           parameters.hash ||
-          (parameters.index &&
+          (parameters.index !== undefined &&
             (parameters.blockHash ||
               parameters.blockNumber ||
               parameters.blockTag))

@@ -16,7 +16,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Compute } from '../types/utils.js'
+import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -30,15 +30,17 @@ export type SendTransactionSyncParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Compute<
-    Omit<
+  [key in keyof chains]: UnionCompute<
+    UnionLooseOmit<
       viem_SendTransactionSyncParameters<chains[key], Account, chains[key]>,
       'chain' | 'gas'
     > &
       ChainIdParameter<config, chainId> &
-      ConnectorParameter
+      SendTransactionSyncOverrides
   >
-}[number] & {
+}[number]
+
+type SendTransactionSyncOverrides = ConnectorParameter & {
   /** Gas provided for transaction execution. */
   gas?: TransactionRequest['gas'] | null
 }

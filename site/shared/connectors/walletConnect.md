@@ -80,19 +80,6 @@ const connector = walletConnect({
 })
 ```
 
-### disableProviderPing
-
-`boolean | undefined`
-
-```ts-vue
-import { walletConnect } from '{{connectorsPackageName}}'
-
-const connector = walletConnect({
-  disableProviderPing: false, // [!code focus]
-  projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
-})
-```
-
 ### isNewChainsStale
 
 `boolean | undefined`
@@ -161,7 +148,7 @@ const connector = walletConnect({
 
 `string`
 
-WalletConnect Cloud project identifier. You can find your `projectId` on your [WalletConnect dashboard](https://cloud.reown.com/sign-in).
+WalletConnect Cloud project identifier. You can find your `projectId` on your [WalletConnect dashboard](https://dashboard.reown.com/sign-in).
 
 ```ts-vue
 import { walletConnect } from '{{connectorsPackageName}}'

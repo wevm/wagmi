@@ -329,6 +329,13 @@ export {
 } from '../actions/signMessage.js'
 
 export {
+  type SignTransactionErrorType,
+  type SignTransactionParameters,
+  type SignTransactionReturnType,
+  signTransaction,
+} from '../actions/signTransaction.js'
+
+export {
   type SignTypedDataErrorType,
   type SignTypedDataParameters,
   type SignTypedDataReturnType,

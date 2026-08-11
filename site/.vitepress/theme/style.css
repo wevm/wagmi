@@ -24,7 +24,7 @@
  *
  *   The soft color must be semi transparent alpha channel. This is crucial
  *   because it allows adding multiple "soft" colors on top of each other
- *   to create a accent, such as when having inline code block inside
+ *   to create an accent, such as when having inline code block inside
  *   custom containers.
  *
  * - `default`: The color used purely for subtle indication without any
@@ -158,4 +158,12 @@ html.dark .shiki span {
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.VPFlyout.active:has(.frameworks-nav-label) .text {
+  color: var(--vp-c-text-1);
+}
+
+.VPFlyout.active:has(.frameworks-nav-label):hover .text {
+  color: var(--vp-c-text-2);
 }

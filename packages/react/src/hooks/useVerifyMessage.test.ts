@@ -16,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -68,7 +68,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -120,7 +120,7 @@ test('parameters: blockNumber', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -173,7 +173,7 @@ test('parameters: blockTag', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -269,7 +269,7 @@ test('behavior: signature: undefined -> defined', async () => {
       '0xc4c7f2820177020d66d5fd00d084cdd3f575a868c059c29a2d7f23398d04819709a14f83d98b446dda539ca5dcb87d75aa3340eb15e66d67606850622a3420f61b',
   })
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {

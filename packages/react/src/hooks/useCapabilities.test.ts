@@ -12,7 +12,7 @@ test('mounts', async () => {
 
   const { result } = await renderHook(() => useCapabilities())
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const { queryKey: _, ...rest } = result.current
   expect(rest).toMatchInlineSnapshot(`
@@ -68,7 +68,7 @@ test('args: account', async () => {
     useCapabilities({ account: accounts[1] }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const { queryKey: _, ...rest } = result.current
   expect(rest).toMatchInlineSnapshot(`

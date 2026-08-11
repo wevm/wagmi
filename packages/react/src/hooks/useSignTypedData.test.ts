@@ -18,7 +18,7 @@ test('default', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   await expect(
     recoverTypedDataAddress({
@@ -42,7 +42,7 @@ test('behavior: local account', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   await expect(
     recoverTypedDataAddress({

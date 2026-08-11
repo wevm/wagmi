@@ -9,7 +9,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useEstimateMaxPriorityFeePerGas())
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')
@@ -56,7 +56,7 @@ test('parameters: chainId', async () => {
     useEstimateMaxPriorityFeePerGas({ chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')

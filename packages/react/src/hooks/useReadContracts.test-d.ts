@@ -5,6 +5,7 @@ import { useReadContracts } from './useReadContracts.js'
 
 test('select data', () => {
   const result = useReadContracts({
+    chainId: 1,
     allowFailure: false,
     contracts: [
       {

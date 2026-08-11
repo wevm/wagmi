@@ -164,6 +164,12 @@ export {
 } from '../composables/useSignMessage.js'
 
 export {
+  type UseSignTransactionParameters,
+  type UseSignTransactionReturnType,
+  useSignTransaction,
+} from '../composables/useSignTransaction.js'
+
+export {
   type UseSignTypedDataParameters,
   type UseSignTypedDataReturnType,
   useSignTypedData,
