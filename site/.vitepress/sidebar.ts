@@ -292,6 +292,14 @@ export function getSidebar() {
             link: '/react/api/hooks/useSignTypedData',
           },
           {
+            text: 'useSimulateBlocks',
+            link: '/react/api/hooks/useSimulateBlocks',
+          },
+          {
+            text: 'useSimulateCalls',
+            link: '/react/api/hooks/useSimulateCalls',
+          },
+          {
             text: 'useSimulateContract',
             link: '/react/api/hooks/useSimulateContract',
           },
@@ -594,6 +602,14 @@ export function getSidebar() {
           {
             text: 'useSignTypedData',
             link: '/vue/api/composables/useSignTypedData',
+          },
+          {
+            text: 'useSimulateBlocks',
+            link: '/vue/api/composables/useSimulateBlocks',
+          },
+          {
+            text: 'useSimulateCalls',
+            link: '/vue/api/composables/useSimulateCalls',
           },
           {
             text: 'useSimulateContract',
@@ -939,6 +955,14 @@ export function getSidebar() {
             link: '/core/api/actions/signTypedData',
           },
           {
+            text: 'simulateBlocks',
+            link: '/core/api/actions/simulateBlocks',
+          },
+          {
+            text: 'simulateCalls',
+            link: '/core/api/actions/simulateCalls',
+          },
+          {
             text: 'simulateContract',
             link: '/core/api/actions/simulateContract',
           },
@@ -1246,6 +1270,14 @@ export function getSidebar() {
             link: '/solid/api/primitives/useReadContracts',
           },
           { text: 'useReconnect', link: '/solid/api/primitives/useReconnect' },
+          {
+            text: 'useSimulateBlocks',
+            link: '/solid/api/primitives/useSimulateBlocks',
+          },
+          {
+            text: 'useSimulateCalls',
+            link: '/solid/api/primitives/useSimulateCalls',
+          },
           {
             text: 'useSimulateContract',
             link: '/solid/api/primitives/useSimulateContract',

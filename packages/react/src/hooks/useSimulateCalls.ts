@@ -37,7 +37,7 @@ export function useSimulateCalls<
   parameters: UseSimulateCallsParameters<config, calls, selectData> = {},
 ): UseSimulateCallsReturnType<calls, selectData> {
   const config = useConfig(parameters)
-  const { address, connector } = useConnection()
+  const { address, connector } = useConnection({ config })
   const chainId = useChainId({ config })
   const options = simulateCallsQueryOptions(config, {
     ...parameters,

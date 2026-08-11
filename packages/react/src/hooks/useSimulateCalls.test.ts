@@ -1,11 +1,19 @@
-import { connect, disconnect } from '@wagmi/core'
+import { connect, createConfig, disconnect, mock } from '@wagmi/core'
 import { accounts, address, config, mainnet, wait } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
+import { http } from 'viem'
 import { expect, test, vi } from 'vitest'
 
 import { useSimulateCalls } from './useSimulateCalls.js'
 
 const connector = config.connectors[0]!
+const customConfig = createConfig({
+  chains: [mainnet],
+  connectors: [mock({ accounts })],
+  storage: null,
+  transports: { [mainnet.id]: http() },
+})
+const customConnector = customConfig.connectors[0]!
 const name4bytes = '0x06fdde03'
 const nameResultData =
   '0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000057761676d69000000000000000000000000000000000000000000000000000000'
@@ -40,6 +48,30 @@ test('default', async () => {
   ])
 
   await disconnect(config, { connector })
+})
+
+test('parameters: config', async () => {
+  await connect(customConfig, { connector: customConnector })
+
+  const { result } = await renderHook(() =>
+    useSimulateCalls({
+      config: customConfig,
+      calls: [
+        {
+          data: name4bytes,
+          to: address.wagmiMintExample,
+        },
+      ],
+      query: { enabled: false },
+    }),
+  )
+
+  expect(result.current.queryKey).toMatchObject([
+    'simulateCalls',
+    expect.objectContaining({ account: accounts[0] }),
+  ])
+
+  await disconnect(customConfig, { connector: customConnector })
 })
 
 test('behavior: disabled when properties missing', async () => {

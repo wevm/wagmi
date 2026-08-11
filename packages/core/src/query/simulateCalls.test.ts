@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { simulateCallsQueryOptions } from './simulateCalls.js'
 
@@ -35,4 +35,42 @@ test('default', () => {
       "structuralSharing": [Function],
     }
   `)
+})
+
+test('behavior: strips query metadata', async () => {
+  const simulateCalls = vi.fn().mockResolvedValue({})
+  const config_ = {
+    ...config,
+    getClient: () => ({ simulateCalls }),
+  } as unknown as typeof config
+  const options = simulateCallsQueryOptions(config_, {
+    calls: [
+      {
+        data: name4bytes,
+        to: '0x',
+      },
+    ],
+  })
+
+  await options.queryFn({
+    queryKey: [
+      'simulateCalls',
+      {
+        ...options.queryKey[1],
+        connectorUid: 'mock',
+        scopeKey: 'test',
+      },
+    ],
+    signal: new AbortSignal(),
+    meta: undefined,
+  })
+
+  expect(simulateCalls).toHaveBeenCalledWith({
+    calls: [
+      {
+        data: name4bytes,
+        to: '0x',
+      },
+    ],
+  })
 })

@@ -120,6 +120,6 @@ test('behavior: traceAssetChanges requires account', async () => {
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [BaseError: \`account\` is required when \`traceAssetChanges\` is true
 
-    Version: viem@2.44.4]
+    Version: viem@2.55.7]
   `)
 })

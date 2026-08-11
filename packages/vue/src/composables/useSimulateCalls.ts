@@ -3,13 +3,14 @@ import type {
   ResolvedRegister,
   SimulateCallsErrorType,
 } from '@wagmi/core'
-import type { ConfigParameter } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type SimulateCallsData,
   type SimulateCallsOptions,
   simulateCallsQueryOptions,
 } from '@wagmi/core/query'
-import { computed, type MaybeRef } from 'vue'
+import { computed } from 'vue'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -20,8 +21,10 @@ export type UseSimulateCallsParameters<
   config extends Config = Config,
   calls extends readonly unknown[] = readonly unknown[],
   selectData = SimulateCallsData<calls>,
-> = MaybeRef<
-  SimulateCallsOptions<config, calls, selectData> & ConfigParameter<config>
+> = Compute<
+  DeepMaybeRef<
+    SimulateCallsOptions<config, calls, selectData> & ConfigParameter<config>
+  >
 >
 
 export type UseSimulateCallsReturnType<
@@ -39,7 +42,7 @@ export function useSimulateCalls<
 ): UseSimulateCallsReturnType<calls, selectData> {
   const params = computed(() => deepUnref(parameters)) as any
   const config = useConfig(params)
-  const { address, connector } = useConnection()
+  const { address, connector } = useConnection({ config })
   const chainId = useChainId({ config })
   const options = computed(() =>
     simulateCallsQueryOptions(config as any, {

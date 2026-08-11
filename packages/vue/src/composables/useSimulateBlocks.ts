@@ -3,13 +3,14 @@ import type {
   ResolvedRegister,
   SimulateBlocksErrorType,
 } from '@wagmi/core'
-import type { ConfigParameter } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type SimulateBlocksData,
   type SimulateBlocksOptions,
   simulateBlocksQueryOptions,
 } from '@wagmi/core/query'
-import { computed, type MaybeRef } from 'vue'
+import { computed } from 'vue'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -19,8 +20,10 @@ export type UseSimulateBlocksParameters<
   config extends Config = Config,
   calls extends readonly unknown[] = readonly unknown[],
   selectData = SimulateBlocksData<calls>,
-> = MaybeRef<
-  SimulateBlocksOptions<config, calls, selectData> & ConfigParameter<config>
+> = Compute<
+  DeepMaybeRef<
+    SimulateBlocksOptions<config, calls, selectData> & ConfigParameter<config>
+  >
 >
 
 export type UseSimulateBlocksReturnType<

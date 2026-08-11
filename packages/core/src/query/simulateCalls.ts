@@ -40,7 +40,8 @@ export function simulateCallsQueryOptions<
         (options.query?.enabled ?? true),
     ),
     queryFn: async (context) => {
-      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      const [, { connectorUid: _, scopeKey: __, ...parameters }] =
+        context.queryKey
       if (!parameters.calls) throw new Error('calls is required')
       if (
         parameters.traceAssetChanges &&

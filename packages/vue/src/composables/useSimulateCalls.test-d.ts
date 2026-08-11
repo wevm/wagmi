@@ -1,5 +1,6 @@
 import { abi } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
+import { ref } from 'vue'
 
 import { useSimulateCalls } from './useSimulateCalls.js'
 
@@ -31,4 +32,15 @@ test('select data', () => {
       )[]
     | undefined
   >()
+})
+
+test('reactive parameters', () => {
+  useSimulateCalls({
+    calls: ref([
+      {
+        data: '0x' as const,
+        to: '0x' as const,
+      },
+    ]),
+  })
 })
