@@ -18,6 +18,8 @@ export type AddChainParameters = Compute<
   viem_AddChainParameters & ConnectorParameter
 >
 
+export type AddChainReturnType = void
+
 export type AddChainErrorType =
   // getConnectorClient()
   | GetConnectorClientErrorType
@@ -28,7 +30,10 @@ export type AddChainErrorType =
   | viem_AddChainErrorType
 
 /** https://wagmi.sh/core/api/actions/addChain */
-export async function addChain(config: Config, parameters: AddChainParameters) {
+export async function addChain(
+  config: Config,
+  parameters: AddChainParameters,
+): Promise<AddChainReturnType> {
   const { connector, ...rest } = parameters
 
   const client = await getConnectorClient(config, { connector })

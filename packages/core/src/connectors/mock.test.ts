@@ -72,6 +72,7 @@ test('behavior: connector.getProvider request errors', async () => {
   const connectorFn = mock({
     accounts,
     features: {
+      addChainError: true,
       signMessageError: true,
       signTypedDataError: true,
       switchChainError: true,
@@ -82,6 +83,18 @@ test('behavior: connector.getProvider request errors', async () => {
     connectorFn,
   ) as ReturnType<typeof connectorFn>
   const provider = await connector.getProvider()
+
+  await expect(
+    provider.request({
+      method: 'wallet_addEthereumChain',
+      params: [] as any,
+    }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: Failed to add chain.
+    Version: viem@2.55.7]
+  `)
 
   await expect(
     provider.request({

@@ -6,6 +6,7 @@
 export {
   type AddChainErrorType,
   type AddChainParameters,
+  type AddChainReturnType,
   addChain,
 } from '../actions/addChain.js'
 

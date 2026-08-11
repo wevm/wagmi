@@ -1,6 +1,6 @@
 import { config } from '@wagmi/test'
 import { avalanche } from 'viem/chains'
-import { test } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { addChain } from './addChain.js'
 import { connect } from './connect.js'
@@ -10,9 +10,7 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  await addChain(config, {
-    chain: avalanche,
-  })
+  await expect(addChain(config, { chain: avalanche })).resolves.toBeUndefined()
   await disconnect(config, { connector })
 })
 

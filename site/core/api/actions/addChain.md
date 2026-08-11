@@ -42,10 +42,10 @@ import { type AddChainParameters } from '@wagmi/core'
 ::: code-group
 ```ts [index.ts]
 import { avalanche } from 'viem/chains'
-import { getAccount, addChain } from '@wagmi/core'
+import { getConnection, addChain } from '@wagmi/core'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await addChain(config, {
   connector, // [!code focus]
   chain: avalanche
@@ -53,6 +53,33 @@ const result = await addChain(config, {
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
+
+### chain
+
+`Chain`
+
+Chain to add to the wallet.
+
+::: code-group
+```ts [index.ts]
+import { avalanche } from 'viem/chains'
+import { addChain } from '@wagmi/core'
+import { config } from './config'
+
+const result = await addChain(config, {
+  chain: avalanche, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+## Return Type
+
+```ts
+import { type AddChainReturnType } from '@wagmi/core'
+```
+
+`void`
 
 ## Error
 
@@ -65,4 +92,3 @@ import { type AddChainErrorType } from '@wagmi/core'
 ## Viem
 
 - [`addChain`](https://viem.sh/docs/actions/wallet/addChain.html)
-

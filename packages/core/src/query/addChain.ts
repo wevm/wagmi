@@ -3,6 +3,7 @@ import type { MutationOptions } from '@tanstack/query-core'
 import {
   type AddChainErrorType,
   type AddChainParameters,
+  type AddChainReturnType,
   addChain,
 } from '../actions/addChain.js'
 import type { Config } from '../createConfig.js'
@@ -36,7 +37,7 @@ export type AddChainMutationOptions = MutationOptions<
   AddChainVariables
 >
 
-export type AddChainData = void
+export type AddChainData = AddChainReturnType
 
 export type AddChainVariables = Compute<AddChainParameters>
 
