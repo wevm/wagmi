@@ -74,3 +74,72 @@ test('behavior: strips query metadata', async () => {
     ],
   })
 })
+
+test('behavior: forwards parameters', async () => {
+  const action = vi.fn().mockResolvedValue({})
+  const getClient = vi.fn(() => ({ simulateCalls: action }))
+  const config_ = { ...config, getClient } as unknown as typeof config
+  const calls = [{ data: name4bytes, to: '0x' }] as const
+  const options = simulateCallsQueryOptions(config_, {
+    account: '0x0000000000000000000000000000000000000001',
+    calls,
+    chainId: 1,
+  })
+
+  await options.queryFn({
+    queryKey: options.queryKey,
+    signal: new AbortSignal(),
+    meta: undefined,
+  })
+
+  expect(getClient).toHaveBeenCalledWith({ chainId: 1 })
+  expect(action).toHaveBeenCalledWith({
+    account: '0x0000000000000000000000000000000000000001',
+    calls,
+  })
+})
+
+test('behavior: required properties', async () => {
+  const missingCalls = simulateCallsQueryOptions(config)
+  expect(missingCalls.enabled).toBe(false)
+  await expect(
+    missingCalls.queryFn({
+      queryKey: missingCalls.queryKey,
+      signal: new AbortSignal(),
+      meta: undefined,
+    }),
+  ).rejects.toThrow('calls is required')
+
+  const missingAccount = simulateCallsQueryOptions(config, {
+    calls: [],
+    traceAssetChanges: true,
+  })
+  expect(missingAccount.enabled).toBe(false)
+  await expect(
+    missingAccount.queryFn({
+      queryKey: missingAccount.queryKey,
+      signal: new AbortSignal(),
+      meta: undefined,
+    }),
+  ).rejects.toThrow(
+    'account or connector is required when traceAssetChanges is true',
+  )
+})
+
+test('behavior: enable gating', () => {
+  const calls = [{ data: name4bytes, to: '0x' }] as const
+  expect(simulateCallsQueryOptions(config, { calls }).enabled).toBe(true)
+  expect(
+    simulateCallsQueryOptions(config, {
+      calls,
+      query: { enabled: false },
+    }).enabled,
+  ).toBe(false)
+  expect(
+    simulateCallsQueryOptions(config, {
+      calls,
+      connector: config.connectors[0],
+      traceAssetChanges: true,
+    }).enabled,
+  ).toBe(true)
+})

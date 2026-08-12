@@ -1,6 +1,6 @@
 import { accounts, address, config, mainnet } from '@wagmi/test'
 import { numberToHex } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -82,6 +82,29 @@ test('parameters: connector', async () => {
   expect(result.assetChanges[0]?.token.symbol).toBe('ETH')
 
   await disconnect(config, { connector })
+})
+
+test('parameters: forwards connector account', async () => {
+  await connect(config, { connector })
+  const action = vi.fn().mockResolvedValue({})
+  const config_ = {
+    ...config,
+    getClient: () => ({ simulateCalls: action }),
+  } as unknown as typeof config
+
+  try {
+    await simulateCalls(config_, {
+      calls: [{ data: name4bytes, to: address.wagmiMintExample }],
+      connector,
+    })
+
+    expect(action).toHaveBeenCalledWith({
+      account: { address: account, type: 'json-rpc' },
+      calls: [{ data: name4bytes, to: address.wagmiMintExample }],
+    })
+  } finally {
+    await disconnect(config, { connector })
+  }
 })
 
 test('behavior: state overrides', async () => {
