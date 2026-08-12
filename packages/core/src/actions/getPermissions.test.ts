@@ -9,7 +9,8 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  await expect(getPermissions(config)).resolves.toMatchInlineSnapshot(`
+  try {
+    await expect(getPermissions(config)).resolves.toMatchInlineSnapshot(`
     [
       {
         "caveats": [
@@ -25,13 +26,18 @@ test('default', async () => {
       },
     ]
   `)
-  await disconnect(config, { connector })
+  } finally {
+    await disconnect(config, { connector })
+  }
 })
 
 test('parameters: connector', async () => {
   await connect(config, { connector })
-  await expect(getPermissions(config, { connector })).resolves.toHaveLength(1)
-  await disconnect(config, { connector })
+  try {
+    await expect(getPermissions(config, { connector })).resolves.toHaveLength(1)
+  } finally {
+    await disconnect(config, { connector })
+  }
 })
 
 test('behavior: not connected', async () => {

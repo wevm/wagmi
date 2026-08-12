@@ -40,13 +40,27 @@ test('parameters: chainId', () => {
 test('queryFn', async () => {
   const connector = config.connectors[0]!
   await connect(config, { connector })
-  const options = getPermissionsQueryOptions(config, { connector })
+  try {
+    const options = getPermissionsQueryOptions(config, {
+      chainId: chain.mainnet.id,
+      connector,
+      scopeKey: 'foo',
+    })
+    await expect(
+      options.queryFn({ queryKey: options.queryKey } as never),
+    ).resolves.toHaveLength(1)
+    expect(options.queryKey).toEqual([
+      'permissions',
+      { chainId: 1, connectorUid: connector.uid, scopeKey: 'foo' },
+    ])
+  } finally {
+    await disconnect(config, { connector })
+  }
+})
+
+test('queryFn: connector is required', async () => {
+  const options = getPermissionsQueryOptions(config)
   await expect(
     options.queryFn({ queryKey: options.queryKey } as never),
-  ).resolves.toHaveLength(1)
-  expect(options.queryKey).toEqual([
-    'permissions',
-    { connectorUid: connector.uid },
-  ])
-  await disconnect(config, { connector })
+  ).rejects.toThrowError('connector is required')
 })

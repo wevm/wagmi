@@ -9,12 +9,13 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  const { result } = await renderHook(() => usePermissions())
+  try {
+    const { result } = await renderHook(() => usePermissions())
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+    await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
-  const { queryKey: _, ...rest } = result.current
-  expect(rest).toMatchInlineSnapshot(`
+    const { queryKey: _, ...rest } = result.current
+    expect(rest).toMatchInlineSnapshot(`
     {
       "data": [
         {
@@ -55,6 +56,7 @@ test('default', async () => {
       "status": "success",
     }
   `)
-
-  await disconnect(config, { connector })
+  } finally {
+    await disconnect(config, { connector })
+  }
 })

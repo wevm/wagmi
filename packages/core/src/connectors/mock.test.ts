@@ -93,6 +93,15 @@ test('behavior: connector.getProvider request errors', async () => {
     Version: viem@2.55.7]
   `)
 
+  const error = new Error('custom get permissions error')
+  const customErrorConnector = config._internal.connectors.setup(
+    mock({ accounts, features: { getPermissionsError: error } }),
+  )
+  const customErrorProvider = await customErrorConnector.getProvider()
+  await expect(
+    customErrorProvider.request({ method: 'wallet_getPermissions' }),
+  ).rejects.toThrowError('custom get permissions error')
+
   await expect(
     provider.request({
       method: 'eth_signTypedData_v4',
