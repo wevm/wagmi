@@ -192,7 +192,7 @@ export function mock(parameters: MockParameters) {
               caveats: [
                 {
                   type: 'filterResponse',
-                  value: ['0x0c54fccd2e384b4bb6f2e405bf5cbc15a017aafb'],
+                  value: parameters.accounts,
                 },
               ],
             },
