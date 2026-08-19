@@ -70,3 +70,25 @@ test('parameters: enabled', async () => {
   expect(blockNumbers.length).toBe(blockNumbersLength)
   await wait(500)
 })
+
+test('parameters: emitOnBegin', async () => {
+  const onBlockNumber = vi.fn()
+  renderComposable(() =>
+    useWatchBlockNumber({
+      emitOnBegin: false,
+      onBlockNumber,
+    }),
+  )
+
+  // `emitOnBegin: false` must reach viem: without it the current block is
+  // delivered as soon as the watcher subscribes, before anything is mined.
+  await wait(200)
+  expect(onBlockNumber).not.toHaveBeenCalled()
+
+  await testClient.mainnet.mine({ blocks: 1 })
+  await vi.waitUntil(() => onBlockNumber.mock.calls.length >= 1, {
+    timeout: 10_000,
+  })
+  expect(onBlockNumber).toHaveBeenCalled()
+  await wait(500)
+})
