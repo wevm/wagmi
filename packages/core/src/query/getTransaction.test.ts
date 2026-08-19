@@ -40,3 +40,19 @@ test('parameters: index 0 with blockNumber enables query', () => {
   })
   expect(options.enabled).toBe(true)
 })
+
+test('parameters: blockNumber 0 (genesis) with index 0 enables query', () => {
+  const options = getTransactionQueryOptions(config, {
+    blockNumber: 0n,
+    index: 0,
+  })
+  expect(options.enabled).toBe(true)
+})
+
+test('parameters: blockNumber 0 (genesis) with index enables query', () => {
+  const options = getTransactionQueryOptions(config, {
+    blockNumber: 0n,
+    index: 1,
+  })
+  expect(options.enabled).toBe(true)
+})
