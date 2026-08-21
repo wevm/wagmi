@@ -15,6 +15,10 @@ const TError = 'WaitForTransactionReceiptErrorType'
 
 Hook that waits for the transaction to be included on a block, and then returns the transaction receipt. If the transaction reverts, then the action will throw an error. Replacement detection (e.g. sped up transactions) is also supported.
 
+::: warning
+This hook expects an on-chain transaction hash. It does not accept an EIP-5792 call bundle ID or a UserOperation hash returned by `writeContracts`, including calls submitted with a paymaster. For batched calls, use [`useWaitForCallsStatus`](/react/api/hooks/useWaitForCallsStatus) with the returned ID. Its `receipts` field contains the on-chain transaction receipts.
+:::
+
 ## Import
 
 ```ts
