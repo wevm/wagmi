@@ -30,8 +30,8 @@ catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@metamask/connect-evm': 2.1.0
-  '@nuxt/kit': 4.4.8
-  '@nuxt/schema': 4.4.8
+  '@nuxt/kit': 4.5.1
+  '@nuxt/schema': 4.5.1
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
   '@tanstack/query-core': 5.49.1
@@ -45,7 +45,7 @@ catalog:
   '@walletconnect/ethereum-provider': 2.21.1
   accounts: 0.12.0
   buffer: 6.0.3
-  nuxt: 4.4.8
+  nuxt: 4.5.1
   ox: 0.11.1
   react: 19.2.0
   react-dom: 19.2.0
@@ -105,10 +105,10 @@ overrides:
   h3-v2: npm:h3@2.0.1-rc.18
   h3@<1.15.9: 1.15.9
   happy-dom@<20.8.9: '>=20.8.9'
-  hono@<4.12.27: 4.12.27
+  hono@<4.12.34: 4.12.34
   js-cookie@<=3.0.5: 3.0.7
-  js-yaml@>=3.0.0 <3.15.0: 3.15.0
-  js-yaml@>=4.0.0 <4.3.0: 4.3.0
+  js-yaml@>=3.0.0 <3.15.1: 3.15.1
+  js-yaml@>=4.0.0 <4.3.1: 4.3.1
   launch-editor@<=2.14.0: 2.14.1
   linkify-it@<=5.0.1: 5.0.2
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
@@ -119,7 +119,7 @@ overrides:
   minimatch@>=10.0.0 <10.2.3: 10.2.3
   minimatch@>=5.0.0 <5.1.8: 5.1.8
   minimatch@>=9.0.0 <9.0.7: 9.0.7
-  nanoid@<3.3.8: 3.3.8
+  nanoid@<3.3.18: 3.3.18
   nitropack@<2.13.4: 2.13.4
   node-forge@<1.4.0: '>=1.4.0'
   picomatch@<2.3.2: '>=2.3.2'
