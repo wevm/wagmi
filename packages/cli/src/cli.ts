@@ -1,53 +1,41 @@
 #!/usr/bin/env node
-import { cac } from 'cac'
+import { Cli, z } from 'incur'
 
-import { type Generate, generate } from './commands/generate.js'
-import { type Init, init } from './commands/init.js'
-import * as logger from './logger.js'
+import { generate } from './commands/generate.js'
+import { init } from './commands/init.js'
 import { version } from './version.js'
 
-const cli = cac('wagmi')
+try {
+  process.title = 'node (wagmi)'
+} catch {}
 
-cli
-  .command('generate', 'generate code based on configuration')
-  .option('-c, --config <path>', '[string] path to config file')
-  .option('-r, --root <path>', '[string] root path to resolve config from')
-  .option('-w, --watch', '[boolean] watch for changes')
-  .example((name) => `${name} generate`)
-  .action(async (options: Generate) => {
-    await generate(options)
-    if (!options.watch) process.exit(0)
+const commonOptions = {
+  config: z.string().optional().describe('Path to config file'),
+  root: z.string().optional().describe('Root path to resolve config from'),
+}
+
+const cli = Cli.create('wagmi', {
+  description: 'Manage and generate code from Ethereum ABIs',
+  version,
+})
+  .command('generate', {
+    alias: { config: 'c', root: 'r', watch: 'w' },
+    description: 'Generate code based on configuration',
+    options: z.object({
+      ...commonOptions,
+      watch: z.boolean().optional().describe('Watch for changes'),
+    }),
+    async run({ options }) {
+      await generate(options)
+    },
+  })
+  .command('init', {
+    alias: { config: 'c', root: 'r' },
+    description: 'Create configuration file',
+    options: z.object(commonOptions),
+    async run({ options }) {
+      await init(options)
+    },
   })
 
-cli
-  .command('init', 'create configuration file')
-  .option('-c, --config <path>', '[string] path to config file')
-  .option('-r, --root <path>', '[string] root path to resolve config from')
-  .example((name) => `${name} init`)
-  .action(async (options: Init) => {
-    await init(options)
-    process.exit(0)
-  })
-
-cli.help()
-cli.version(version)
-
-void (async () => {
-  try {
-    process.title = 'node (wagmi)'
-  } catch {}
-
-  try {
-    // Parse CLI args without running command
-    cli.parse(process.argv, { run: false })
-    if (!cli.matchedCommand) {
-      if (cli.args.length === 0) {
-        if (!cli.options.help && !cli.options.version) cli.outputHelp()
-      } else throw new Error(`Unknown command: ${cli.args.join(' ')}`)
-    }
-    await cli.runMatchedCommand()
-  } catch (error) {
-    logger.error(`\n${(error as Error).message}`)
-    process.exit(1)
-  }
-})()
+await cli.serve()

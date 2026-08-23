@@ -259,9 +259,6 @@ importers:
       bundle-require:
         specifier: ^5.1.0
         version: 5.1.0(esbuild@0.28.1)
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -286,6 +283,9 @@ importers:
       fdir:
         specifier: ^6.1.1
         version: 6.1.1(picomatch@4.0.4)
+      incur:
+        specifier: ^0.5.1
+        version: 0.5.1
       nanospinner:
         specifier: 1.2.2
         version: 1.2.2
@@ -2778,6 +2778,10 @@ packages:
       '@cfworker/json-schema':
         optional: true
 
+  '@modelcontextprotocol/server@2.0.0-alpha.4':
+    resolution: {integrity: sha512-/KEo3ZJ50HlagHp0lz2vPgfBZFtXHu6zTBXT9XqPc+4O9i4+IbBVWKq/a9yAfv/ifp0u3+mRo8SUk5kMKzhN8A==}
+    engines: {node: '>=20'}
+
   '@mswjs/interceptors@0.35.9':
     resolution: {integrity: sha512-SSnyl/4ni/2ViHKkiZb8eajA/eN1DNFaHjhGiLUdZvDz6PKF4COSf/17xqSz64nOo2Ia29SA6B2KNCsyCbVmaQ==}
     engines: {node: '>=18'}
@@ -4505,6 +4509,10 @@ packages:
   '@safe-global/safe-gateway-typescript-sdk@3.8.0':
     resolution: {integrity: sha512-CiGWIHgIaOdICpDxp05Jw3OPslWTu8AnL0PhrCT1xZgIO86NlMMLzkGbeycJ4FHpTjA999O791Oxp4bZPIjgHA==}
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+  '@scalar/openapi-types@0.8.0':
+    resolution: {integrity: sha512-WmaxVSfvY5K/TwcG2B2TU1WOe1As1uc2s7myswtP6dBlcjU3hM08SApxv/jmyGaCE8t4gO5BBhmHY4pDUfmr2g==}
+    engines: {node: '>=22'}
 
   '@scure/base@1.1.9':
     resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
@@ -7808,6 +7816,11 @@ packages:
 
   incur@0.4.5:
     resolution: {integrity: sha512-4WFlqm5e+IKNoX+lDIjjpebO8ResPx3vPUBChxNfnNo3oGp0ooo6piiiTspOMub2dq2mcG/AmlUq0ejuGfKobg==}
+    engines: {node: '>=22'}
+    hasBin: true
+
+  incur@0.5.1:
+    resolution: {integrity: sha512-gEwPg0Rwf+Oi8pwySLumYgWk//Xiv2wRJhwsOwVskt7ZHrfwFTR7oQmANnyDqudRYhqK3I5/dp489kPehPjIww==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -13724,6 +13737,10 @@ snapshots:
     optionalDependencies:
       '@cfworker/json-schema': 4.1.1
 
+  '@modelcontextprotocol/server@2.0.0-alpha.4':
+    dependencies:
+      zod: 4.3.6
+
   '@mswjs/interceptors@0.35.9':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
@@ -16019,6 +16036,8 @@ snapshots:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
       - encoding
+
+  '@scalar/openapi-types@0.8.0': {}
 
   '@scure/base@1.1.9': {}
 
@@ -20704,6 +20723,16 @@ snapshots:
     dependencies:
       '@cfworker/json-schema': 4.1.1
       '@modelcontextprotocol/server': 2.0.0-alpha.2(@cfworker/json-schema@4.1.1)
+      '@toon-format/toon': 2.1.0
+      tokenx: 1.3.0
+      yaml: 2.9.0
+      zod: 4.3.6
+
+  incur@0.5.1:
+    dependencies:
+      '@cfworker/json-schema': 4.1.1
+      '@modelcontextprotocol/server': 2.0.0-alpha.4
+      '@scalar/openapi-types': 0.8.0
       '@toon-format/toon': 2.1.0
       tokenx: 1.3.0
       yaml: 2.9.0
