@@ -23,8 +23,13 @@ import {
   type Transport,
 } from 'viem'
 import { sendTransactionSync } from 'viem/actions'
-import { Actions, Addresses, Tick, Account as tempo_Account } from 'viem/tempo'
-import { http as zoneHttp } from 'viem/tempo/zones'
+import {
+  Actions,
+  Addresses,
+  Tick,
+  Account as tempo_Account,
+  http as zoneHttp,
+} from 'viem/tempo'
 import { vi } from 'vitest'
 import {
   type RenderHookOptions,

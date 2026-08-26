@@ -1,7 +1,6 @@
 import * as chains from '@wagmi/core/chains'
 import { defineChain, zeroHash } from 'viem'
-import { Storage } from 'viem/tempo'
-import { zone } from 'viem/tempo/zones'
+import { Storage, Zone } from 'viem/tempo'
 
 export const zoneId = 7
 export const zoneRpcPort = 4001
@@ -18,7 +17,7 @@ export const zoneTokens = [
 ] as const
 
 export const zoneInfo = {
-  chainId: zone(zoneId).id,
+  chainId: 4_217_000_007,
   sequencer: zoneSequencer,
   zoneId,
   zoneTokens,
@@ -67,9 +66,12 @@ export const zoneDepositStatusRpcReturnValue = {
 } as const
 
 export const zoneLocal = defineChain({
-  ...zone(zoneId),
+  ...Zone.from({
+    id: zoneInfo.chainId,
+    name: 'Tempo Zone 007',
+    sourceId: chains.tempoLocalnet.id,
+  }),
   rpcUrls: { default: { http: [zoneRpcUrl] } },
-  sourceId: chains.tempoLocalnet.id,
 })
 
 export const zoneStorage = Storage.memory()

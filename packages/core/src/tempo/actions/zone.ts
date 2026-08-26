@@ -12,7 +12,6 @@ import {
   sendTransactionSync as viem_sendTransactionSync,
 } from 'viem/actions'
 import { Abis, Actions, Bytes, PublicKey, Secp256k1, TokenId } from 'viem/tempo'
-import { Abis as ZoneAbis } from 'viem/tempo/zones'
 import { parseAccount } from 'viem/utils'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import type { Config } from '../../createConfig.js'
@@ -558,7 +557,7 @@ export async function deposit<config extends Config>(
       },
       {
         data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
+          abi: Abis.zonePortal,
           functionName: 'deposit',
           args: [tokenAddress, recipient, amount, memo],
         }),
@@ -666,7 +665,7 @@ export async function depositSync<config extends Config>(
       },
       {
         data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
+          abi: Abis.zonePortal,
           functionName: 'deposit',
           args: [tokenAddress, recipient, amount, memo],
         }),
@@ -756,12 +755,12 @@ export async function encryptedDeposit<config extends Config>(
       : await Promise.all([
           viem_readContract(client, {
             address: portalAddress,
-            abi: ZoneAbis.zonePortal,
+            abi: Abis.zonePortal,
             functionName: 'sequencerEncryptionKey',
           }).then(([x, yParity]) => ({ x, yParity: Number(yParity) })),
           viem_readContract(client, {
             address: portalAddress,
-            abi: ZoneAbis.zonePortal,
+            abi: Abis.zonePortal,
             functionName: 'encryptionKeyCount',
           }),
         ])
@@ -782,7 +781,7 @@ export async function encryptedDeposit<config extends Config>(
       },
       {
         data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
+          abi: Abis.zonePortal,
           functionName: 'depositEncrypted',
           args: [tokenAddress, amount, keyIndex - 1n, encrypted],
         }),
@@ -883,12 +882,12 @@ export async function encryptedDepositSync<config extends Config>(
       : await Promise.all([
           viem_readContract(client, {
             address: portalAddress,
-            abi: ZoneAbis.zonePortal,
+            abi: Abis.zonePortal,
             functionName: 'sequencerEncryptionKey',
           }).then(([x, yParity]) => ({ x, yParity: Number(yParity) })),
           viem_readContract(client, {
             address: portalAddress,
-            abi: ZoneAbis.zonePortal,
+            abi: Abis.zonePortal,
             functionName: 'encryptionKeyCount',
           }),
         ])
@@ -909,7 +908,7 @@ export async function encryptedDepositSync<config extends Config>(
       },
       {
         data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
+          abi: Abis.zonePortal,
           functionName: 'depositEncrypted',
           args: [tokenAddress, amount, keyIndex - 1n, encrypted],
         }),
