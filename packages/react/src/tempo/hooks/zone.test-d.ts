@@ -1,6 +1,6 @@
 import { createConfig, http } from '@wagmi/core'
 import { tempoLocalnet } from 'viem/chains'
-import { zone, http as zoneHttp } from 'viem/tempo/zones'
+import { Zone, http as zoneHttp } from 'viem/tempo'
 import { expectTypeOf, test } from 'vitest'
 import {
   useDeposit,
@@ -13,7 +13,7 @@ import {
   useRequestWithdrawalSync,
 } from './zone.js'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
 const token = '0x20c0000000000000000000000000000000000001'

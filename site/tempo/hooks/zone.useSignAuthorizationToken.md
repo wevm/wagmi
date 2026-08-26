@@ -4,8 +4,8 @@ Hook for signing and storing a Tempo zone authorization token.
 
 Use this hook before querying zone RPC methods that require the zone transport to send an `X-Authorization-Token` header.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage
@@ -13,9 +13,9 @@ Zone actions and hooks require `viem >=2.48.0`.
 ::: code-group
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
-import { zone } from 'viem/tempo/zones'
+import { Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 const signAuthorizationToken = Hooks.zone.useSignAuthorizationToken()
 
 const result = await signAuthorizationToken.mutateAsync({
@@ -30,9 +30,9 @@ console.log('Token:', result.token)
 // @noErrors
 import { createConfig } from 'wagmi'
 import { webAuthn } from 'wagmi/tempo'
-import { http as zoneHttp, zone } from 'viem/tempo/zones'
+import { http as zoneHttp, Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 export const config = createConfig({
   connectors: [webAuthn()],

@@ -9,9 +9,9 @@ This hook expects a zone authorization token to already exist in storage. Use [`
 ::: code-group
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
-import { zone } from 'viem/tempo/zones'
+import { Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 const { data: zoneInfo } = Hooks.zone.useWaitForTempoBlock({
   chainId: zoneChain.id,

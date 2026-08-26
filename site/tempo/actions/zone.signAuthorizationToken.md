@@ -2,10 +2,10 @@
 
 Signs and stores a zone authorization token for the configured account and zone chain.
 
-The token is persisted to the provided storage so future zone RPC requests made through `viem/tempo/zones` transports can send the `X-Authorization-Token` header automatically.
+The token is persisted to the provided storage so future zone RPC requests made through `viem/tempo` transports can send the `X-Authorization-Token` header automatically.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage
@@ -15,9 +15,9 @@ Zone actions and hooks require `viem >=2.48.0`.
 ```ts [example.ts]
 import { createConfig } from 'wagmi'
 import { webAuthn } from 'wagmi/tempo'
-import { http as zoneHttp, zone } from 'viem/tempo/zones'
+import { http as zoneHttp, Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 const config = createConfig({
   connectors: [webAuthn()],

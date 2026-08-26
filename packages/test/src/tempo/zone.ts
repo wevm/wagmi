@@ -12,8 +12,7 @@ import {
   Actions as wagmi_Actions,
 } from '@wagmi/core/tempo'
 import { type Address, defineChain, parseUnits, webSocket } from 'viem'
-import { Actions, Addresses, Storage } from 'viem/tempo'
-import { zone, http as zoneHttp } from 'viem/tempo/zones'
+import { Actions, Addresses, Storage, Zone, http as zoneHttp } from 'viem/tempo'
 import { inject } from 'vitest'
 import { accounts, createRenderHook, privateKeys } from './config.js'
 
@@ -49,9 +48,9 @@ export const parentChain = defineChain({
   rpcUrls: { default: { http: [], webSocket: [context.l1RpcUrl] } },
 }).extend({ feeToken: 1n })
 
-export const zoneChain = defineChain({
-  ...zone(zoneId),
+export const zoneChain = Zone.from({
   id: context.chainId,
+  name: `Tempo Zone ${String(zoneId).padStart(3, '0')}`,
   rpcUrls: { default: { http: [context.privateRpcUrl] } },
   sourceId: parentChain.id,
 })
