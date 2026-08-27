@@ -1,6 +1,5 @@
 ---
-"@wagmi/connectors": patch
-"@wagmi/core": patch
+"@wagmi/connectors": minor
 ---
 
-Bumped the Accounts peer dependency to 0.18.
+Bumped min `accounts` peer dependency to `0.18`.
