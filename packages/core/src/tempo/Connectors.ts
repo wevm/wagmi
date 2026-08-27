@@ -315,7 +315,7 @@ function _setup(parameters: setup.Parameters) {
         const provider = await getProvider()
         // Always provide a JSON-RPC account; the SDK provider performs
         // access key orchestration internally before signing.
-        const { address } = provider.getAccount({ accessKey: false })
+        const { address } = provider.getAccount()
         return Object.assign(provider.getClient({ chainId }), {
           account: parseAccount(address),
         }) as never
