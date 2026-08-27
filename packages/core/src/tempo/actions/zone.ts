@@ -1,9 +1,9 @@
-import { type Account, type Address, encodeFunctionData, zeroHash } from 'viem'
+import type { Account, Address } from 'viem'
 import {
   sendTransaction as viem_sendTransaction,
   sendTransactionSync as viem_sendTransactionSync,
 } from 'viem/actions'
-import { Abis, Actions, TokenId } from 'viem/tempo'
+import { Actions } from 'viem/tempo'
 import { parseAccount } from 'viem/utils'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import type { Config } from '../../createConfig.js'
@@ -520,40 +520,36 @@ export async function deposit<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
-    memo = zeroHash,
+    bouncebackRecipient,
+    memo,
+    portalAddress: portalAddress_,
     recipient = accountAddress,
-    tempoRefundRecipient = accountAddress,
+    tempoRefundRecipient,
     token,
     zoneId,
     ...tx
-  } = rest
-  const { address: portalAddress } = resolvePortal(
-    config,
-    resolvedChainId,
-    zoneId,
-  )
-  const tokenAddress = TokenId.toAddress(token)
+  } = rest as typeof rest & {
+    bouncebackRecipient?: Address | undefined
+    tempoRefundRecipient?: Address | undefined
+  }
+  const portalAddress =
+    portalAddress_ ?? resolvePortal(config, resolvedChainId, zoneId).address
+  const refundRecipient =
+    tempoRefundRecipient ?? bouncebackRecipient ?? accountAddress
 
   return viem_sendTransaction(client, {
     ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: Abis.zonePortal,
-          functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo, tempoRefundRecipient],
-        }),
-        to: portalAddress,
-      },
-    ],
+    calls: Actions.zone.deposit.calls({
+      amount,
+      bouncebackRecipient: refundRecipient,
+      chainId: resolvedChainId,
+      memo,
+      portalAddress,
+      recipient,
+      tempoRefundRecipient: refundRecipient,
+      token,
+      zoneId,
+    } as never),
   } as never) as never
 }
 
@@ -631,40 +627,36 @@ export async function depositSync<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
-    memo = zeroHash,
+    bouncebackRecipient,
+    memo,
+    portalAddress: portalAddress_,
     recipient = accountAddress,
-    tempoRefundRecipient = accountAddress,
+    tempoRefundRecipient,
     token,
     zoneId,
     ...tx
-  } = rest
-  const { address: portalAddress } = resolvePortal(
-    config,
-    resolvedChainId,
-    zoneId,
-  )
-  const tokenAddress = TokenId.toAddress(token)
+  } = rest as typeof rest & {
+    bouncebackRecipient?: Address | undefined
+    tempoRefundRecipient?: Address | undefined
+  }
+  const portalAddress =
+    portalAddress_ ?? resolvePortal(config, resolvedChainId, zoneId).address
+  const refundRecipient =
+    tempoRefundRecipient ?? bouncebackRecipient ?? accountAddress
 
   const receipt = await viem_sendTransactionSync(client, {
     ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: Abis.zonePortal,
-          functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo, tempoRefundRecipient],
-        }),
-        to: portalAddress,
-      },
-    ],
+    calls: Actions.zone.deposit.calls({
+      amount,
+      bouncebackRecipient: refundRecipient,
+      chainId: resolvedChainId,
+      memo,
+      portalAddress,
+      recipient,
+      tempoRefundRecipient: refundRecipient,
+      token,
+      zoneId,
+    } as never),
     throwOnReceiptRevert,
   } as never)
 

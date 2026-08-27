@@ -1,11 +1,19 @@
-import { http } from 'viem'
+import { defineChain, http } from 'viem'
 import { tempoLocalnet } from 'viem/chains'
-import { Zone, http as zoneHttp } from 'viem/tempo'
 import { expectTypeOf, test } from 'vitest'
 import { createConfig } from '../../createConfig.js'
 import * as zoneActions from './zone.js'
 
-const zoneChain = Zone.b
+const zoneChain = defineChain({
+  ...tempoLocalnet,
+  id: 4_217_000_007,
+  name: 'Zone B',
+  rpcUrls: {
+    default: { http: ['https://rpc-zone-b.testnet.tempo.xyz'] },
+  },
+  sourceId: tempoLocalnet.id,
+  supportsTransactionReplacementDetection: false,
+})
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
 const token = '0x20c0000000000000000000000000000000000001'
@@ -14,7 +22,7 @@ const config = createConfig({
   chains: [tempoLocalnet, zoneChain],
   transports: {
     [tempoLocalnet.id]: http(),
-    [zoneChain.id]: zoneHttp(),
+    [zoneChain.id]: http(),
   },
 })
 

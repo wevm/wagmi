@@ -11,8 +11,8 @@ import {
   dangerous_secp256k1,
   Actions as wagmi_Actions,
 } from '@wagmi/core/tempo'
-import { type Address, defineChain, parseUnits, webSocket } from 'viem'
-import { Actions, Addresses, Storage, Zone, http as zoneHttp } from 'viem/tempo'
+import { type Address, defineChain, http, parseUnits, webSocket } from 'viem'
+import { Actions, Addresses, Storage } from 'viem/tempo'
 import { inject } from 'vitest'
 import { accounts, createRenderHook, privateKeys } from './config.js'
 
@@ -48,11 +48,13 @@ export const parentChain = defineChain({
   rpcUrls: { default: { http: [], webSocket: [context.l1RpcUrl] } },
 }).extend({ feeToken: 1n })
 
-export const zoneChain = Zone.from({
+export const zoneChain = defineChain({
+  ...tempoLocalnet,
   id: context.chainId,
   name: `Tempo Zone ${String(zoneId).padStart(3, '0')}`,
   rpcUrls: { default: { http: [context.privateRpcUrl] } },
   sourceId: parentChain.id,
+  supportsTransactionReplacementDetection: false,
 })
 
 export const config = createConfig({
@@ -66,7 +68,15 @@ export const config = createConfig({
   storage: null,
   transports: {
     [parentChain.id]: webSocket(context.l1RpcUrl),
-    [zoneChain.id]: zoneHttp(context.privateRpcUrl, { storage: zoneStorage }),
+    [zoneChain.id]: http(context.privateRpcUrl, {
+      async onFetchRequest(_request, init) {
+        const token = await zoneStorage.getItem(`auth:token:${zoneChain.id}`)
+        if (!token) return init
+        const headers = new Headers(init.headers)
+        headers.set('X-Authorization-Token', token)
+        return { ...init, headers }
+      },
+    }),
   },
 } as const satisfies CreateConfigParameters)
 

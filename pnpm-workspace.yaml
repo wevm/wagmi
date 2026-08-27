@@ -156,6 +156,9 @@ peerDependencyRules:
     - react-native
     - search-insights
 
+patchedDependencies:
+  accounts@0.12.0: patches/accounts@0.12.0.patch
+
 trustPolicy: no-downgrade
 
 trustPolicyExclude:

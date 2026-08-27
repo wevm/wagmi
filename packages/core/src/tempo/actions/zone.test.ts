@@ -32,7 +32,7 @@ async function getPreparedEncryptedDeposit() {
       tempoRefundRecipient: accounts[0].address,
       token: depositToken,
       zoneId,
-    },
+    } as never,
   )
 }
 
