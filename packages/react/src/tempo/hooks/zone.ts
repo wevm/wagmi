@@ -18,9 +18,9 @@ import type { QueryParameter } from '../utils.js'
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { data, isLoading } = Hooks.zone.useAuthorizationTokenInfo({
@@ -74,9 +74,9 @@ export declare namespace useAuthorizationTokenInfo {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { data, isLoading } = Hooks.zone.useWithdrawalFee({
@@ -132,9 +132,9 @@ export declare namespace useWithdrawalFee {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { data, isLoading } = Hooks.zone.useZoneInfo({
@@ -188,9 +188,9 @@ export declare namespace useZoneInfo {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { data, isLoading } = Hooks.zone.useWaitForTempoBlock({
@@ -246,9 +246,9 @@ export declare namespace useWaitForTempoBlock {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { mutate, isPending } = Hooks.zone.useSignAuthorizationToken()
@@ -616,9 +616,9 @@ export declare namespace useEncryptedDepositSync {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { mutate, isPending } = Hooks.zone.useRequestWithdrawal()
@@ -695,9 +695,9 @@ export declare namespace useRequestWithdrawal {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { mutate, isPending } = Hooks.zone.useRequestWithdrawalSync()
@@ -772,9 +772,9 @@ export declare namespace useRequestWithdrawalSync {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { mutate, isPending } = Hooks.zone.useRequestVerifiableWithdrawal()
@@ -854,9 +854,9 @@ export declare namespace useRequestVerifiableWithdrawal {
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
+ * import { Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  *
  * function App() {
  *   const { mutate, isPending } = Hooks.zone.useRequestVerifiableWithdrawalSync()

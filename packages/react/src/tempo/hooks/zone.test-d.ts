@@ -1,6 +1,6 @@
 import { createConfig, http } from '@wagmi/core'
+import { defineChain } from 'viem'
 import { tempoLocalnet } from 'viem/chains'
-import { zone, http as zoneHttp } from 'viem/tempo/zones'
 import { expectTypeOf, test } from 'vitest'
 import {
   useDeposit,
@@ -13,7 +13,16 @@ import {
   useRequestWithdrawalSync,
 } from './zone.js'
 
-const zoneChain = zone(7)
+const zoneChain = defineChain({
+  ...tempoLocalnet,
+  id: 4_217_000_007,
+  name: 'Zone B',
+  rpcUrls: {
+    default: { http: ['https://rpc-zone-b.testnet.tempo.xyz'] },
+  },
+  sourceId: tempoLocalnet.id,
+  supportsTransactionReplacementDetection: false,
+})
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798'
 const token = '0x20c0000000000000000000000000000000000001'
@@ -22,7 +31,7 @@ const config = createConfig({
   chains: [tempoLocalnet, zoneChain],
   transports: {
     [tempoLocalnet.id]: http(),
-    [zoneChain.id]: zoneHttp(),
+    [zoneChain.id]: http(),
   },
 })
 

@@ -1,18 +1,9 @@
+import type { Account, Address } from 'viem'
 import {
-  type Account,
-  type Address,
-  encodeAbiParameters,
-  encodeFunctionData,
-  type Hex,
-  zeroHash,
-} from 'viem'
-import {
-  readContract as viem_readContract,
   sendTransaction as viem_sendTransaction,
   sendTransactionSync as viem_sendTransactionSync,
 } from 'viem/actions'
-import { Abis, Actions, Bytes, PublicKey, Secp256k1, TokenId } from 'viem/tempo'
-import { Abis as ZoneAbis } from 'viem/tempo/zones'
+import { Actions } from 'viem/tempo'
 import { parseAccount } from 'viem/utils'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import type { Config } from '../../createConfig.js'
@@ -36,9 +27,9 @@ import { filterQueryOptions } from './utils.js'
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -138,9 +129,9 @@ export namespace getAuthorizationTokenInfo {
  * ```ts
  * import { createConfig } from '@wagmi/core'
  * import { Actions } from '@wagmi/core/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const config = createConfig({
  *   chains: [zoneChain],
  *   transports: {
@@ -234,9 +225,9 @@ export namespace getWithdrawalFee {
  * ```ts
  * import { createConfig } from '@wagmi/core'
  * import { Actions } from '@wagmi/core/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const config = createConfig({
  *   chains: [zoneChain],
  *   transports: {
@@ -327,9 +318,9 @@ export namespace getZoneInfo {
  * ```ts
  * import { createConfig } from '@wagmi/core'
  * import { Actions } from '@wagmi/core/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const config = createConfig({
  *   chains: [zoneChain],
  *   transports: {
@@ -431,9 +422,9 @@ export namespace waitForTempoBlock {
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -529,40 +520,36 @@ export async function deposit<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
-    bouncebackRecipient = accountAddress,
-    memo = zeroHash,
+    bouncebackRecipient,
+    memo,
+    portalAddress: portalAddress_,
     recipient = accountAddress,
+    tempoRefundRecipient,
     token,
     zoneId,
     ...tx
-  } = rest
-  const { address: portalAddress } = resolvePortal(
-    config,
-    resolvedChainId,
-    zoneId,
-  )
-  const tokenAddress = TokenId.toAddress(token)
+  } = rest as typeof rest & {
+    bouncebackRecipient?: Address | undefined
+    tempoRefundRecipient?: Address | undefined
+  }
+  const portalAddress =
+    portalAddress_ ?? resolvePortal(config, resolvedChainId, zoneId).address
+  const refundRecipient =
+    tempoRefundRecipient ?? bouncebackRecipient ?? accountAddress
 
   return viem_sendTransaction(client, {
     ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
-          functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo, bouncebackRecipient],
-        }),
-        to: portalAddress,
-      },
-    ],
+    calls: Actions.zone.deposit.calls({
+      amount,
+      bouncebackRecipient: refundRecipient,
+      chainId: resolvedChainId,
+      memo,
+      portalAddress,
+      recipient,
+      tempoRefundRecipient: refundRecipient,
+      token,
+      zoneId,
+    } as never),
   } as never) as never
 }
 
@@ -640,40 +627,36 @@ export async function depositSync<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
-    bouncebackRecipient = accountAddress,
-    memo = zeroHash,
+    bouncebackRecipient,
+    memo,
+    portalAddress: portalAddress_,
     recipient = accountAddress,
+    tempoRefundRecipient,
     token,
     zoneId,
     ...tx
-  } = rest
-  const { address: portalAddress } = resolvePortal(
-    config,
-    resolvedChainId,
-    zoneId,
-  )
-  const tokenAddress = TokenId.toAddress(token)
+  } = rest as typeof rest & {
+    bouncebackRecipient?: Address | undefined
+    tempoRefundRecipient?: Address | undefined
+  }
+  const portalAddress =
+    portalAddress_ ?? resolvePortal(config, resolvedChainId, zoneId).address
+  const refundRecipient =
+    tempoRefundRecipient ?? bouncebackRecipient ?? accountAddress
 
   const receipt = await viem_sendTransactionSync(client, {
     ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
-          functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo, bouncebackRecipient],
-        }),
-        to: portalAddress,
-      },
-    ],
+    calls: Actions.zone.deposit.calls({
+      amount,
+      bouncebackRecipient: refundRecipient,
+      chainId: resolvedChainId,
+      memo,
+      portalAddress,
+      recipient,
+      tempoRefundRecipient: refundRecipient,
+      token,
+      zoneId,
+    } as never),
     throwOnReceiptRevert,
   } as never)
 
@@ -738,76 +721,19 @@ export async function encryptedDeposit<config extends Config>(
   const resolvedChainId = chainId ?? client.chain?.id
   if (!resolvedChainId) throw new Error('`chainId` is required.')
 
-  const account_ = account ?? client.account
-  if (!account_) throw new Error('`account` is required.')
-
-  const accountAddress = parseAccount(account_).address
-  const { bouncebackRecipient = accountAddress, ...rest_ } = rest
-
-  if ('encrypted' in rest_)
+  if ('encrypted' in rest)
     return Actions.zone.encryptedDeposit(client, {
-      ...rest_,
-      bouncebackRecipient,
+      ...rest,
       chainId: resolvedChainId,
     } as never)
 
-  const {
-    amount,
-    memo,
-    recipient = accountAddress,
-    token,
-    zoneId,
-    ...tx
-  } = rest_
-  const portal = resolvePortal(config, resolvedChainId, zoneId)
-  const portalAddress = portal.address
-  const tokenAddress = TokenId.toAddress(token)
-  const [publicKey, keyIndex] =
-    portal.sequencerEncryptionKey && portal.encryptionKeyCount !== undefined
-      ? [portal.sequencerEncryptionKey, portal.encryptionKeyCount]
-      : await Promise.all([
-          viem_readContract(client, {
-            address: portalAddress,
-            abi: ZoneAbis.zonePortal,
-            functionName: 'sequencerEncryptionKey',
-          }).then(([x, yParity]) => ({ x, yParity: Number(yParity) })),
-          viem_readContract(client, {
-            address: portalAddress,
-            abi: ZoneAbis.zonePortal,
-            functionName: 'encryptionKeyCount',
-          }),
-        ])
-  if (keyIndex === 0n)
-    throw new Error('No sequencer encryption key configured.')
-  const encrypted = await encryptDepositPayload(publicKey, recipient, memo)
-
-  return viem_sendTransaction(client, {
-    ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
-          functionName: 'depositEncrypted',
-          args: [
-            tokenAddress,
-            amount,
-            keyIndex - 1n,
-            encrypted,
-            bouncebackRecipient,
-          ],
-        }),
-        to: portalAddress,
-      },
-    ],
-  } as never) as never
+  const portalAddress =
+    rest.portalAddress ??
+    resolvePortal(config, resolvedChainId, rest.zoneId).address
+  return Actions.zone.encryptedDeposit(client, {
+    ...rest,
+    portalAddress,
+  } as never)
 }
 
 export declare namespace encryptedDeposit {
@@ -882,80 +808,21 @@ export async function encryptedDepositSync<config extends Config>(
   const resolvedChainId = chainId ?? client.chain?.id
   if (!resolvedChainId) throw new Error('`chainId` is required.')
 
-  const account_ = account ?? client.account
-  if (!account_) throw new Error('`account` is required.')
-
-  const accountAddress = parseAccount(account_).address
-  const { bouncebackRecipient = accountAddress, ...rest_ } = rest
-
-  if ('encrypted' in rest_)
+  if ('encrypted' in rest)
     return Actions.zone.encryptedDepositSync(client, {
-      ...rest_,
-      bouncebackRecipient,
+      ...rest,
       chainId: resolvedChainId,
       throwOnReceiptRevert,
     } as never)
 
-  const {
-    amount,
-    memo,
-    recipient = accountAddress,
-    token,
-    zoneId,
-    ...tx
-  } = rest_
-  const portal = resolvePortal(config, resolvedChainId, zoneId)
-  const portalAddress = portal.address
-  const tokenAddress = TokenId.toAddress(token)
-  const [publicKey, keyIndex] =
-    portal.sequencerEncryptionKey && portal.encryptionKeyCount !== undefined
-      ? [portal.sequencerEncryptionKey, portal.encryptionKeyCount]
-      : await Promise.all([
-          viem_readContract(client, {
-            address: portalAddress,
-            abi: ZoneAbis.zonePortal,
-            functionName: 'sequencerEncryptionKey',
-          }).then(([x, yParity]) => ({ x, yParity: Number(yParity) })),
-          viem_readContract(client, {
-            address: portalAddress,
-            abi: ZoneAbis.zonePortal,
-            functionName: 'encryptionKeyCount',
-          }),
-        ])
-  if (keyIndex === 0n)
-    throw new Error('No sequencer encryption key configured.')
-  const encrypted = await encryptDepositPayload(publicKey, recipient, memo)
-
-  const receipt = await viem_sendTransactionSync(client, {
-    ...tx,
-    calls: [
-      {
-        data: encodeFunctionData({
-          abi: Abis.tip20,
-          functionName: 'approve',
-          args: [portalAddress, amount],
-        }),
-        to: tokenAddress,
-      },
-      {
-        data: encodeFunctionData({
-          abi: ZoneAbis.zonePortal,
-          functionName: 'depositEncrypted',
-          args: [
-            tokenAddress,
-            amount,
-            keyIndex - 1n,
-            encrypted,
-            bouncebackRecipient,
-          ],
-        }),
-        to: portalAddress,
-      },
-    ],
+  const portalAddress =
+    rest.portalAddress ??
+    resolvePortal(config, resolvedChainId, rest.zoneId).address
+  return Actions.zone.encryptedDepositSync(client, {
+    ...rest,
+    portalAddress,
     throwOnReceiptRevert,
   } as never)
-
-  return { receipt }
 }
 
 export declare namespace encryptedDepositSync {
@@ -984,9 +851,9 @@ export declare namespace encryptedDepositSync {
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -1051,9 +918,9 @@ export declare namespace requestWithdrawal {
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -1115,9 +982,9 @@ export declare namespace requestWithdrawalSync {
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -1184,9 +1051,9 @@ export declare namespace requestVerifiableWithdrawal {
  * import { createConfig } from '@wagmi/core'
  * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
  * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ * import { http as zoneHttp, Zone } from 'viem/tempo'
  *
- * const zoneChain = zone(7)
+ * const zoneChain = Zone.b
  * const account = Account.fromSecp256k1('0x...')
  * const config = createConfig({
  *   chains: [zoneChain],
@@ -1330,11 +1197,7 @@ function resolvePortal<config extends Config>(
   config: config,
   chainId: number,
   zoneId: number,
-): {
-  address: Address
-  encryptionKeyCount?: bigint | undefined
-  sequencerEncryptionKey?: { x: Hex; yParity: number } | undefined
-} {
+): { address: Address } {
   const chain = config.chains.find((chain) => chain.id === chainId)
   const zonePortal = chain?.contracts?.zonePortal as
     | Address
@@ -1343,13 +1206,9 @@ function resolvePortal<config extends Config>(
           | Address
           | {
               address?: Address | undefined
-              encryptionKeyCount?: bigint | undefined
-              sequencerEncryptionKey?: { x: Hex; yParity: number } | undefined
             }
           | undefined
         address?: Address | undefined
-        encryptionKeyCount?: bigint | undefined
-        sequencerEncryptionKey?: { x: Hex; yParity: number } | undefined
       }
     | undefined
 
@@ -1367,13 +1226,8 @@ function resolvePortal<config extends Config>(
       portal &&
       typeof portal === 'object' &&
       typeof portal.address === 'string'
-    ) {
-      return {
-        address: portal.address,
-        encryptionKeyCount: portal.encryptionKeyCount,
-        sequencerEncryptionKey: portal.sequencerEncryptionKey,
-      }
-    }
+    )
+      return { address: portal.address }
   }
 
   const address = (portalAddresses as Record<number, Record<number, Address>>)[
@@ -1384,78 +1238,4 @@ function resolvePortal<config extends Config>(
   throw new Error(
     `No portal address configured for zone ${zoneId} on chain ${chainId}.`,
   )
-}
-
-async function encryptDepositPayload(
-  publicKey: { x: Hex; yParity: number },
-  recipient: Address,
-  memo: Hex = zeroHash,
-): Promise<{
-  ciphertext: Hex
-  ephemeralPubkeyX: Hex
-  ephemeralPubkeyYParity: number
-  nonce: Hex
-  tag: Hex
-}> {
-  const sequencerPublicKey = PublicKey.from({
-    prefix: publicKey.yParity,
-    x: BigInt(publicKey.x),
-  })
-
-  const { privateKey: ephemeralPrivateKey, publicKey: ephemeralPublicKey } =
-    Secp256k1.createKeyPair()
-
-  const sharedSecret = Secp256k1.getSharedSecret({
-    privateKey: ephemeralPrivateKey,
-    publicKey: sequencerPublicKey,
-    as: 'Bytes',
-  })
-
-  const hkdfKey = await globalThis.crypto.subtle.importKey(
-    'raw',
-    sharedSecret.buffer as ArrayBuffer,
-    'HKDF',
-    false,
-    ['deriveKey'],
-  )
-  const aesKey = await globalThis.crypto.subtle.deriveKey(
-    {
-      name: 'HKDF',
-      hash: 'SHA-256',
-      salt: new Uint8Array(12),
-      info: new TextEncoder().encode('ecies-aes-key'),
-    },
-    hkdfKey,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt'],
-  )
-
-  const nonce = Bytes.random(12)
-  const plaintext = encodeAbiParameters(
-    [{ type: 'address' }, { type: 'bytes32' }],
-    [recipient, memo],
-  )
-  const ciphertextWithTag = new Uint8Array(
-    await globalThis.crypto.subtle.encrypt(
-      { name: 'AES-GCM', iv: nonce as BufferSource, tagLength: 128 },
-      aesKey,
-      Bytes.from(plaintext) as BufferSource,
-    ),
-  )
-  const ciphertext = ciphertextWithTag.slice(0, -16)
-  const tag = ciphertextWithTag.slice(-16)
-  const compressedEphemeral = PublicKey.compress(ephemeralPublicKey)
-
-  return {
-    ciphertext: bytesToHex(ciphertext),
-    ephemeralPubkeyX: `0x${compressedEphemeral.x.toString(16).padStart(64, '0')}`,
-    ephemeralPubkeyYParity: compressedEphemeral.prefix,
-    nonce: bytesToHex(nonce),
-    tag: bytesToHex(tag),
-  }
-}
-
-function bytesToHex(bytes: Uint8Array): Hex {
-  return `0x${Array.from(bytes, (value) => value.toString(16).padStart(2, '0')).join('')}` as Hex
 }

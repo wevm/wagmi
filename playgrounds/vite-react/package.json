@@ -16,7 +16,7 @@
     "idb-keyval": "^6.2.1",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "viem": "2.*",
+    "viem": "2.56.0",
     "wagmi": "workspace:*"
   },
   "devDependencies": {
