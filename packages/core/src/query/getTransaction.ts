@@ -37,7 +37,9 @@ export function getTransactionQueryOptions<
     enabled: Boolean(
       (options.hash ||
         (options.index !== undefined &&
-          (options.blockHash || options.blockNumber || options.blockTag))) &&
+          (options.blockHash ||
+            options.blockNumber !== undefined ||
+            options.blockTag))) &&
         (options.query?.enabled ?? true),
     ),
     queryFn: async (context) => {
@@ -47,7 +49,7 @@ export function getTransactionQueryOptions<
           parameters.hash ||
           (parameters.index !== undefined &&
             (parameters.blockHash ||
-              parameters.blockNumber ||
+              parameters.blockNumber !== undefined ||
               parameters.blockTag))
         )
       )
