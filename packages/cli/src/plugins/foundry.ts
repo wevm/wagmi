@@ -60,7 +60,24 @@ export type FoundryConfig = {
    * @default false
    */
   includeBroadcasts?: boolean | undefined
-  /** Mapping of addresses to attach to artifacts. */
+  /**
+   * Mapping of addresses to attach to artifacts.
+   *
+   * Keys are artifact names (e.g. `'ERC20'`). To generate multiple named contracts
+   * from the same ABI, use `'DisplayName:ArtifactName'` — each entry produces a
+   * separate export that shares the ABI but gets its own address and name.
+   *
+   * @example
+   * // Single deployment
+   * { ERC20: { 1: '0x6B175474E89094C44Da98b954EedeAC495271d0F' } }
+   *
+   * @example
+   * // Multiple tokens sharing the same ERC20 ABI
+   * {
+   *   'DAI:ERC20':  { 1: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
+   *   'WETH:ERC20': { 1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' },
+   * }
+   */
   deployments?: { [key: string]: ContractConfig['address'] } | undefined
   /** Artifact files to exclude. */
   exclude?: string[] | undefined
@@ -147,6 +164,22 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       address: contractDeployments[getContractName(artifactPath, false)],
       name: getContractName(artifactPath),
     }
+  }
+
+  function getDeploymentsForArtifact(
+    artifactName: string,
+    contractDeployments: { [key: string]: ContractConfig['address'] },
+  ): Array<{ displayName: string; address: ContractConfig['address'] }> {
+    const direct = contractDeployments[artifactName]
+    if (direct !== undefined)
+      return [{ displayName: artifactName, address: direct }]
+
+    return Object.entries(contractDeployments)
+      .filter(([key]) => key.endsWith(`:${artifactName}`))
+      .map(([key, address]) => ({
+        displayName: key.slice(0, -(artifactName.length + 1)),
+        address,
+      }))
   }
 
   function getArtifactPaths(artifactsDirectory: string) {
@@ -274,9 +307,21 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
       const contracts = []
       for (const artifactPath of artifactPaths) {
-        const contract = await getContract(artifactPath, allDeployments)
-        if (!contract.abi?.length) continue
-        contracts.push(contract)
+        const artifact = JSON.parse(await readFile(artifactPath, 'utf8'))
+        if (!artifact.abi?.length) continue
+        const artifactName = getContractName(artifactPath, false)
+        const matches = getDeploymentsForArtifact(artifactName, allDeployments)
+        if (matches.length >= 1 && matches[0]!.displayName !== artifactName) {
+          for (const match of matches) {
+            contracts.push({
+              abi: artifact.abi,
+              address: match.address,
+              name: `${namePrefix}${match.displayName}`,
+            })
+          }
+        } else {
+          contracts.push(await getContract(artifactPath, allDeployments))
+        }
       }
       return contracts
     },
