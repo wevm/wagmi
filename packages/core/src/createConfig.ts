@@ -466,14 +466,14 @@ export function createConfig<
       async revalidate() {
         // Check connections to see if they are still active
         const state = store.getState()
-        const connections = state.connections
+        const connections = new Map(state.connections)
         let current = state.current
-        for (const [, connection] of connections) {
+        for (const [, connection] of state.connections) {
           const connector = connection.connector
           // check if `connect.isAuthorized` exists
           // partial connectors in storage do not have it
           const isAuthorized = connector.isAuthorized
-            ? await connector.isAuthorized()
+            ? await connector.isAuthorized().catch(() => false)
             : false
           if (isAuthorized) continue
           // Remove stale connection

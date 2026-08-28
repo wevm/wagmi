@@ -483,6 +483,32 @@ test('behavior: revalidate connections', async () => {
   expect([...config.state.connections.keys()]).toEqual([c2.uid])
 })
 
+test('behavior: revalidate handles connector.isAuthorized() rejection', async () => {
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [
+      mock({ accounts, features: { defaultConnected: true, reconnect: true } }),
+    ],
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  const c1 = config.connectors.at(0)!
+  c1.isAuthorized = async () => {
+    throw new Error('revalidation error')
+  }
+
+  const connections = new Map<string, Connection>()
+  connections.set(c1.uid, { accounts: ['0x'], chainId: 1, connector: c1 })
+  config.setState((state) => ({ ...state, connections, current: c1.uid }))
+
+  await expect(config._internal.revalidate()).resolves.toBeUndefined()
+  expect(config.state.connections.size).toEqual(0)
+  expect(config.state.current).toBeNull()
+})
+
 function getProviderDetail(
   info: Pick<EIP6963ProviderDetail['info'], 'name' | 'rdns'>,
 ): EIP6963ProviderDetail {

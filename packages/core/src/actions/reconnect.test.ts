@@ -72,6 +72,31 @@ test("behavior: doesn't reconnect if already reconnecting", async () => {
   config.setState((x) => ({ ...x, status: previousStatus }))
 })
 
+test('behavior: connector.isAuthorized() rejects', async () => {
+  const rejectingConnector = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: {
+        reconnect: true,
+        defaultConnected: true,
+      },
+    }),
+  )
+  rejectingConnector.isAuthorized = async () => {
+    throw new Error('stale session')
+  }
+
+  await expect(
+    reconnect(config, { connectors: [rejectingConnector] }),
+  ).resolves.toStrictEqual([])
+  expect(config.state.status).toEqual('disconnected')
+
+  // subsequent reconnect should still be able to run
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toStrictEqual([])
+})
+
 test('behavior: recovers from invalid state', async () => {
   const state = {
     'wagmi.store': JSON.stringify({
