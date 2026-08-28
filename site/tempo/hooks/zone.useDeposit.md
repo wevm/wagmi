@@ -2,8 +2,8 @@
 
 Hook for depositing tokens from the parent Tempo chain into a zone.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage

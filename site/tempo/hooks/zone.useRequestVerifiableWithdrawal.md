@@ -2,8 +2,8 @@
 
 Hook for requesting a verifiable withdrawal from a zone to the parent Tempo chain.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage
@@ -11,9 +11,9 @@ Zone actions and hooks require `viem >=2.48.0`.
 ::: code-group
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
-import { zone } from 'viem/tempo/zones'
+import { Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 const requestWithdrawalSync = Hooks.zone.useRequestVerifiableWithdrawalSync()
 
 requestWithdrawalSync.mutate({
@@ -38,9 +38,9 @@ If you are optimizing for performance, you should use the non-sync `zone.request
 ```ts
 import { Hooks } from 'wagmi/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
-import { zone } from 'viem/tempo/zones'
+import { Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 const requestWithdrawal = Hooks.zone.useRequestVerifiableWithdrawal()
 const { data: receipt } = useWaitForTransactionReceipt({
   hash: requestWithdrawal.data,

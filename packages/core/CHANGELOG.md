@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 3.6.5
+
+### Patch Changes
+
+- Fixed Tempo Zone action compatibility with Viem 2.56.0. ([#5230](https://github.com/wevm/wagmi/pull/5230))
+
+- Fixed Tempo connectors crashing with Metro ([#5216](https://github.com/wevm/wagmi/pull/5216))
+
 ## 3.6.4
 
 ### Patch Changes

@@ -4,8 +4,8 @@ Deposits tokens into a zone with an encrypted recipient and memo.
 
 Use the `*Sync` variant when you want the receipt before continuing. The non-sync `zone.encryptedDeposit` action returns the transaction hash immediately.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage

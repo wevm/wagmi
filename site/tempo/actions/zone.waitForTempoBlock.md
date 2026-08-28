@@ -11,9 +11,9 @@ This action expects the zone transport to already have an authorization token in
 ```ts [example.ts]
 import { createConfig } from 'wagmi'
 import { webAuthn } from 'wagmi/tempo'
-import { http as zoneHttp, zone } from 'viem/tempo/zones'
+import { http as zoneHttp, Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 const config = createConfig({
   connectors: [webAuthn()],

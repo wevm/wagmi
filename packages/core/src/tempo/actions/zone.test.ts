@@ -26,12 +26,13 @@ async function getPreparedEncryptedDeposit() {
     config.getClient({ chainId: parentChain.id }),
     {
       amount: 123_000n,
-      bouncebackRecipient: accounts[0].address,
       portalAddress,
       recipient: accounts[0].address,
+      sender: accounts[0].address,
+      tempoRefundRecipient: accounts[0].address,
       token: depositToken,
       zoneId,
-    },
+    } as never,
   )
 }
 

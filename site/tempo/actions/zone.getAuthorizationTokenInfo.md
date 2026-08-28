@@ -4,8 +4,8 @@ Gets information about the currently stored Tempo zone authorization token.
 
 This action expects the zone transport to already have an authorization token in storage. Use [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) first.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage
@@ -15,9 +15,9 @@ Zone actions and hooks require `viem >=2.48.0`.
 ```ts [example.ts]
 import { createConfig } from 'wagmi'
 import { webAuthn } from 'wagmi/tempo'
-import { http as zoneHttp, zone } from 'viem/tempo/zones'
+import { http as zoneHttp, Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 const config = createConfig({
   connectors: [webAuthn()],

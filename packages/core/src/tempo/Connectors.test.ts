@@ -34,29 +34,21 @@ function createTempoWalletDialog(
   address: `0x${string}`,
   capabilities: Record<string, unknown> = {},
 ) {
-  return Dialog.define({ name: 'test' }, ({ store }: any) => ({
+  return Dialog.define({ name: 'test' }, ({ onResponse }) => ({
     close() {},
     destroy() {},
     open() {},
     syncTheme() {},
-    async syncRequests(requests) {
+    async syncRequests({ requests }) {
       for (const queued of requests) {
         if (queued.request.method !== 'wallet_connect') continue
 
-        store.setState((state: any) => ({
-          ...state,
-          requestQueue: state.requestQueue.map((request: any) =>
-            request.request.id === queued.request.id
-              ? {
-                  request: request.request,
-                  result: {
-                    accounts: [{ address, capabilities }],
-                  },
-                  status: 'success',
-                }
-              : request,
-          ),
-        }))
+        onResponse({
+          id: queued.request.id,
+          result: {
+            accounts: [{ address, capabilities }],
+          },
+        })
       }
     },
   }))

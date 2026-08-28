@@ -4,8 +4,8 @@ Hook for getting Tempo zone metadata and the latest imported Tempo block number.
 
 This hook expects a zone authorization token to already exist in storage. Use [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) first.
 
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
+::: info Requires viem >=2.56.0
+Zone actions and hooks require `viem >=2.56.0`.
 :::
 
 ## Usage
@@ -13,9 +13,9 @@ Zone actions and hooks require `viem >=2.48.0`.
 ::: code-group
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
-import { zone } from 'viem/tempo/zones'
+import { Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 const { data: zoneInfo } = Hooks.zone.useZoneInfo({
   chainId: zoneChain.id,
@@ -38,9 +38,9 @@ console.log('Zone ID:', zoneInfo?.zoneId)
 // @noErrors
 import { createConfig } from 'wagmi'
 import { webAuthn } from 'wagmi/tempo'
-import { http as zoneHttp, zone } from 'viem/tempo/zones'
+import { http as zoneHttp, Zone } from 'viem/tempo'
 
-const zoneChain = zone(7)
+const zoneChain = Zone.b
 
 export const config = createConfig({
   connectors: [webAuthn()],
