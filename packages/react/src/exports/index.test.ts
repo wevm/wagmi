@@ -75,6 +75,7 @@ test('exports', () => {
       "useReadContract",
       "useReadContracts",
       "useReconnect",
+      "useRequestPermissions",
       "useSendCalls",
       "useSendCallsSync",
       "useSendTransaction",

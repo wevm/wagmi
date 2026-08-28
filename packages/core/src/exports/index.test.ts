@@ -49,6 +49,7 @@ test('exports', () => {
       "readContract",
       "readContracts",
       "reconnect",
+      "requestPermissions",
       "sendCalls",
       "sendCallsSync",
       "sendTransaction",
