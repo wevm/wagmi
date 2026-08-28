@@ -4,6 +4,16 @@
 
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
+  type AddChainData,
+  type AddChainMutate,
+  type AddChainMutateAsync,
+  type AddChainMutationOptions,
+  type AddChainOptions,
+  type AddChainVariables,
+  addChainMutationOptions,
+} from '../query/addChain.js'
+
+export {
   type CallData,
   type CallOptions,
   type CallQueryFnData,

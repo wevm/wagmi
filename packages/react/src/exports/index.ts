@@ -25,6 +25,12 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type UseAddChainParameters,
+  type UseAddChainReturnType,
+  useAddChain,
+} from '../hooks/useAddChain.js'
+
+export {
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,
