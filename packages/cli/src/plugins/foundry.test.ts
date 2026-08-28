@@ -407,3 +407,54 @@ test('watch callbacks use broadcast deployments', async () => {
     },
   })
 })
+
+test('contracts supports multiple deployment names sharing one ABI artifact', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  await expect(
+    foundry({
+      forge: { build: false, clean: false },
+      deployments: {
+        DAI: '0x1111111111111111111111111111111111111111',
+        WETH: '0x2222222222222222222222222222222222222222',
+      },
+      deploymentArtifacts: {
+        DAI: 'ERC20',
+        WETH: 'ERC20',
+      },
+    }).contracts?.(),
+  ).resolves.toMatchObject([
+    {
+      address: undefined,
+      name: 'ERC20',
+    },
+    {
+      address: '0x1111111111111111111111111111111111111111',
+      name: 'DAI',
+    },
+    {
+      address: '0x2222222222222222222222222222222222222222',
+      name: 'WETH',
+    },
+  ])
+})
