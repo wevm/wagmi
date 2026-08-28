@@ -72,6 +72,7 @@ test('behavior: connector.getProvider request errors', async () => {
   const connectorFn = mock({
     accounts,
     features: {
+      getPermissionsError: true,
       signMessageError: true,
       signTypedDataError: true,
       switchChainError: true,
@@ -82,6 +83,24 @@ test('behavior: connector.getProvider request errors', async () => {
     connectorFn,
   ) as ReturnType<typeof connectorFn>
   const provider = await connector.getProvider()
+
+  await expect(
+    provider.request({ method: 'wallet_getPermissions' }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: Failed to get permissions.
+    Version: viem@2.55.7]
+  `)
+
+  const error = new Error('custom get permissions error')
+  const customErrorConnector = config._internal.connectors.setup(
+    mock({ accounts, features: { getPermissionsError: error } }),
+  )
+  const customErrorProvider = await customErrorConnector.getProvider()
+  await expect(
+    customErrorProvider.request({ method: 'wallet_getPermissions' }),
+  ).rejects.toThrowError('custom get permissions error')
 
   await expect(
     provider.request({
