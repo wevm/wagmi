@@ -58,6 +58,10 @@ export { useReadContracts } from '../primitives/useReadContracts.js'
 
 export { useReconnect } from '../primitives/useReconnect.js'
 
+export { useSimulateBlocks } from '../primitives/useSimulateBlocks.js'
+
+export { useSimulateCalls } from '../primitives/useSimulateCalls.js'
+
 export { useSimulateContract } from '../primitives/useSimulateContract.js'
 
 export { useSwitchChain } from '../primitives/useSwitchChain.js'

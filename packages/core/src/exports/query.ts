@@ -443,6 +443,26 @@ export {
 } from '../query/signTypedData.js'
 
 export {
+  type SimulateBlocksData,
+  type SimulateBlocksOptions,
+  type SimulateBlocksQueryFnData,
+  type SimulateBlocksQueryKey,
+  type SimulateBlocksQueryOptions,
+  simulateBlocksQueryKey,
+  simulateBlocksQueryOptions,
+} from '../query/simulateBlocks.js'
+
+export {
+  type SimulateCallsData,
+  type SimulateCallsOptions,
+  type SimulateCallsQueryFnData,
+  type SimulateCallsQueryKey,
+  type SimulateCallsQueryOptions,
+  simulateCallsQueryKey,
+  simulateCallsQueryOptions,
+} from '../query/simulateCalls.js'
+
+export {
   type SimulateContractData,
   type SimulateContractOptions,
   type SimulateContractQueryFnData,
