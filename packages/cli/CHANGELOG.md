@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.11.0
+
+### Minor Changes
+
+- Added support for passing a function to React plugin `abiItemHooks` to enable ABI item hooks per contract.
+
 ## 2.10.0
 
 ### Minor Changes
