@@ -323,6 +323,16 @@ export {
 } from '../query/infiniteReadContracts.js'
 
 export {
+  type PrepareAuthorizationData,
+  type PrepareAuthorizationOptions,
+  type PrepareAuthorizationQueryFnData,
+  type PrepareAuthorizationQueryKey,
+  type PrepareAuthorizationQueryOptions,
+  prepareAuthorizationQueryKey,
+  prepareAuthorizationQueryOptions,
+} from '../query/prepareAuthorization.js'
+
+export {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
   type PrepareTransactionRequestQueryFnData,
@@ -411,6 +421,16 @@ export {
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '../query/showCallsStatus.js'
+
+export {
+  type SignAuthorizationData,
+  type SignAuthorizationMutate,
+  type SignAuthorizationMutateAsync,
+  type SignAuthorizationMutationOptions,
+  type SignAuthorizationOptions,
+  type SignAuthorizationVariables,
+  signAuthorizationMutationOptions,
+} from '../query/signAuthorization.js'
 
 export {
   type SignMessageData,

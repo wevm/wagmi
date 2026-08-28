@@ -268,6 +268,13 @@ export {
 } from '../actions/multicall.js'
 
 export {
+  type PrepareAuthorizationErrorType,
+  type PrepareAuthorizationParameters,
+  type PrepareAuthorizationReturnType,
+  prepareAuthorization,
+} from '../actions/prepareAuthorization.js'
+
+export {
   type PrepareTransactionRequestErrorType,
   type PrepareTransactionRequestParameters,
   type PrepareTransactionRequestReturnType,
@@ -329,6 +336,13 @@ export {
   type ShowCallsStatusReturnType,
   showCallsStatus,
 } from '../actions/showCallsStatus.js'
+
+export {
+  type SignAuthorizationErrorType,
+  type SignAuthorizationParameters,
+  type SignAuthorizationReturnType,
+  signAuthorization,
+} from '../actions/signAuthorization.js'
 
 export {
   type SignMessageErrorType,
