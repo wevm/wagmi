@@ -66,12 +66,29 @@ Next, we will need to add some mechanisms to hydrate the stored cookie in Wagmi.
 
 #### Nuxt.js
 
-Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
-<!-- TODO -->
+In a Nuxt plugin, read the request's `cookie` header on the server and pass the result of [`cookieToInitialState`](/vue/api/utilities/cookieToInitialState) to [`WagmiPlugin`](/vue/api/WagmiPlugin) as `initialState`.
+
+::: code-group
+```ts [plugins/wagmi.ts]
+import { useRequestHeaders } from '#imports'
+import { cookieToInitialState, WagmiPlugin } from '@wagmi/vue'
+
+import { config } from '~/config'
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const cookie = useRequestHeaders(['cookie']).cookie
+  const initialState = cookieToInitialState(config, cookie)
+
+  nuxtApp.vueApp.use(WagmiPlugin, {
+    config,
+    initialState,
+  })
+})
+```
+:::
 
 #### Vanilla SSR
 
 Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
 <!-- TODO -->
-
 
