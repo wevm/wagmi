@@ -1,4 +1,4 @@
-import { erc20Abi } from 'viem'
+import { type Abi, erc20Abi } from 'viem'
 import { expect, test } from 'vitest'
 
 import { react } from './react.js'
@@ -333,6 +333,65 @@ test('legacy hook names', async () => {
      * Wraps __{@link useWatchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`"Transfer"\`
      */
     export const useErc20TransferEvent = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Transfer' })"
+  `)
+})
+
+test('abi item hooks function', async () => {
+  const abi = [
+    {
+      name: 'bar',
+      type: 'function',
+      stateMutability: 'view',
+      inputs: [],
+      outputs: [{ name: '', type: 'uint256' }],
+    },
+  ] satisfies Abi
+  const result = await react({
+    abiItemHooks({ contractName }) {
+      return contractName === 'withItems'
+    },
+  }).run?.({
+    contracts: [
+      {
+        name: 'withItems',
+        abi,
+        content: '',
+        meta: {
+          abiName: 'withItemsAbi',
+        },
+      },
+      {
+        name: 'withoutItems',
+        abi,
+        content: '',
+        meta: {
+          abiName: 'withoutItemsAbi',
+        },
+      },
+    ],
+    isTypeScript: true,
+    outputs: [],
+  })
+
+  expect(result?.imports).toMatchInlineSnapshot(`
+    "import { createUseReadContract } from 'wagmi/codegen'
+    "
+  `)
+  expect(result?.content).toMatchInlineSnapshot(`
+    "/**
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link withItemsAbi}__
+     */
+    export const useReadWithItems = /*#__PURE__*/ createUseReadContract({ abi: withItemsAbi })
+
+    /**
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link withItemsAbi}__ and \`functionName\` set to \`"bar"\`
+     */
+    export const useReadWithItemsBar = /*#__PURE__*/ createUseReadContract({ abi: withItemsAbi, functionName: 'bar' })
+
+    /**
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link withoutItemsAbi}__
+     */
+    export const useReadWithoutItems = /*#__PURE__*/ createUseReadContract({ abi: withoutItemsAbi })"
   `)
 })
 
