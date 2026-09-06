@@ -25,6 +25,7 @@ export async function reconnect(
   if (isReconnecting) return []
   isReconnecting = true
 
+  try {
   config.setState((x) => ({
     ...x,
     status: x.current ? 'reconnecting' : 'connecting',
@@ -74,7 +75,7 @@ export async function reconnect(
     // connect to it again).
     if (providers.some((x) => x === provider)) continue
 
-    const isAuthorized = await connector.isAuthorized()
+    const isAuthorized = await connector.isAuthorized().catch(() => false)
     if (!isAuthorized) continue
 
     const data = await connector
@@ -122,6 +123,8 @@ export async function reconnect(
     else config.setState((x) => ({ ...x, status: 'connected' }))
   }
 
-  isReconnecting = false
   return connections
+  } finally {
+    isReconnecting = false
+  }
 }

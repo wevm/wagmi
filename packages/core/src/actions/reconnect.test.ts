@@ -117,3 +117,26 @@ test('behavior: recovers from invalid state', async () => {
     }
   `)
 })
+
+test('behavior: isAuthorized rejection does not strand reconnecting', async () => {
+  const connector = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: { reconnect: true },
+    }),
+  )
+  vi.spyOn(connector, 'isAuthorized').mockRejectedValueOnce(new Error('auth failed'))
+
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toStrictEqual([])
+  expect(config.state.status).toEqual('disconnected')
+
+  // Guard must be cleared so a later reconnect can run again.
+  vi.spyOn(connector, 'isAuthorized').mockResolvedValue(false)
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toStrictEqual([])
+  expect(config.state.status).toEqual('disconnected')
+})
+
