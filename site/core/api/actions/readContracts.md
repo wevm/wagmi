@@ -6,7 +6,7 @@ const typeName = 'ReadContracts'
 
 # readContracts
 
-Action for calling multiple read methods on a contract.
+Action for calling multiple read methods across contracts.
 
 ## Import
 
@@ -54,6 +54,10 @@ const result = await readContracts(config, {
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
+:::
+
+::: warning
+`readContracts` groups calls by chain and first tries to use [`multicall`](/core/api/actions/multicall). If the multicall operation throws an error other than `ContractFunctionExecutionError`, `readContracts` retries each call with individual [`readContract`](https://viem.sh/docs/contract/readContract) calls. `ContractFunctionExecutionError` is thrown instead.
 :::
 
 ## Parameters
@@ -206,7 +210,10 @@ const result = await readContracts(config, {
 
 `boolean`
 
-Whether or not the Hook should throw if a call reverts. If set to `true` (default), and a call reverts, then `readContracts` will fail silently and its error will be logged in the results array. Defaults to `true`.
+Whether or not `readContracts` should throw if a call reverts. Defaults to `true`.
+
+- When `true`, returns `{ status: 'success', result }` or `{ status: 'failure', error, result: undefined }` for each call. Fallback reads run in parallel with `Promise.allSettled`.
+- When `false`, returns the results directly and rejects if a call fails. Fallback reads run in parallel with `Promise.all`.
 
 ::: code-group
 ```tsx [index.tsx]
@@ -359,5 +366,5 @@ import { type ReadContractsErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`multicall`](https://viem.sh/docs/contract/multicall) when supported by current chain.
-- [`readContract`](https://viem.sh/docs/contract/readContract) when multicall is not supported.
+- [`multicall`](https://viem.sh/docs/contract/multicall) for the initial grouped reads.
+- [`readContract`](https://viem.sh/docs/contract/readContract) for fallback reads when the multicall operation throws an error other than `ContractFunctionExecutionError`.

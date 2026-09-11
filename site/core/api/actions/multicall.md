@@ -50,6 +50,10 @@ const result = await multicall(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+::: warning
+By default, `multicall` uses the Multicall3 address defined on the target chain. If the chain does not define one, pass [`multicallAddress`](#multicalladdress). When using an address to read a historical block, the Multicall3 contract must have been deployed at that block.
+:::
+
 ## Parameters
 
 ```ts
