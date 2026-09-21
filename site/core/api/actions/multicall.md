@@ -66,7 +66,7 @@ Set of contracts to call.
 
 `Abi | undefined`
 
-The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
+The contract's ABI. Check out the [TypeScript docs](/core/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
 
 ::: code-group
 ```tsx [index.tsx]
@@ -85,7 +85,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 #### address
@@ -111,7 +111,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 #### args
@@ -138,7 +138,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 #### chainId
@@ -165,7 +165,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 
@@ -193,7 +193,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### allowFailure
@@ -220,7 +220,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### batchSize
@@ -249,7 +249,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### blockNumber
@@ -276,7 +276,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### blockTag
@@ -303,7 +303,7 @@ const result = await multicall(config, {
   ],
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### multicallAddress
@@ -330,7 +330,7 @@ const result = await multicall(config, {
   multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11', // [!code hl]
 })
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 
