@@ -10,8 +10,8 @@ catalogs:
       specifier: 2.4.0
       version: 2.4.0
     '@coinbase/wallet-sdk':
-      specifier: 4.3.6
-      version: 4.3.6
+      specifier: 4.4.0
+      version: 4.4.0
     '@metamask/connect-evm':
       specifier: 2.1.0
       version: 2.1.0
@@ -334,7 +334,7 @@ importers:
         version: 2.4.0(@types/react@19.2.3)(bufferutil@4.0.8)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(utf-8-validate@5.0.10)(ws@8.21.3(bufferutil@4.0.8)(utf-8-validate@5.0.10))(zod@3.25.76)
       '@coinbase/wallet-sdk':
         specifier: 'catalog:'
-        version: 4.3.6(@types/react@19.2.3)(bufferutil@4.0.8)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(utf-8-validate@5.0.10)(zod@3.25.76)
+        version: 4.4.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       '@metamask/connect-evm':
         specifier: 'catalog:'
         version: 2.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -1558,8 +1558,8 @@ packages:
   '@coinbase/cdp-sdk@1.38.4':
     resolution: {integrity: sha512-xVvfluaGt0NxNmjElP3C1yI6KnsGwihabdXj+qNtjjsSmd/Ha2V3gAiCyNrrYOqIORn4mpC2jgu2fUFEDaMpaw==}
 
-  '@coinbase/wallet-sdk@4.3.6':
-    resolution: {integrity: sha512-4q8BNG1ViL4mSAAvPAtpwlOs1gpC+67eQtgIwNvT3xyeyFFd+guwkc8bcX5rTmQhXpqnhzC4f0obACbP9CqMSA==}
+  '@coinbase/wallet-sdk@4.4.0':
+    resolution: {integrity: sha512-smqgHEefN+ERH+WJ5W4BpnHSKydmoyM441PkzmeKEpPVaVHYHIwt2JnHEL+2ZDIEuEvNaCqBf5xq/pBAmZ2Rhg==}
 
   '@colordx/core@5.5.0':
     resolution: {integrity: sha512-3PxTH8itZzltK0U9jTwVVnjLXvnDYuq3m+QXsHkENxWiPRh4WaoLcs1SQjqgZ55kS+QyirpH5BVwzP2gMVG6EQ==}
@@ -12772,23 +12772,16 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@coinbase/wallet-sdk@4.3.6(@types/react@19.2.3)(bufferutil@4.0.8)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(utf-8-validate@5.0.10)(zod@3.25.76)':
+  '@coinbase/wallet-sdk@4.4.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)':
     dependencies:
-      '@noble/hashes': 1.4.0
+      '@noble/hashes': 1.8.0
       clsx: 1.2.1
       eventemitter3: 5.0.1
-      idb-keyval: 6.2.1
-      ox: 0.6.9(typescript@5.9.3)(zod@3.25.76)
-      preact: 10.24.2
+      preact: 10.24.3
       viem: 2.56.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
-      zustand: 5.0.3(@types/react@19.2.3)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
     transitivePeerDependencies:
-      - '@types/react'
       - bufferutil
-      - immer
-      - react
       - typescript
-      - use-sync-external-store
       - utf-8-validate
       - zod
 
