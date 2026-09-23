@@ -28,7 +28,7 @@ autoInstallPeers: false
 
 catalog:
   '@base-org/account': 2.4.0
-  '@coinbase/wallet-sdk': 4.3.6
+  '@coinbase/wallet-sdk': 4.4.0
   '@metamask/connect-evm': 2.1.0
   '@nuxt/kit': 4.5.1
   '@nuxt/schema': 4.5.1
@@ -59,6 +59,7 @@ linkWorkspacePackages: deep
 minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
+  - '@coinbase/wallet-sdk'
   - '@metamask/analytics'
   - '@metamask/connect-evm'
   - '@metamask/connect-multichain'
