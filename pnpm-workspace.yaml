@@ -23,6 +23,7 @@ auditConfig:
     - GHSA-p9ff-h696-f583 # vite: arbitrary file read via dev server WebSocket (patched versions blocked by minimumReleaseAge)
     - GHSA-4w7w-66w2-5vf9 # vite: path traversal in optimized deps .map handling (patched versions blocked by minimumReleaseAge)
     - GHSA-f886-m6hf-6m8v # brace-expansion: zero-step sequence DoS (transitive via testcontainers)
+    - GHSA-528h-pc64-c93x # stream-json: awaiting Solana/Jayson migration
 
 autoInstallPeers: false
 
@@ -42,7 +43,7 @@ catalog:
   '@types/react-dom': ^19.2.0
   '@vitejs/plugin-react': ^6.0.1
   '@vitejs/plugin-vue': 6.0.5
-  '@walletconnect/ethereum-provider': 2.21.1
+  '@walletconnect/ethereum-provider': 2.25.0
   accounts: 0.18.0
   buffer: 6.0.3
   nuxt: 4.5.1
@@ -86,12 +87,14 @@ overrides:
   '@protobufjs/utf8@<=1.1.0': '>=1.1.1'
   '@tanstack/start-server-core@<1.167.30': '>=1.167.30'
   '@grpc/grpc-js@<1.14.4': 1.14.4
-  adm-zip@<0.6.0: 0.6.0
+  adm-zip@<0.6.1: 0.6.1
   axios@<1.18.0: 1.18.1
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
   brace-expansion@>=5.0.0 <5.0.9: 5.0.9
+  browserslist@<4.28.7: 4.28.7
+  baseline-browser-mapping@>=2.0.0 <2.11.0: 2.11.0
   cookie@<0.7.0: 0.7.0
   defu@<=6.1.4: '>=6.1.5'
   devalue@<5.6.4: 5.6.4
@@ -99,16 +102,17 @@ overrides:
   diff@<8.0.3: 8.0.3
   elliptic@<=6.6.0: '>=6.6.1'
   '@babel/core@<=7.29.0': 7.29.7
+  fflate@>=0.8.0 <0.8.3: 0.8.3
   follow-redirects@<=1.15.11: 1.16.0
   form-data@>=4.0.0 <4.0.6: 4.0.6
   glob@>=10.2.0 <10.5.0: 10.5.0
   h3-v2: npm:h3@2.0.1-rc.18
   h3@<1.15.9: 1.15.9
   happy-dom@<20.8.9: '>=20.8.9'
-  hono@<4.12.34: 4.12.34
+  hono@<4.13.5: 4.13.5
   js-cookie@<=3.0.5: 3.0.7
-  js-yaml@>=3.0.0 <3.15.1: 3.15.1
-  js-yaml@>=4.0.0 <4.3.1: 4.3.1
+  js-yaml@>=3.0.0 <3.15.2: 3.15.2
+  js-yaml@>=4.0.0 <4.3.2: 4.3.2
   launch-editor@<=2.14.0: 2.14.1
   linkify-it@<=5.0.1: 5.0.2
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
@@ -125,17 +129,19 @@ overrides:
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
   postcss@<8.5.23: 8.5.23
+  postcss-selector-parser@>=7.1.0 <7.1.3: 7.1.3
   protobufjs@<8.6.6: 8.6.6
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
   serialize-javascript@<7.0.5: '>=7.0.5'
   seroval@<1.5.3: '>=1.5.3'
-  sharp@<0.35.0: 0.35.0
+  sharp@<0.35.4: 0.35.4
   shell-quote@<=1.8.4: 1.9.0
   simple-git@>=3.15.0 <3.36.0: 3.36.0
-  smol-toml@<1.6.1: '>=1.6.1'
+  slow-redact@0.3.2: 0.3.1 # 0.3.2 lacks trusted-publisher evidence
+  smol-toml@<1.7.1: 1.7.1
   srvx@<0.11.13: '>=0.11.13'
-  svgo@>=4.0.0 <4.0.2: 4.0.2
+  svgo@>=4.0.0 <4.1.0: 4.1.0
   tar@<=7.5.20: 7.5.21
   tmp@<0.2.7: 0.2.7
   undici@<6.28.0: 6.28.0
