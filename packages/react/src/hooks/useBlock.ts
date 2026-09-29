@@ -91,6 +91,8 @@ export function useBlock<
     ...({
       config: parameters.config,
       chainId: parameters.chainId!,
+      blockTag: parameters.blockTag,
+      includeTransactions: parameters.includeTransactions,
       ...(typeof parameters.watch === 'object' ? parameters.watch : {}),
     } as UseWatchBlocksParameters),
     enabled: Boolean(
