@@ -46,6 +46,7 @@ export function useWatchBlockNumber<
   watchEffect((onCleanup) => {
     const {
       chainId = configChainId.value,
+      emitOnBegin = true,
       enabled = true,
       onBlockNumber,
       config: _,
@@ -58,8 +59,8 @@ export function useWatchBlockNumber<
     const unwatch = watchBlockNumber(config, {
       ...(rest as any),
       chainId,
+      emitOnBegin,
       onBlockNumber,
-      emitOnBegin: true,
     })
     onCleanup(unwatch)
   })
