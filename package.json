@@ -41,7 +41,7 @@
     "version:update:viem": "node scripts/updateViemVersion.ts"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.16.4",
+    "@arethetypeswrong/cli": "^0.18.5",
     "@ark/attest": "^0.56.0",
     "@biomejs/biome": "^2.2.4",
     "@changesets/cli": "^2.31.0",
