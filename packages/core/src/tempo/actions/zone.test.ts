@@ -11,9 +11,9 @@ import {
   setupZoneBalance,
   zoneChain,
   zoneId,
-  zoneStorage,
+  zoneStore,
 } from '@wagmi/test/tempo/zone'
-import { Actions, Addresses, Storage } from 'viem/tempo'
+import { Actions, Addresses, Store } from 'viem/tempo'
 import { beforeEach, describe, expect, test } from 'vitest'
 import * as zoneActions from './zone.js'
 
@@ -48,33 +48,31 @@ describe('signAuthorizationToken', () => {
 
     const result = await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 
     expect(result.token).toBeDefined()
-    expect(await zoneStorage.getItem(`auth:token:${zoneChain.id}`)).toBe(
+    expect(await zoneStore.getItem(`auth:token:${zoneChain.id}`)).toBe(
       result.token,
     )
   })
 
-  test('parameters: storage', async () => {
+  test('parameters: store', async () => {
     await connect(config, {
       connector: config.connectors[0]!,
     })
 
-    const storage = Storage.memory()
+    const store = Store.memory()
     const result = await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
       expiresAt: Math.floor(Date.now() / 1000) + 300,
       issuedAt: Math.floor(Date.now() / 1000) - 100,
-      storage,
+      store,
       zoneId,
     })
 
-    expect(await storage.getItem(`auth:token:${zoneChain.id}`)).toBe(
-      result.token,
-    )
+    expect(await store.getItem(`auth:token:${zoneChain.id}`)).toBe(result.token)
   })
 })
 
@@ -255,7 +253,7 @@ describe('getZoneInfo', () => {
     })
     await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 
@@ -272,7 +270,7 @@ describe('getZoneInfo', () => {
     })
     await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 
@@ -320,7 +318,7 @@ describe('getAuthorizationTokenInfo', () => {
     await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
       expiresAt,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 
@@ -340,7 +338,7 @@ describe('getAuthorizationTokenInfo', () => {
     await zoneActions.signAuthorizationToken(config, {
       chainId: zoneChain.id,
       expiresAt,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 

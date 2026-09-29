@@ -2,8 +2,8 @@
 
 Gets the withdrawal fee for a given gas limit.
 
-::: info Requires viem >=2.56.0
-Zone actions and hooks require `viem >=2.56.0`.
+::: info Requires viem >=2.56.2
+Zone actions and hooks require `viem >=2.56.2`.
 :::
 
 ## Usage
