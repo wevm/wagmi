@@ -12,5 +12,5 @@ export {
   type TempoZoneContext,
   zoneChain,
   zoneId,
-  zoneStorage,
+  zoneStore,
 } from '../../tempo/zone.js'

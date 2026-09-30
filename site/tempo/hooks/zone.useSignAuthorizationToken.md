@@ -4,8 +4,8 @@ Hook for signing and storing a Tempo zone authorization token.
 
 Use this hook before querying zone RPC methods that require the zone transport to send an `X-Authorization-Token` header.
 
-::: info Requires viem >=2.56.0
-Zone actions and hooks require `viem >=2.56.0`.
+::: info Requires viem >=2.56.2
+Zone actions and hooks require `viem >=2.56.2`.
 :::
 
 ## Usage

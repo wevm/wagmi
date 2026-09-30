@@ -10,9 +10,9 @@ import {
   setupZoneBalance,
   zoneChain,
   zoneId,
-  zoneStorage,
+  zoneStore,
 } from '@wagmi/test/tempo/zone'
-import { Addresses, Storage } from 'viem/tempo'
+import { Addresses, Store } from 'viem/tempo'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
@@ -39,15 +39,15 @@ describe('useSignAuthorizationToken', () => {
 
     const result_ = await result.current.signAuthorizationToken.mutateAsync({
       chainId: zoneChain.id,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
-    expect(await zoneStorage.getItem(`auth:token:${zoneChain.id}`)).toBe(
+    expect(await zoneStore.getItem(`auth:token:${zoneChain.id}`)).toBe(
       result_.token,
     )
   })
 
-  test('parameters: storage', async () => {
+  test('parameters: store', async () => {
     const { result } = await renderHook(() => ({
       connect: useConnect(),
       signAuthorizationToken: zoneHooks.useSignAuthorizationToken(),
@@ -57,13 +57,13 @@ describe('useSignAuthorizationToken', () => {
       connector: config.connectors[0]!,
     })
 
-    const storage = Storage.memory()
+    const store = Store.memory()
     const result_ = await result.current.signAuthorizationToken.mutateAsync({
       chainId: zoneChain.id,
-      storage,
+      store,
       zoneId,
     })
-    expect(await storage.getItem(`auth:token:${zoneChain.id}`)).toBe(
+    expect(await store.getItem(`auth:token:${zoneChain.id}`)).toBe(
       result_.token,
     )
   })
@@ -263,7 +263,7 @@ describe('useZoneInfo', () => {
     })
     await connectResult.current.signAuthorizationToken.mutateAsync({
       chainId: zoneChain.id,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 
@@ -340,7 +340,7 @@ describe('useAuthorizationTokenInfo', () => {
     await connectResult.current.signAuthorizationToken.mutateAsync({
       chainId: zoneChain.id,
       expiresAt,
-      storage: zoneStorage,
+      store: zoneStore,
       zoneId,
     })
 

@@ -4,8 +4,8 @@ Hook for getting Tempo zone metadata and the latest imported Tempo block number.
 
 This hook expects a zone authorization token to already exist in storage. Use [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) first.
 
-::: info Requires viem >=2.56.0
-Zone actions and hooks require `viem >=2.56.0`.
+::: info Requires viem >=2.56.2
+Zone actions and hooks require `viem >=2.56.2`.
 :::
 
 ## Usage

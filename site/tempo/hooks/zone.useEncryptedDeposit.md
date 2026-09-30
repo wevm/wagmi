@@ -2,8 +2,8 @@
 
 Hook for depositing tokens into a zone with an encrypted recipient and memo.
 
-::: info Requires viem >=2.56.0
-Zone actions and hooks require `viem >=2.56.0`.
+::: info Requires viem >=2.56.2
+Zone actions and hooks require `viem >=2.56.2`.
 :::
 
 ## Usage
