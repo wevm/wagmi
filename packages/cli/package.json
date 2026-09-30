@@ -69,7 +69,6 @@
   "dependencies": {
     "abitype": "^1.1.1",
     "bundle-require": "^5.1.0",
-    "cac": "^6.7.14",
     "change-case": "^5.4.4",
     "chokidar": "4.0.1",
     "dedent": "^0.7.0",
@@ -78,6 +77,7 @@
     "esbuild": "~0.28.1",
     "escalade": "3.2.0",
     "fdir": "^6.1.1",
+    "incur": "^0.5.1",
     "nanospinner": "1.2.2",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
