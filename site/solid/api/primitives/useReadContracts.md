@@ -1,6 +1,6 @@
 ---
 title: useReadContracts
-description: Primitive for calling multiple read methods on a contract.
+description: Primitive for calling multiple read methods across contracts.
 ---
 
 <script setup>
@@ -13,7 +13,7 @@ const TError = 'ReadContractsErrorType'
 
 # useReadContracts
 
-Primitive for calling multiple read methods on a contract.
+Primitive for calling multiple read methods across contracts.
 
 ## Import
 
@@ -64,6 +64,10 @@ function App() {
 <<< @/snippets/solid/config.ts[config.ts]
 :::
 
+::: warning
+`useReadContracts` uses the [`readContracts`](/core/api/actions/readContracts) action. If the multicall operation throws an error other than `ContractFunctionExecutionError`, `readContracts` retries each call with individual [`readContract`](https://viem.sh/docs/contract/readContract) calls. `ContractFunctionExecutionError` is thrown instead.
+:::
+
 ## Parameters
 
 ```ts
@@ -92,7 +96,10 @@ Set of contracts to call. Each contract includes `abi`, `address`, `functionName
 
 `boolean`
 
-Whether or not the primitive should throw if a call reverts. If set to `true` (default), and a call reverts, then `useReadContracts` will fail silently and its error will be logged in the results array. Defaults to `true`.
+Whether or not the query should fail if a call reverts. Defaults to `true`.
+
+- When `true`, `data` contains `{ status: 'success', result }` or `{ status: 'failure', error, result: undefined }` for each call. Fallback reads run in parallel with `Promise.allSettled`.
+- When `false`, `data` contains the results directly and the query fails if a call fails. Fallback reads run in parallel with `Promise.all`.
 
 ### batchSize
 
