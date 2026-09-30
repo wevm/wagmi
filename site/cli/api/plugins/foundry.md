@@ -74,7 +74,7 @@ export default defineConfig({
 
 ### deployments
 
-`{ [key: string]: address?: Address | Record<chainId, Address> | undefined } | undefined`
+`{ [key: string]: Address | Record<chainId, Address> | { artifact: string, address: Address | Record<chainId, Address> } | undefined } | undefined`
 
 Mapping of addresses to attach to artifacts.
 
@@ -95,6 +95,34 @@ export default defineConfig({
   ],
 })
 ```
+
+A key can also resolve to `{ artifact, address }` to generate an additional, separately named contract that shares another artifact's ABI — useful when multiple deployments (e.g. different ERC20 tokens) share one ABI.
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      deployments: { // [!code focus]
+        DAI: { // [!code focus]
+          artifact: 'ERC20', // [!code focus]
+          address: '0x6b175474e89094c44da98b954eedeac495271d0', // [!code focus]
+        }, // [!code focus]
+        WETH: { // [!code focus]
+          artifact: 'ERC20', // [!code focus]
+          address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // [!code focus]
+        }, // [!code focus]
+      }, // [!code focus]
+    }),
+  ],
+})
+```
+
+:::: warning
+Alias deployments are only resolved by a full `wagmi generate` run. During `wagmi generate --watch`, a changed artifact only re-emits its own artifact-named contract — rerun `wagmi generate` to pick up alias contracts.
+::::
 
 ### exclude
 

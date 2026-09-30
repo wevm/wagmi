@@ -60,8 +60,24 @@ export type FoundryConfig = {
    * @default false
    */
   includeBroadcasts?: boolean | undefined
-  /** Mapping of addresses to attach to artifacts. */
-  deployments?: { [key: string]: ContractConfig['address'] } | undefined
+  /**
+   * Mapping of addresses to attach to artifacts.
+   *
+   * A key can either resolve to an address (or `{ [chainId]: address }` map) for the
+   * artifact of the same name, or to `{ artifact, address }` to generate an additional,
+   * separately named contract that shares another artifact's ABI. The latter is useful
+   * when multiple deployments (e.g. different ERC20 tokens) share one ABI.
+   *
+   * @example
+   * {
+   *   // `ERC20.json` artifact's own address
+   *   ERC20: '0x314159265dd8dbb310642f98f50c066173c1259b',
+   *   // additional named contracts sharing the `ERC20.json` artifact's ABI
+   *   DAI: { artifact: 'ERC20', address: '0x6b175474e89094c44da98b954eedeac495271d0' },
+   *   WETH: { artifact: 'ERC20', address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' },
+   * }
+   */
+  deployments?: { [key: string]: FoundryDeployment } | undefined
   /** Artifact files to exclude. */
   exclude?: string[] | undefined
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
@@ -105,6 +121,33 @@ type FoundryResult = Compute<
   RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 >
 
+/** A named deployment that reuses another artifact's ABI (see {@link FoundryConfig.deployments}). */
+export type FoundryAliasDeployment = {
+  /** Address (or `{ [chainId]: address }` map) for this named deployment. */
+  address: ContractConfig['address']
+  /** Name of the artifact (e.g. `'ERC20'`) whose ABI this deployment reuses. */
+  artifact: string
+}
+
+type FoundryDeployment = ContractConfig['address'] | FoundryAliasDeployment
+
+function isAliasDeployment(
+  deployment: FoundryDeployment | undefined,
+): deployment is FoundryAliasDeployment {
+  return (
+    typeof deployment === 'object' &&
+    deployment !== null &&
+    'artifact' in deployment
+  )
+}
+
+function resolveAddress(
+  deployment: FoundryDeployment | undefined,
+): ContractConfig['address'] {
+  if (isAliasDeployment(deployment)) return deployment.address
+  return deployment
+}
+
 const FoundryConfigSchema = z.object({
   out: z.string().default('out'),
   src: z.string().default('src'),
@@ -138,15 +181,35 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   async function getContract(
     artifactPath: string,
     contractDeployments: {
-      [key: string]: ContractConfig['address']
+      [key: string]: FoundryDeployment
     } = allDeployments,
   ) {
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
-      address: contractDeployments[getContractName(artifactPath, false)],
+      address: resolveAddress(
+        contractDeployments[getContractName(artifactPath, false)],
+      ),
       name: getContractName(artifactPath),
     }
+  }
+
+  /**
+   * Additional contracts declared via `deployments` that alias another artifact's ABI
+   * (`{ artifact, address }`), scoped to a single artifact's name.
+   */
+  function getAliasContracts(artifactName: string, abi: unknown) {
+    const aliasContracts: ContractConfig[] = []
+    for (const [name, deployment] of Object.entries(allDeployments)) {
+      if (!isAliasDeployment(deployment)) continue
+      if (deployment.artifact !== artifactName) continue
+      aliasContracts.push({
+        abi: abi as ContractConfig['abi'],
+        address: deployment.address,
+        name: `${namePrefix}${name}`,
+      })
+    }
+    return aliasContracts
   }
 
   function getArtifactPaths(artifactsDirectory: string) {
@@ -277,6 +340,12 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         const contract = await getContract(artifactPath, allDeployments)
         if (!contract.abi?.length) continue
         contracts.push(contract)
+        contracts.push(
+          ...getAliasContracts(
+            getContractName(artifactPath, false),
+            contract.abi,
+          ),
+        )
       }
       return contracts
     },
@@ -329,6 +398,10 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         ...include.map((x) => `${artifactsDirectory}/**/${x}`),
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
+      // Note: alias deployments (`deployments: { X: { artifact, address } }`) are only
+      // resolved by `contracts()`. `onAdd`/`onChange` can only return one `ContractConfig`
+      // per changed file, so during `--watch` a rebuild (`wagmi generate`) is needed to
+      // pick up alias contracts for a changed artifact.
       async onAdd(path) {
         return getContract(path)
       },
