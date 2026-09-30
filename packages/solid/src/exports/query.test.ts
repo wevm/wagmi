@@ -1,3 +1,4 @@
+import { renderPrimitive } from '@wagmi/test/solid'
 import { expect, test } from 'vitest'
 
 import * as query from './query.js'
@@ -104,4 +105,19 @@ test('exports', () => {
       "writeContractSyncMutationOptions",
     ]
   `)
+})
+
+test('useInfiniteQuery exposes its query key', () => {
+  const queryKey = ['example', { page: 1 }] as const
+  const { result, cleanup } = renderPrimitive(() =>
+    query.useInfiniteQuery(() => ({
+      queryKey,
+      queryFn: async () => 'value',
+      initialPageParam: 0,
+      getNextPageParam: () => undefined,
+    })),
+  )
+
+  expect(result.queryKey).toEqual(queryKey)
+  cleanup()
 })
