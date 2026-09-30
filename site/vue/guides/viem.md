@@ -2,7 +2,7 @@
 
 [Viem](https://viem.sh) is a low-level TypeScript Interface for Ethereum that enables developers to interact with the Ethereum blockchain, including: JSON-RPC API abstractions, Smart Contract interaction, wallet & signing implementations, coding/parsing utilities and more.
 
-**Wagmi Core** is essentially a wrapper over **Viem** that provides multi-chain functionality via [Wagmi Config](/react/api/createConfig) and automatic account management via [Connectors](/react/api/connectors).
+**Wagmi Core** is essentially a wrapper over **Viem** that provides multi-chain functionality via [Wagmi Config](/vue/api/createConfig) and automatic account management via [Connectors](/vue/api/connectors).
 
 ## Leveraging Viem Actions
 
