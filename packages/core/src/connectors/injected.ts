@@ -357,8 +357,9 @@ export function injected(parameters: InjectedParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      let listener: Parameters<typeof config.emitter.on>[1] = () => {}
       const promise = new Promise<void>((resolve) => {
-        const listener = ((data) => {
+        listener = ((data) => {
           if ('chainId' in data && data.chainId === chainId) {
             config.emitter.off('change', listener)
             resolve()
@@ -446,10 +447,12 @@ export function injected(parameters: InjectedParameters = {}) {
 
             return chain
           } catch (error) {
+            config.emitter.off('change', listener)
             throw new UserRejectedRequestError(error as Error)
           }
         }
 
+        config.emitter.off('change', listener)
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
         throw new SwitchChainError(error)
