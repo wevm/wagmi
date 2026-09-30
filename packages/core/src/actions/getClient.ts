@@ -28,7 +28,7 @@ export type GetClientReturnType<
       ? chainId
       : config['chains'][number]['id']
     : config['chains'][number]['id'] | undefined,
-> = resolvedChainId extends config['chains'][number]['id']
+> = [resolvedChainId] extends [config['chains'][number]['id']]
   ? Compute<
       Client<
         config['_internal']['transports'][resolvedChainId],
