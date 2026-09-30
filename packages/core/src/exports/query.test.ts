@@ -5,6 +5,7 @@ import * as query from './query.js'
 test('exports', () => {
   expect(Object.keys(query)).toMatchInlineSnapshot(`
     [
+      "addChainMutationOptions",
       "callQueryKey",
       "callQueryOptions",
       "connectMutationOptions",
