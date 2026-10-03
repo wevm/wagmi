@@ -117,3 +117,23 @@ test('behavior: recovers from invalid state', async () => {
     }
   `)
 })
+
+test('behavior: does not strand status if `isAuthorized` rejects', async () => {
+  const connector = config._internal.connectors.setup(
+    mock({ accounts, features: { reconnect: true } }),
+  )
+  vi.spyOn(connector, 'isAuthorized').mockRejectedValueOnce(
+    new Error('stale session'),
+  )
+
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toStrictEqual([])
+  expect(config.state.status).toEqual('disconnected')
+
+  // a later `reconnect` is not blocked by a stuck in-progress flag
+  await connect(config, { connector })
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toHaveLength(1)
+})
