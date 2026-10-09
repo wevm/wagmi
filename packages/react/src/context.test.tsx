@@ -1,5 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { connect, createConfig, http, mock } from '@wagmi/core'
+import {
+  connect,
+  createConfig,
+  createStorage,
+  http,
+  mock,
+  noopStorage,
+} from '@wagmi/core'
 import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
 import { render } from '@wagmi/test/react'
 import * as React from 'react'
@@ -93,5 +100,79 @@ test('mock reconnect', async () => {
   await expect
     .element(screen.getByRole('heading'))
     .toHaveTextContent(addressRegex)
+  screen.unmount()
+})
+
+function ConnectionStatus(props: { name: string }) {
+  const { status } = useConnection()
+  return (
+    <div>
+      {props.name}: {status}
+    </div>
+  )
+}
+
+function createIndependentConfig(ssr = false) {
+  return createConfig({
+    chains: [mainnet],
+    connectors: [
+      mock({
+        accounts,
+        features: { defaultConnected: true, reconnect: true },
+      }),
+    ],
+    ssr,
+    storage: createStorage({ storage: noopStorage }),
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+}
+
+test('mock reconnect: multiple providers with independent configs', async () => {
+  const queryClient = new QueryClient()
+  const screen = await render(
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider config={createIndependentConfig()} reconnectOnMount>
+        <ConnectionStatus name="a" />
+      </WagmiProvider>
+      <WagmiProvider config={createIndependentConfig()} reconnectOnMount>
+        <ConnectionStatus name="b" />
+      </WagmiProvider>
+    </QueryClientProvider>,
+  )
+  await expect.element(screen.getByText('a: connected')).toBeInTheDocument()
+  await expect.element(screen.getByText('b: connected')).toBeInTheDocument()
+  screen.unmount()
+})
+
+test('mock reconnect: multiple ssr providers with independent configs', async () => {
+  const initialState = {
+    chainId: mainnet.id,
+    connections: new Map(),
+    current: null,
+    status: 'disconnected',
+  } as const
+  const queryClient = new QueryClient()
+  const screen = await render(
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider
+        config={createIndependentConfig(true)}
+        initialState={initialState}
+        reconnectOnMount
+      >
+        <ConnectionStatus name="a" />
+      </WagmiProvider>
+      <WagmiProvider
+        config={createIndependentConfig(true)}
+        initialState={initialState}
+        reconnectOnMount
+      >
+        <ConnectionStatus name="b" />
+      </WagmiProvider>
+    </QueryClientProvider>,
+  )
+  await expect.element(screen.getByText('a: connected')).toBeInTheDocument()
+  await expect.element(screen.getByText('b: connected')).toBeInTheDocument()
   screen.unmount()
 })
