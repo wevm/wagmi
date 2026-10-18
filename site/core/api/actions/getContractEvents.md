@@ -279,7 +279,7 @@ With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for 
 ## Error
 
 ```ts
-import { type GetContractEventsError } from '@wagmi/core'
+import { type GetContractEventsErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->
