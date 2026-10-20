@@ -66,8 +66,58 @@ Next, we will need to add some mechanisms to hydrate the stored cookie in Wagmi.
 
 #### Nuxt.js
 
-Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
-<!-- TODO -->
+In a Nuxt plugin, read the cookie (from the request headers on the server, `document.cookie` on the client) and pass it to [`cookieToInitialState`](/vue/api/utilities/cookieToInitialState). Pass the result to the [`initialState` property](/vue/api/WagmiPlugin#initialstate) of `WagmiPlugin`.
+
+Create the config inside the plugin so each server request gets its own config instead of sharing state across users.
+
+::: code-group
+```ts [plugins/wagmi.ts]
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { cookieToInitialState, WagmiPlugin } from '@wagmi/vue' // [!code ++]
+import { defineNuxtPlugin, useRequestHeaders } from 'nuxt/app' // [!code ++]
+
+import { getConfig } from '../config'
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const config = getConfig()
+  const initialState = cookieToInitialState( // [!code ++]
+    config, // [!code ++]
+    import.meta.server // [!code ++]
+      ? useRequestHeaders(['cookie']).cookie // [!code ++]
+      : document.cookie, // [!code ++]
+  ) // [!code ++]
+
+  nuxtApp.vueApp
+    .use(WagmiPlugin, { config }) // [!code --]
+    .use(WagmiPlugin, { config, initialState }) // [!code ++]
+    .use(VueQueryPlugin, {})
+})
+```
+
+```ts [config.ts]
+import { 
+  createConfig, 
+  http, 
+  cookieStorage,
+  createStorage 
+} from '@wagmi/vue'
+import { mainnet, sepolia } from '@wagmi/vue/chains'
+
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({  // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }),  // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  })
+}
+```
+:::
 
 #### Vanilla SSR
 

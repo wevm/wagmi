@@ -643,6 +643,10 @@ export function getSidebar() {
             collapsed: true,
             items: [
               {
+                text: 'cookieToInitialState',
+                link: '/vue/api/utilities/cookieToInitialState',
+              },
+              {
                 text: 'deserialize',
                 link: '/vue/api/utilities/deserialize',
               },
