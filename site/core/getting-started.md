@@ -34,7 +34,7 @@ bun add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 
 - [Wagmi Connectors](/core/api/connectors) is a collection of interfaces for linking accounts/wallets to Wagmi.
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
-- [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/core/typescript).
+- [TypeScript](/core/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/core/typescript).
 
 ### Create Config
 

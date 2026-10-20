@@ -33,17 +33,17 @@
     },
     {
       "source": "/tempo/actions/nonce.getNonceKeyCount",
-      "destination": "/tempo/actions/nonce",
+      "destination": "/tempo/actions/",
       "permanent": true
     },
     {
       "source": "/tempo/actions/nonce.watchActiveKeyCountChanged",
-      "destination": "/tempo/actions/nonce",
+      "destination": "/tempo/actions/",
       "permanent": true
     },
     {
       "source": "/tempo/actions/amm.watchFeeSwap",
-      "destination": "/tempo/actions/amm",
+      "destination": "/tempo/actions/",
       "permanent": true
     },
     {
@@ -58,26 +58,24 @@
     },
     {
       "source": "/tempo/hooks/nonce.useNonceKeyCount",
-      "destination": "/tempo/hooks/nonce",
+      "destination": "/tempo/hooks/",
       "permanent": true
     },
     {
       "source": "/tempo/hooks/nonce.useWatchActiveKeyCountChanged",
-      "destination": "/tempo/hooks/nonce",
+      "destination": "/tempo/hooks/",
       "permanent": true
     },
     {
       "source": "/tempo/hooks/amm.useWatchFeeSwap",
-      "destination": "/tempo/hooks/amm",
+      "destination": "/tempo/hooks/",
       "permanent": true
     },
-
     {
       "source": "/cli",
       "destination": "/cli/getting-started",
       "permanent": true
     },
-
     {
       "source": "/core",
       "destination": "/core/getting-started",
@@ -95,7 +93,7 @@
     },
     {
       "source": "/core/ethers-adapters",
-      "destination": "/core/guides/ethers-web3",
+      "destination": "/core/guides/ethers",
       "permanent": true
     },
     {
@@ -128,7 +126,6 @@
       "destination": "/core/api/actions/watchConnection",
       "permanent": true
     },
-
     {
       "source": "/react",
       "destination": "/react/getting-started",
@@ -186,48 +183,44 @@
     },
     {
       "source": "/react/api/actions/useAccount",
-      "destination": "/react/api/actions/useConnection",
+      "destination": "/react/api/hooks/useConnection",
       "permanent": true
     },
     {
       "source": "/react/api/actions/useAccountEffect",
-      "destination": "/react/api/actions/useConnectionEffect",
+      "destination": "/react/api/hooks/useConnectionEffect",
       "permanent": true
     },
     {
       "source": "/react/api/actions/useSwitchAccount",
-      "destination": "/react/api/actions/useSwitchConnection",
+      "destination": "/react/api/hooks/useSwitchConnection",
       "permanent": true
     },
-
     {
       "source": "/core",
       "destination": "/core/getting-started",
       "permanent": true
     },
-
     {
       "source": "/tempo",
       "destination": "/tempo/getting-started",
       "permanent": true
     },
-
     {
       "source": "/vue/api/actions/useAccount",
-      "destination": "/vue/api/actions/useConnection",
+      "destination": "/vue/api/composables/useConnection",
       "permanent": true
     },
     {
       "source": "/vue/api/actions/useAccountEffect",
-      "destination": "/vue/api/actions/useConnectionEffect",
+      "destination": "/vue/api/composables/useConnectionEffect",
       "permanent": true
     },
     {
       "source": "/vue/api/actions/useSwitchAccount",
-      "destination": "/vue/api/actions/useSwitchConnection",
+      "destination": "/vue/api/composables/useSwitchConnection",
       "permanent": true
     },
-
     {
       "source": "/examples/connect-wallet",
       "destination": "/react/guides/connect-wallet",
