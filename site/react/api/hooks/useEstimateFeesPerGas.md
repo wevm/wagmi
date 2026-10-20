@@ -37,7 +37,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseEstimateFeesPerGas } from 'wagmi'
+import { type UseEstimateFeesPerGasParameters } from 'wagmi'
 ```
 
 ### chainId

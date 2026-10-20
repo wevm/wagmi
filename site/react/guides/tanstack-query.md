@@ -268,7 +268,7 @@ Fetching a query is the process of invoking the query function to retrieve data.
 
 ::: code-group
 ```tsx [example.tsx]
-import { getBlockQueryOptions } from 'wagmi'
+import { getBlockQueryOptions } from 'wagmi/query'
 import { queryClient } from './app'
 import { config } from './config'
 
@@ -292,7 +292,7 @@ Note that these functions do not invalidate or refetch queries.
 
 ::: code-group
 ```tsx [example.tsx]
-import { getBlockQueryOptions } from 'wagmi'
+import { getBlockQueryOptions } from 'wagmi/query'
 import type { Block } from 'viem'
 import { queryClient } from './app'
 import { config } from './config'
@@ -330,7 +330,7 @@ Read more about **Prefetching Queries** on the [TanStack Query docs.](https://ta
 
 ```tsx
 import { Link } from 'next/link'
-import { getBlockQueryOptions } from 'wagmi'
+import { getBlockQueryOptions } from 'wagmi/query'
 
 function App() {
   const config = useConfig()

@@ -28,7 +28,7 @@ createApp(App)
 ## Parameters
 
 ```ts
-import { type WagmiPluginProps } from '@wagmi/vue'
+import { type WagmiPluginOptions } from '@wagmi/vue'
 ```
 
 ### config
