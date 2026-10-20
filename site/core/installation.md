@@ -5,6 +5,7 @@ import Browsers from '../components/Browsers.vue'
 const docsPath = 'core'
 const packageDir = 'core'
 const packageName = '@wagmi/core'
+const packageVersion = packageJson.version
 const viemVersion = packageJson.peerDependencies.viem
 </script>
 
@@ -44,7 +45,7 @@ If you're not using a package manager, you can also use Wagmi Core via an ESM-co
 ```html-vue
 <script type="module">
   import { createClient } from 'https://esm.sh/viem'
-  import { createConfig } from 'https://esm.sh/@wagmi/core@{{viemVersion}}'
+  import { createConfig } from 'https://esm.sh/@wagmi/core@{{packageVersion}}'
   import { injected } from 'https://esm.sh/@wagmi/connectors'
 </script>
 ```
