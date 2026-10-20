@@ -473,7 +473,7 @@ export function createConfig<
           // check if `connect.isAuthorized` exists
           // partial connectors in storage do not have it
           const isAuthorized = connector.isAuthorized
-            ? await connector.isAuthorized()
+            ? await connector.isAuthorized().catch(() => false)
             : false
           if (isAuthorized) continue
           // Remove stale connection

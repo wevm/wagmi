@@ -74,7 +74,7 @@ export async function reconnect(
     // connect to it again).
     if (providers.some((x) => x === provider)) continue
 
-    const isAuthorized = await connector.isAuthorized()
+    const isAuthorized = await connector.isAuthorized().catch(() => false)
     if (!isAuthorized) continue
 
     const data = await connector

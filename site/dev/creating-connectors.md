@@ -64,7 +64,7 @@ The type error tells you what properties are missing from `createConnector`'s re
 - `getAccounts`: Function that returns the connected accounts for the connector.
 - `getChainId`: Function that returns the connected chain ID for the connector.
 - `getProvider`: Function that returns the underlying provider interface for internal use throughout the connector.
-- `isAuthorized`: Function that returns whether the connector has connected previously and is still authorized.
+- `isAuthorized`: Function that returns whether the connector has connected previously and is still authorized. Should return `false` instead of throwing.
 - `setup`: Optional function for running when the connector is first created.
 - `switchChain`: Optional function for switching the connector's active chain.
 
