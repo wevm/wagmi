@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 3.6.6
+
+### Patch Changes
+
+- Fixed `reconnect` skipping configs when multiple independent configs reconnect concurrently. ([#5258](https://github.com/wevm/wagmi/pull/5258))
+
+- Fixed `revalidate` leaving stale connections when a connector's `isAuthorized` rejects. ([`d026883`](https://github.com/wevm/wagmi/commit/d0268837a69d776ebe64c661d95890ce52a2b0fe))
+
+- Fixed `reconnect` getting stuck in `reconnecting` when a connector's `isAuthorized` rejects. ([#5255](https://github.com/wevm/wagmi/pull/5255))
+
 ## 3.6.5
 
 ### Patch Changes
