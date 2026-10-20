@@ -112,7 +112,7 @@ function ConnectionStatus(props: { name: string }) {
   )
 }
 
-function createIndependentConfig(ssr = false) {
+function createIsolatedConfig(ssr = false) {
   return createConfig({
     chains: [mainnet],
     connectors: [
@@ -133,10 +133,10 @@ test('mock reconnect: multiple providers with independent configs', async () => 
   const queryClient = new QueryClient()
   const screen = await render(
     <QueryClientProvider client={queryClient}>
-      <WagmiProvider config={createIndependentConfig()} reconnectOnMount>
+      <WagmiProvider config={createIsolatedConfig()} reconnectOnMount>
         <ConnectionStatus name="a" />
       </WagmiProvider>
-      <WagmiProvider config={createIndependentConfig()} reconnectOnMount>
+      <WagmiProvider config={createIsolatedConfig()} reconnectOnMount>
         <ConnectionStatus name="b" />
       </WagmiProvider>
     </QueryClientProvider>,
@@ -157,14 +157,14 @@ test('mock reconnect: multiple ssr providers with independent configs', async ()
   const screen = await render(
     <QueryClientProvider client={queryClient}>
       <WagmiProvider
-        config={createIndependentConfig(true)}
+        config={createIsolatedConfig(true)}
         initialState={initialState}
         reconnectOnMount
       >
         <ConnectionStatus name="a" />
       </WagmiProvider>
       <WagmiProvider
-        config={createIndependentConfig(true)}
+        config={createIsolatedConfig(true)}
         initialState={initialState}
         reconnectOnMount
       >

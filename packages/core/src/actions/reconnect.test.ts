@@ -17,7 +17,7 @@ const connector = config._internal.connectors.setup(
   }),
 )
 
-function createIndependentConfig() {
+function createIsolatedConfig() {
   return createConfig({
     chains: [mainnet],
     connectors: [
@@ -76,27 +76,27 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
 })
 
 test("behavior: doesn't reconnect if already reconnecting", async () => {
-  const config = createIndependentConfig()
+  const config = createIsolatedConfig()
   const results = await Promise.all([reconnect(config), reconnect(config)])
   expect(results.map((x) => x.length)).toEqual([1, 0])
   expect(config.state.status).toEqual('connected')
 })
 
 test('behavior: reconnects when status is reconnecting', async () => {
-  const config = createIndependentConfig()
+  const config = createIsolatedConfig()
   config.setState((x) => ({ ...x, status: 'reconnecting' }))
   await expect(reconnect(config)).resolves.toHaveLength(1)
   expect(config.state.status).toEqual('connected')
 })
 
 test('behavior: reconnects independent configs sequentially', async () => {
-  const configs = [createIndependentConfig(), createIndependentConfig()]
+  const configs = [createIsolatedConfig(), createIsolatedConfig()]
   for (const config of configs) await reconnect(config)
   expect(configs.map((x) => x.state.status)).toEqual(['connected', 'connected'])
 })
 
 test('behavior: reconnects independent configs concurrently', async () => {
-  const configs = [createIndependentConfig(), createIndependentConfig()]
+  const configs = [createIsolatedConfig(), createIsolatedConfig()]
   const results = await Promise.all(configs.map((x) => reconnect(x)))
   expect(results.map((x) => x.length)).toEqual([1, 1])
   expect(configs.map((x) => x.state.status)).toEqual(['connected', 'connected'])
@@ -107,9 +107,9 @@ test('behavior: reconnects after connector throws', async () => {
     throw new Error('setup failed')
   })
   await expect(
-    reconnect(createIndependentConfig(), { connectors: [broken] }),
+    reconnect(createIsolatedConfig(), { connectors: [broken] }),
   ).rejects.toThrowError('setup failed')
-  await expect(reconnect(createIndependentConfig())).resolves.toHaveLength(1)
+  await expect(reconnect(createIsolatedConfig())).resolves.toHaveLength(1)
 })
 
 test('behavior: recovers from invalid state', async () => {
