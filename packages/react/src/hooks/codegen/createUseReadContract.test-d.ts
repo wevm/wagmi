@@ -218,3 +218,16 @@ test('narrows data for functions with matching argument shapes', () => {
     abi: abiSameArgsDifferentReturns,
   })
 })
+
+test('deployless read (bytecode)', () => {
+  const useReadErc20 = createUseReadContract({
+    abi: abi.erc20,
+  })
+
+  const result = useReadErc20({
+    code: '0x',
+    functionName: 'balanceOf',
+    args: ['0x'],
+  })
+  expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
+})
