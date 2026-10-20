@@ -44,7 +44,7 @@ import { type ReadContractParameters } from '@wagmi/core'
 
 `Abi`
 
-The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
+The contract's ABI. Check out the [TypeScript docs](/core/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
 
 ::: code-group
 ```ts [index.ts]
