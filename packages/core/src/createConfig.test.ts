@@ -12,7 +12,11 @@ import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
 import { createConnector } from './connectors/createConnector.js'
 import { mock } from './connectors/mock.js'
-import { type Connection, createConfig } from './createConfig.js'
+import {
+  type Connection,
+  type Connector,
+  createConfig,
+} from './createConfig.js'
 import { createStorage } from './createStorage.js'
 import { serialize } from './utils/serialize.js'
 
@@ -481,6 +485,35 @@ test('behavior: revalidate connections', async () => {
   await config._internal.revalidate()
 
   expect([...config.state.connections.keys()]).toEqual([c2.uid])
+})
+
+test('behavior: revalidate removes connection if `isAuthorized` rejects', async () => {
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [
+      mock({ accounts, features: { defaultConnected: true, reconnect: true } }),
+      mock({ accounts, features: { defaultConnected: true, reconnect: true } }),
+    ],
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  const [c1, c2] = config.connectors as [Connector, Connector]
+  vi.spyOn(c1, 'isAuthorized').mockRejectedValueOnce(new Error('stale session'))
+  config.setState((state) => ({
+    ...state,
+    connections: new Map([
+      [c1.uid, { accounts: ['0x'], chainId: 1, connector: c1 }],
+      [c2.uid, { accounts: ['0x'], chainId: 1, connector: c2 }],
+    ]),
+    current: c1.uid,
+  }))
+
+  await expect(config._internal.revalidate()).resolves.toBeUndefined()
+  expect([...config.state.connections.keys()]).toEqual([c2.uid])
+  expect(config.state.current).toBeNull()
 })
 
 function getProviderDetail(
