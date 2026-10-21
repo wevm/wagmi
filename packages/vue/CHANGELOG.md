@@ -1,5 +1,15 @@
 # @wagmi/vue
 
+## 0.5.32
+
+### Patch Changes
+
+- Fixed `useWatchBlockNumber` ignoring `emitOnBegin` ([#5225](https://github.com/wevm/wagmi/pull/5225))
+
+- Updated dependencies [[`768756e`](https://github.com/wevm/wagmi/commit/768756eb0b365b0980b7a82c02d669b834ed8c30)]:
+  - @wagmi/core@3.6.7
+  - @wagmi/connectors@8.2.2
+
 ## 0.5.31
 
 ### Patch Changes

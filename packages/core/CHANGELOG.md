@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.6.7
+
+### Patch Changes
+
+- Fixed `getTransaction` query being disabled for `blockNumber: 0n` (genesis), which is a valid input but was treated as falsy alongside a valid `index`. ([#5224](https://github.com/wevm/wagmi/pull/5224))
+
 ## 3.6.6
 
 ### Patch Changes
