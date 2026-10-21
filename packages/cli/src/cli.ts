@@ -16,6 +16,8 @@ const commonOptions = {
 
 const cli = Cli.create('wagmi', {
   description: 'Manage and generate code from Ethereum ABIs',
+  // Installed per-project, so don't suggest a global `--update`.
+  update: false,
   version,
 })
   .command('generate', {
@@ -38,4 +40,6 @@ const cli = Cli.create('wagmi', {
     },
   })
 
-await cli.serve()
+// Keep the `-v` shorthand from the previous CLI.
+const argv = process.argv.slice(2)
+await cli.serve(argv.length === 1 && argv[0] === '-v' ? ['--version'] : argv)
