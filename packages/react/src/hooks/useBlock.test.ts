@@ -1,5 +1,6 @@
-import { testClient } from '@wagmi/test'
+import { accounts, testClient } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
+import { parseEther } from 'viem'
 import { expect, test, vi } from 'vitest'
 
 import { useBlock } from './useBlock.js'
@@ -64,4 +65,35 @@ test('parameters: watch', async () => {
   await vi.waitFor(() => {
     expect(result.current.data?.number).toEqual(block.number + 2n)
   })
+})
+
+test('parameters: watch (includeTransactions)', async () => {
+  await testClient.mainnet.mine({ blocks: 1 })
+
+  const { result } = await renderHook(() =>
+    useBlock({ includeTransactions: true, watch: true }),
+  )
+
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
+  const block = result.current.data!
+  expect(block).toBeDefined()
+
+  await testClient.mainnet.setBalance({
+    address: accounts[0],
+    value: parseEther('10'),
+  })
+  await testClient.mainnet.sendUnsignedTransaction({
+    from: accounts[0],
+    to: accounts[1],
+    value: parseEther('1'),
+  })
+  await testClient.mainnet.mine({ blocks: 1 })
+
+  await vi.waitFor(() => {
+    expect(result.current.data?.number).toEqual(block.number + 1n)
+  })
+
+  const transactions = result.current.data!.transactions
+  expect(transactions.length).toBeGreaterThan(0)
+  expect(typeof transactions[0]).not.toBe('string')
 })
