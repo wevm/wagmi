@@ -385,12 +385,12 @@ importers:
 
   packages/create-wagmi:
     dependencies:
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
       cross-spawn:
         specifier: ^7.0.3
         version: 7.0.6
+      incur:
+        specifier: ^0.7.1
+        version: 0.7.1
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0

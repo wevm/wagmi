@@ -5,7 +5,6 @@ import {
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
-import pc from 'picocolors'
 import { afterEach, beforeAll, expect, test } from 'vitest'
 
 import { version } from './version.js'
@@ -123,29 +122,44 @@ test('uses different package manager', () => {
 
 test('shows help', () => {
   const stdout = run(['--help'])
-  expect(
-    stdout
-      .replace(version, 'x.y.z')
-      .replace(pc.green('<project-directory>'), '<project-directory>'),
-  ).toMatchInlineSnapshot(`
-    "create-wagmi/x.y.z
+  expect(stdout.replace(version, 'x.y.z')).toMatchInlineSnapshot(`
+    "create-wagmi@x.y.z — Create Wagmi apps with one command
 
-    Usage:
-      $ create-wagmi <project-directory> [options]
+    Usage: create-wagmi [projectDirectory] [options]
+
+    Arguments:
+      projectDirectory  Directory to create the project in
 
     Options:
-      -t, --template [name]  Template to bootstrap with. Available: vite-react, next, vite-vue, nuxt, vite-vanilla 
-      --bun                  Use bun as your package manager 
-      --npm                  Use npm as your package manager 
-      --pnpm                 Use pnpm as your package manager 
-      --yarn                 Use yarn as your package manager 
-      -h, --help             Display this message 
-      -v, --version          Display version number 
+      --template, -t <string>  Template to bootstrap with. Available: vite-react, next, vite-vue, nuxt, vite-vanilla
+      --bun                    Use bun as your package manager
+      --npm                    Use npm as your package manager
+      --pnpm                   Use pnpm as your package manager
+      --yarn                   Use yarn as your package manager
+
+    Integrations:
+      completions  Generate shell completion script
+      mcp          Register as MCP server (add, doctor)
+      skills       Sync skill files to agents (add, list)
+
+    Global Options:
+      --filter-output <keys>              Filter output by key paths (e.g. foo,bar.baz,a[0,3])
+      --format <toon|json|yaml|md|jsonl>  Output format
+      --full-output                       Show full output envelope
+      --help                              Show help
+      --llms, --llms-full                 Print LLM-readable manifest
+      --mcp                               Start as MCP stdio server
+      --schema                            Show JSON Schema for command
+      --token-count                       Print token count of output (instead of output)
+      --token-limit <n>                   Limit output to n tokens
+      --token-offset <n>                  Skip first n tokens of output
+      --update                            Update to latest version
+      --version                           Show version
     "
   `)
 })
 
 test('shows version', () => {
-  const stdout = run(['--version'])
-  expect(stdout).toContain(`create-wagmi/${version} `)
+  expect(run(['--version']).trim()).toBe(version)
+  expect(run(['-v']).trim()).toBe(version)
 })

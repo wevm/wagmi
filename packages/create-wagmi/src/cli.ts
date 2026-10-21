@@ -2,8 +2,8 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { cac } from 'cac'
 import spawn from 'cross-spawn'
+import { Cli, z } from 'incur'
 import pc from 'picocolors'
 import prompts from 'prompts'
 
@@ -23,24 +23,6 @@ const templates = frameworks
   .map((f) => f.variants?.map((v) => v.name) || [f.name])
   .reduce((a, b) => a.concat(b), [])
 
-const cli = cac('create-wagmi')
-
-cli
-  .usage(`${pc.green('<project-directory>')} [options]`)
-  .option(
-    '-t, --template [name]',
-    `Template to bootstrap with. Available: ${templates
-      .sort((a, b) => (a && !b ? -1 : 1))
-      .join(', ')}`,
-  )
-  .option('--bun', 'Use bun as your package manager')
-  .option('--npm', 'Use npm as your package manager')
-  .option('--pnpm', 'Use pnpm as your package manager')
-  .option('--yarn', 'Use yarn as your package manager')
-
-cli.help()
-cli.version(version)
-
 const cwd = process.cwd()
 
 const renameFiles: Record<string, string | undefined> = {
@@ -52,13 +34,17 @@ const renameFiles: Record<string, string | undefined> = {
 
 const defaultTargetDir = 'wagmi-project'
 
-async function init() {
-  const { args, options } = cli.parse(process.argv)
-  if (options.help) return
-  if (options.version) return
+type Options = {
+  bun?: boolean | undefined
+  npm?: boolean | undefined
+  pnpm?: boolean | undefined
+  template?: string | undefined
+  yarn?: boolean | undefined
+}
 
-  const argTargetDir = formatTargetDir(args[0])
-  const argTemplate = options.template || options.t
+async function init(projectDirectory: string | undefined, options: Options) {
+  const argTargetDir = formatTargetDir(projectDirectory)
+  const argTemplate = options.template
 
   let targetDir = argTargetDir || defaultTargetDir
   function getProjectName() {
@@ -270,7 +256,42 @@ async function init() {
   console.log()
 }
 
-init().catch((e) => {
-  // biome-ignore lint/suspicious/noConsole: logging error
-  console.error(e)
+const cli = Cli.create('create-wagmi', {
+  description: 'Create Wagmi apps with one command',
+  // Run once via `npm create`, so don't suggest a global `--update`.
+  update: false,
+  version,
+  args: z.object({
+    projectDirectory: z
+      .string()
+      .optional()
+      .describe('Directory to create the project in'),
+  }),
+  options: z.object({
+    template: z
+      .string()
+      .optional()
+      .describe(
+        `Template to bootstrap with. Available: ${templates
+          .sort((a, b) => (a && !b ? -1 : 1))
+          .join(', ')}`,
+      ),
+    bun: z.boolean().optional().describe('Use bun as your package manager'),
+    npm: z.boolean().optional().describe('Use npm as your package manager'),
+    pnpm: z.boolean().optional().describe('Use pnpm as your package manager'),
+    yarn: z.boolean().optional().describe('Use yarn as your package manager'),
+  }),
+  alias: { template: 't' },
+  async run({ args, options }) {
+    await init(args.projectDirectory, options)
+  },
 })
+
+// Keep CLI shorthands from the previous CLI: `-v` for `--version`, and a
+// valueless `--template`/`-t` prompts for the framework instead of erroring.
+const argv = process.argv.slice(2).filter((arg, i, all) => {
+  if (arg !== '--template' && arg !== '-t') return true
+  const next = all[i + 1]
+  return next !== undefined && !next.startsWith('-')
+})
+void cli.serve(argv.length === 1 && argv[0] === '-v' ? ['--version'] : argv)
