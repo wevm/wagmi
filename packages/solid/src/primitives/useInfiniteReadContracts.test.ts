@@ -55,3 +55,24 @@ test('default', async () => {
     ]
   `)
 }, 20_000)
+
+test('behavior: exposes queryKey', () => {
+  const { result } = renderPrimitive(() =>
+    useInfiniteReadContracts(() => ({
+      cacheKey: 'foo',
+      contracts() {
+        return []
+      },
+      query: {
+        enabled: false,
+        initialPageParam: 0,
+        getNextPageParam: () => undefined,
+      },
+    })),
+  )
+
+  expect(result.queryKey).toEqual([
+    'infiniteReadContracts',
+    expect.objectContaining({ cacheKey: 'foo' }),
+  ])
+})

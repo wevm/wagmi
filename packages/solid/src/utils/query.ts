@@ -164,8 +164,9 @@ export function useInfiniteQuery<
     ...(parameters() as any),
     queryKeyHashFn: hashFn, // for bigint support
   }))
-  return mergeProps(
-    result,
-    parameters().queryKey,
-  ) as unknown as UseInfiniteQueryReturnType<data, error>
+  return mergeProps(result, {
+    get queryKey() {
+      return parameters().queryKey
+    },
+  }) as unknown as UseInfiniteQueryReturnType<data, error>
 }
