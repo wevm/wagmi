@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       # TODO: Remove `--ignore-registry-errors` when issue fixed
       # https://github.com/pnpm/pnpm/issues/11265
@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       - name: Build
         run: pnpm clean && pnpm build
@@ -94,7 +94,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
 
@@ -133,7 +133,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
@@ -188,7 +188,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       - name: Cache Playwright
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
@@ -233,7 +233,7 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
         with:
-          node-version: 24.5
+          node-version: 24.22.1
 
       - name: Cache Playwright
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb

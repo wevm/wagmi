@@ -65,6 +65,19 @@ linkWorkspacePackages: deep
 minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
+  - bun@1.4.4
+  - '@oven/bun-darwin-aarch64@1.4.4'
+  - '@oven/bun-darwin-x64@1.4.4'
+  - '@oven/bun-freebsd-aarch64@1.4.4'
+  - '@oven/bun-freebsd-x64@1.4.4'
+  - '@oven/bun-linux-aarch64@1.4.4'
+  - '@oven/bun-linux-aarch64-android@1.4.4'
+  - '@oven/bun-linux-aarch64-musl@1.4.4'
+  - '@oven/bun-linux-x64@1.4.4'
+  - '@oven/bun-linux-x64-android@1.4.4'
+  - '@oven/bun-linux-x64-musl@1.4.4'
+  - '@oven/bun-windows-aarch64@1.4.4'
+  - '@oven/bun-windows-x64@1.4.4'
   - '@metamask/analytics'
   - '@metamask/connect-evm'
   - '@metamask/connect-multichain'
