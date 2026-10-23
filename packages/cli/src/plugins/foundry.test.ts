@@ -349,6 +349,99 @@ test('broadcast deployments filters CALL transactions', async () => {
   })
 })
 
+test('deployments support multiple named contracts sharing one artifact ABI', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const result = await foundry({
+    deployments: {
+      DAI: {
+        artifact: 'ERC20',
+        address: { 1: '0x6b175474e89094c44da98b954eedeac495271d0' },
+      },
+      WETH: {
+        artifact: 'ERC20',
+        address: { 1: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' },
+      },
+    },
+  }).contracts?.()
+
+  const dai = result?.find((c) => c.name === 'DAI')
+  expect(dai?.address).toEqual({
+    '1': '0x6b175474e89094c44da98b954eedeac495271d0',
+  })
+  expect(dai?.abi).toEqual(erc20Artifact.abi)
+
+  const weth = result?.find((c) => c.name === 'WETH')
+  expect(weth?.address).toEqual({
+    '1': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  })
+  expect(weth?.abi).toEqual(erc20Artifact.abi)
+
+  // base artifact-named contract is still emitted (no address, since `ERC20` key
+  // wasn't given its own plain-address entry in `deployments`)
+  const erc20 = result?.find((c) => c.name === 'ERC20')
+  expect(erc20?.address).toBeUndefined()
+  expect(erc20?.abi).toEqual(erc20Artifact.abi)
+})
+
+test('deployments still support a plain address for the artifact itself', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const counterArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'increment',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'Counter.json'),
+    JSON.stringify(counterArtifact, null, 2),
+  )
+
+  const result = await foundry({
+    deployments: {
+      Counter: '0x1234567890123456789012345678901234567890',
+    },
+  }).contracts?.()
+
+  expect(result).toEqual([
+    {
+      abi: counterArtifact.abi,
+      address: '0x1234567890123456789012345678901234567890',
+      name: 'Counter',
+    },
+  ])
+})
+
 test('watch callbacks use broadcast deployments', async () => {
   const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
