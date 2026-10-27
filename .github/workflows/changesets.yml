@@ -38,14 +38,14 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@fb23e449c43e848371a2090a5e3fd49f7f569b87
+        uses: wevm/actions/.github/actions/pnpm@67ad93da5866fc6ad24c25e49e5e8efabc08c718
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks
 
       - name: Create version pull request
         id: changesets
-        uses: wevm/actions/vendor/changesets/action/wagmi@bf2029b5aa6e21ce7c0ed0654a2e9a48a59bdb4a # upstream v1.9.0
+        uses: wevm/actions/vendor/changesets/action/wagmi@817c9008b1112c1d61003f2f155687c30601de97 # upstream v1.9.0
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
@@ -71,14 +71,14 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@fb23e449c43e848371a2090a5e3fd49f7f569b87
+        uses: wevm/actions/.github/actions/pnpm@67ad93da5866fc6ad24c25e49e5e8efabc08c718
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks
 
       - name: Publish to npm
         id: publish
-        uses: wevm/actions/vendor/changesets/action/wagmi@bf2029b5aa6e21ce7c0ed0654a2e9a48a59bdb4a # upstream v1.9.0
+        uses: wevm/actions/vendor/changesets/action/wagmi@817c9008b1112c1d61003f2f155687c30601de97 # upstream v1.9.0
         with:
           createGithubReleases: true
           publish: pnpm changeset:publish
@@ -101,7 +101,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@fb23e449c43e848371a2090a5e3fd49f7f569b87
+        uses: wevm/actions/.github/actions/pnpm@67ad93da5866fc6ad24c25e49e5e8efabc08c718
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks
