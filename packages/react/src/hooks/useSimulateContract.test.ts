@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { abi, address, config, wait } from '@wagmi/test'
+import { abi, accounts, address, config, wait } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
@@ -89,4 +89,22 @@ test('behavior: disabled when properties missing', async () => {
 
   await wait(100)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
+})
+
+test('behavior: account without connector', async () => {
+  const { result } = await renderHook(() =>
+    useSimulateContract({
+      account: accounts[0],
+      address: address.wagmiMintExample,
+      abi: abi.wagmiMintExample,
+      functionName: 'mint',
+    }),
+  )
+
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
+
+  expect(result.current.data?.request.account).toEqual({
+    address: accounts[0],
+    type: 'json-rpc',
+  })
 })

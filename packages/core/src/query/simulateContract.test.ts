@@ -1,4 +1,4 @@
-import { abi, config } from '@wagmi/test'
+import { abi, accounts, address, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { simulateContractQueryOptions } from './simulateContract.js'
@@ -29,4 +29,14 @@ test('default', () => {
       ],
     }
   `)
+})
+
+test('parameters: account without connector', () => {
+  const options = simulateContractQueryOptions(config, {
+    account: accounts[0],
+    address: address.wagmiMintExample,
+    abi: abi.wagmiMintExample,
+    functionName: 'mint',
+  })
+  expect(options.enabled).toBe(true)
 })
