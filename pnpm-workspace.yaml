@@ -29,6 +29,13 @@ auditConfig:
     - GHSA-vfj7-8cjw-p6xm # braces: stack-exhaustion DoS (no patch)
     - GHSA-86w9-cpqp-85rv # node-forge: RSA signature verification (no patch, transitive via nuxt cli)
     - GHSA-hp3w-g68c-fv3c # sprintf-js: unbounded precision DoS (no patch, transitive via changesets)
+    # Zod 3 has no patched release. WalletConnect 2.25.0 uses AppKit 1.8.19's
+    # core QR client (no auth-frame provider) and disables email/social login;
+    # the affected appkit-wallet message schemas are not used on that path.
+    # Hardhat only validates checked-in configuration in a private CLI fixture.
+    # Reassess on WalletConnect/AppKit/Hardhat updates or auth-client adoption;
+    # remove when these dependencies replace Zod 3 or a compatible fix ships.
+    - GHSA-mrhx-c7xc-m3w5
 
 autoInstallPeers: false
 
@@ -36,8 +43,8 @@ catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@metamask/connect-evm': 2.1.0
-  '@nuxt/kit': 4.5.1
-  '@nuxt/schema': 4.5.1
+  '@nuxt/kit': 4.6.2
+  '@nuxt/schema': 4.6.2
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
   '@tanstack/query-core': 5.49.1
@@ -51,7 +58,7 @@ catalog:
   '@walletconnect/ethereum-provider': 2.25.0
   accounts: 0.18.0
   buffer: 6.0.3
-  nuxt: 4.5.1
+  nuxt: 4.6.2
   ox: 0.11.1
   react: 19.2.0
   react-dom: 19.2.0
@@ -153,7 +160,7 @@ overrides:
   semver@<5.7.2: '>=5.7.2'
   source-map-js@>=1.0.0 <1.2.2: 1.2.2
   vue@<3.5.42: 3.5.44
-  serialize-javascript@<7.0.5: '>=7.0.5'
+  serialize-javascript@<7.1.3: 7.1.3
   seroval@<1.6.3: 1.6.11
   sharp@<0.35.5: 0.35.5
   shell-quote@<1.11.0: 1.12.0
@@ -163,9 +170,9 @@ overrides:
   svgo@>=4.0.0 <4.1.0: 4.1.0
   tar@<=7.5.20: 7.5.21
   tmp@<0.2.7: 0.2.7
-  undici@<6.28.1: 6.28.1
-  undici@>=7.0.0 <7.29.1: 7.29.1
-  undici@>=8.0.0 <8.10.2: 8.10.2
+  undici@<6.29.1: 6.29.1
+  undici@>=7.0.0 <7.30.1: 7.30.1
+  undici@>=8.0.0 <8.12.2: 8.12.2
   unhead@<2.1.13: 2.1.13
   uuid@<14.0.0: 14.0.0
   vite@>=5.0.0 <6.4.4: 6.4.4
@@ -174,6 +181,7 @@ overrides:
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
   ws@>=8.0.0 <8.21.0: 8.21.0
   yaml@>=2.0.0 <2.8.3: '>=2.8.3'
+  zod@>=4.0.0 <4.6.6: ^4.6.6
 
 peerDependencyRules:
   ignoreMissing:
