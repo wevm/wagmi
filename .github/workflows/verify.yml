@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
@@ -92,7 +92,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
@@ -131,7 +131,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
@@ -186,7 +186,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
@@ -231,7 +231,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@6ef040d0ae453f66108446f1cd232e842a17fc8f
+        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
         with:
           node-version: 24.22.1
 
