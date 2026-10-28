@@ -36,6 +36,12 @@ auditConfig:
     # Reassess on WalletConnect/AppKit/Hardhat updates or auth-client adoption;
     # remove when these dependencies replace Zod 3 or a compatible fix ships.
     - GHSA-mrhx-c7xc-m3w5
+    # deepmerge 4.3.1 has no patched release. Its only locked consumer is
+    # @rollup/plugin-node-resolve 16.0.3 (via Nuxt/Nitro), which calls
+    # deepMerge({}, defaults) only to clone hard-coded defaults at module load;
+    # user options and request data never enter that merge.
+    # Reassess when its consumers change; remove when patched or no longer used.
+    - GHSA-gcqx-w48m-w2h4
 
 autoInstallPeers: false
 
