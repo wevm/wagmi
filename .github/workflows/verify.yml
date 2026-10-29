@@ -38,7 +38,7 @@ jobs:
       - name: Update package versions
         run: pnpm version:update
       
-      - uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
+      - uses: wevm/actions/vendor/stefanzweifel/git-auto-commit-action/v6.0.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28 # v6.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -136,7 +136,7 @@ jobs:
           node-version: 24.22.1
 
       - name: Set up foundry
-        uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
+        uses: wevm/actions/vendor/foundry-rs/foundry-toolchain/v1.5.0@73e899a58d51092d694fbaf94b7a1d8c09bfea28 # v1.5.0
         with:
           version: nightly
 
@@ -155,7 +155,7 @@ jobs:
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           command: CI=true pnpm test:cov --project='!tempo*' --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
@@ -165,7 +165,7 @@ jobs:
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
+        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -208,14 +208,14 @@ jobs:
         run: docker pull ghcr.io/tempoxyz/tempo:latest
 
       - name: Run Tempo tests
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           command: CI=true pnpm test:cov --project=tempo --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
           timeout_minutes: 10
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
+        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -255,7 +255,7 @@ jobs:
           docker pull ghcr.io/tempoxyz/tempo-zone:sha-db90b21
 
       - name: Run Tempo Zone tests
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           command: CI=true pnpm test --run --bail=1 --project tempo-zone
           max_attempts: 3
