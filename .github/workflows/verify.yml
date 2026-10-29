@@ -38,7 +38,7 @@ jobs:
       - name: Update package versions
         run: pnpm version:update
       
-      - uses: wevm/actions/vendor/stefanzweifel/git-auto-commit-action/v6.0.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28 # v6.0.1
+      - uses: wevm/actions/vendor/stefanzweifel/git-auto-commit-action/v6.0.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -136,7 +136,7 @@ jobs:
           node-version: 24.22.1
 
       - name: Set up foundry
-        uses: wevm/actions/vendor/foundry-rs/foundry-toolchain/v1.5.0@73e899a58d51092d694fbaf94b7a1d8c09bfea28 # v1.5.0
+        uses: wevm/actions/vendor/foundry-rs/foundry-toolchain/v1.5.0@73e899a58d51092d694fbaf94b7a1d8c09bfea28
         with:
           version: nightly
 
