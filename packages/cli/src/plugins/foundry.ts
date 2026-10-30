@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
 import { fdir } from 'fdir'
-import { basename, extname, join, resolve } from 'pathe'
+import { basename, extname, join, relative, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
@@ -273,9 +273,22 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       }
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
       const contracts = []
+      const seen = new Map<string, { abi: string; artifactPath: string }>()
       for (const artifactPath of artifactPaths) {
         const contract = await getContract(artifactPath, allDeployments)
         if (!contract.abi?.length) continue
+        // Foundry can emit the same contract more than once (e.g. under both
+        // `out/` and `out/src/` when projects import each other), so skip
+        // copies with an identical ABI.
+        const abi = JSON.stringify(contract.abi)
+        const previous = seen.get(contract.name)
+        if (previous) {
+          if (previous.abi === abi) continue
+          throw new Error(
+            `Contract name "${contract.name}" must be unique. Found different ABIs in ${relative(project, previous.artifactPath)} and ${relative(project, artifactPath)}.`,
+          )
+        }
+        seen.set(contract.name, { abi, artifactPath })
         contracts.push(contract)
       }
       return contracts
