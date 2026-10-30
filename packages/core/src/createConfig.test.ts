@@ -4,13 +4,14 @@ import {
   type EIP1193Provider,
   type EIP6963ProviderDetail,
 } from 'mipd'
-import { http } from 'viem'
+import { type Address, http } from 'viem'
 import { expect, test, vi } from 'vitest'
 
 import { connect } from './actions/connect.js'
 import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
 import { createConnector } from './connectors/createConnector.js'
+import { injected } from './connectors/injected.js'
 import { mock } from './connectors/mock.js'
 import {
   type Connection,
@@ -515,6 +516,131 @@ test('behavior: revalidate removes connection if `isAuthorized` rejects', async 
   expect([...config.state.connections.keys()]).toEqual([c2.uid])
   expect(config.state.current).toBeNull()
 })
+
+test('behavior: wallet-initiated connect removes the connect listener', async () => {
+  const explicit = createConfig({
+    chains: [mainnet],
+    connectors: [mock({ accounts })],
+    multiInjectedProviderDiscovery: false,
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  await connect(explicit, { connector: explicit.connectors[0]! })
+  expect(explicit.connectors[0]!.emitter.listenerCount('connect')).toBe(0)
+
+  const passive = createConfig({
+    chains: [mainnet],
+    connectors: [mock({ accounts })],
+    multiInjectedProviderDiscovery: false,
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  const connector = passive.connectors[0]!
+  expect(connector.emitter.listenerCount('connect')).toBe(1)
+
+  connector.emitter.emit('connect', {
+    accounts,
+    chainId: mainnet.id,
+  })
+
+  expect(passive.state.status).toBe('connected')
+  expect(passive.state.current).toBe(connector.uid)
+  // `connect()` / `reconnect()` unsubscribe this listener. The emitter path
+  // must do the same: `listenerCount('connect')` means "not connected yet"
+  // (`injected` uses it to tell a new connection from an account change).
+  expect(connector.emitter.listenerCount('connect')).toBe(0)
+  expect(connector.emitter.listenerCount('change')).toBe(1)
+  expect(connector.emitter.listenerCount('disconnect')).toBe(1)
+})
+
+test('behavior: background account change keeps the active connection', async () => {
+  const providerA = createInjectedProvider([accounts[0]!])
+  const providerB = createInjectedProvider([accounts[1]!])
+
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [
+      injected({
+        target: { id: 'walletA', name: 'Wallet A', provider: providerA },
+      }),
+      injected({
+        target: { id: 'walletB', name: 'Wallet B', provider: providerB },
+      }),
+    ],
+    multiInjectedProviderDiscovery: false,
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  const walletA = config.connectors[0]!
+  const walletB = config.connectors[1]!
+
+  await vi.waitFor(() => {
+    expect(providerB.listenerCount('accountsChanged')).toBe(1)
+  })
+
+  // Wallet B connects itself (MetaMask "manually connect", or `accountsChanged`
+  // while no `connect` event exists). This must not leave B subscribed to
+  // `connect`, or the next account change is handled as a new connection.
+  providerB.emit('accountsChanged', [accounts[1]!])
+  await vi.waitFor(() => {
+    expect(config.state.connections.has(walletB.uid)).toBe(true)
+  })
+
+  await connect(config, { connector: walletA })
+  expect(config.state.current).toBe(walletA.uid)
+
+  providerB.setAccounts([accounts[2]!])
+  providerB.emit('accountsChanged', [accounts[2]!])
+  await vi.waitFor(() => {
+    expect(config.state.connections.get(walletB.uid)?.accounts[0]).toBe(
+      accounts[2],
+    )
+  })
+
+  expect(config.state.current).toBe(walletA.uid)
+})
+
+function createInjectedProvider(initialAccounts: readonly Address[]) {
+  let accounts_ = [...initialAccounts]
+  const listeners = new Map<string, Set<(...args: any[]) => void>>()
+
+  return {
+    setAccounts(next: readonly Address[]) {
+      accounts_ = [...next]
+    },
+    async request({ method }: { method: string }) {
+      if (method === 'eth_accounts' || method === 'eth_requestAccounts')
+        return accounts_
+      if (method === 'eth_chainId') return '0x1'
+      if (method === 'wallet_requestPermissions')
+        return [{ caveats: [{ value: accounts_ }] }]
+      if (method === 'wallet_revokePermissions') return null
+      throw new Error(`unexpected method: ${method}`)
+    },
+    on(event: string, listener: (...args: any[]) => void) {
+      const set = listeners.get(event) ?? new Set()
+      set.add(listener)
+      listeners.set(event, set)
+    },
+    removeListener(event: string, listener: (...args: any[]) => void) {
+      listeners.get(event)?.delete(listener)
+    },
+    emit(event: string, ...args: any[]) {
+      for (const listener of [...(listeners.get(event) ?? [])])
+        listener(...args)
+    },
+    listenerCount(event: string) {
+      return listeners.get(event)?.size ?? 0
+    },
+  }
+}
 
 function getProviderDetail(
   info: Pick<EIP6963ProviderDetail['info'], 'name' | 'rdns'>,
