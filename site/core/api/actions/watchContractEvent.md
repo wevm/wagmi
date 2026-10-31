@@ -363,12 +363,6 @@ Function for cleaning up watcher.
 
 With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`eventName`](#eventname), [`args`](#args), and [`onLogs`](#onlogs) parameters. See the Wagmi [TypeScript docs](/core/typescript) for more information.
 
-## Error
-
-```ts
-import { type WatchContractEventError } from '@wagmi/core'
-```
-
 <!--@include: @shared/query-imports.md-->
 
 ## Viem

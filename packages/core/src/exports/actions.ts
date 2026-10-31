@@ -260,6 +260,7 @@ export {
 } from '../actions/getWalletClient.js'
 
 export {
+  type MulticallErrorType,
   type MulticallParameters,
   type MulticallReturnType,
   multicall,
