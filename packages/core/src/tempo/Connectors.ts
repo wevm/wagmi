@@ -332,9 +332,12 @@ function _setup(parameters: setup.Parameters) {
         }
       },
       onAccountsChanged(accounts) {
-        config.emitter.emit('change', {
-          accounts: accounts as readonly Address[],
-        })
+        // Disconnect if there are no accounts
+        if (accounts.length === 0) this.onDisconnect()
+        else
+          config.emitter.emit('change', {
+            accounts: accounts as readonly Address[],
+          })
       },
       onChainChanged(chain) {
         config.emitter.emit('change', { chainId: Number(chain) })
