@@ -49,8 +49,8 @@ catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@metamask/connect-evm': 2.1.0
-  '@nuxt/kit': 4.6.2
-  '@nuxt/schema': 4.6.2
+  '@nuxt/kit': 4.6.3
+  '@nuxt/schema': 4.6.3
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
   '@tanstack/query-core': 5.49.1
@@ -64,7 +64,7 @@ catalog:
   '@walletconnect/ethereum-provider': 2.25.0
   accounts: 0.18.0
   buffer: 6.0.3
-  nuxt: 4.6.2
+  nuxt: 4.6.3
   ox: 0.11.1
   react: 19.2.0
   react-dom: 19.2.0
@@ -135,9 +135,9 @@ overrides:
   elliptic@<=6.6.0: '>=6.6.1'
   '@babel/core@<=7.29.0': 7.29.7
   fflate@>=0.8.0 <0.8.3: 0.8.3
-  follow-redirects@<1.16.1: 1.16.1
+  follow-redirects@<1.16.2: 1.16.2
   form-data@>=4.0.0 <4.0.6: 4.0.6
-  glob@>=10.2.0 <10.5.0: 10.5.0
+  glob@>=9.0.0 <14.0.2: 14.0.2
   h3-v2: npm:h3@2.0.1-rc.18
   h3@<1.15.9: 1.15.9
   happy-dom@<20.8.9: '>=20.8.9'
@@ -152,17 +152,17 @@ overrides:
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   minimatch@<3.1.4: 3.1.4
   minimatch@5.1.8>brace-expansion: 5.0.12
-  minimatch@>=10.0.0 <10.2.3: 10.2.3
   minimatch@>=5.0.0 <5.1.8: 5.1.8
-  minimatch@>=9.0.0 <9.0.7: 9.0.7
+  minimatch@>=9.0.0 <11.0.1: 11.0.1
   nanoid@<3.3.18: 3.3.18
   nitropack@<2.13.4: 2.13.4
-  node-forge@<1.4.0: '>=1.4.0'
+  node-forge@<1.4.1: 1.4.1
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
   postcss@<8.5.23: 8.5.23
   postcss-selector-parser@>=7.0.0 <7.1.6: 7.1.6
   protobufjs@<8.6.6: 8.6.6
+  readdir-glob@<3.0.0: 3.0.0
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
   source-map-js@>=1.0.0 <1.2.2: 1.2.2
@@ -182,7 +182,7 @@ overrides:
   undici@>=8.0.0 <8.12.2: 8.12.2
   unhead@<2.1.13: 2.1.13
   uuid@<14.0.0: 14.0.0
-  vite@>=5.0.0 <6.4.4: 6.4.4
+  vite@>=5.0.0 <6.4.5: 6.4.5
   vite@>=7.0.0 <7.3.7: 7.3.7
   vite@>=8.0.0 <8.2.4: 8.2.4
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
