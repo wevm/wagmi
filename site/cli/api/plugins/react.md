@@ -29,13 +29,31 @@ import { type ReactConfig } from '@wagmi/cli/plugins'
 
 ### abiItemHooks
 
-- Boolean flag to generate abi item hooks (e.g. hooks for each abi function and events).
+`boolean | ((options: { contractName: string }) => boolean)`
+
+- Generate hooks for each ABI function and event, in addition to contract-level hooks (e.g. `useReadErc20BalanceOf` alongside `useReadErc20`).
 - Defaults to `true`.
+- Pass a function to enable ABI item hooks for some contracts and not others. `contractName` is the contract `name` from config.
 
 ```ts
 plugins: [
   react({ abiItemHooks: false }), // [!code focus]
 ],
+```
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      abiItemHooks({ contractName }) { // [!code focus]
+        return contractName === 'Erc20' // [!code focus]
+      }, // [!code focus]
+    }),
+  ],
+})
 ```
 
 ### getHookName
