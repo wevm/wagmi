@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
@@ -38,7 +38,7 @@ jobs:
       - name: Update package versions
         run: pnpm version:update
       
-      - uses: wevm/actions/vendor/stefanzweifel/git-auto-commit-action/v6.0.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+      - uses: wevm/actions/vendor/stefanzweifel/git-auto-commit-action/v6.0.1@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
@@ -92,7 +92,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
@@ -131,12 +131,12 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
       - name: Set up foundry
-        uses: wevm/actions/vendor/foundry-rs/foundry-toolchain/v1.5.0@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/foundry-rs/foundry-toolchain/v1.5.0@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           version: nightly
 
@@ -155,7 +155,7 @@ jobs:
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests
-        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           command: CI=true pnpm test:cov --project='!tempo*' --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
@@ -165,7 +165,7 @@ jobs:
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
-        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -186,7 +186,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
@@ -208,14 +208,14 @@ jobs:
         run: docker pull ghcr.io/tempoxyz/tempo:latest
 
       - name: Run Tempo tests
-        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           command: CI=true pnpm test:cov --project=tempo --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
           timeout_minutes: 10
 
       - name: Upload coverage reports to Codecov
-        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/codecov/codecov-action/v5.5.1@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -231,7 +231,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@28b5093e040885467b40d0a5cf0164f8be0fc038
+        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           node-version: 24.22.1
 
@@ -255,7 +255,7 @@ jobs:
           docker pull ghcr.io/tempoxyz/tempo-zone:sha-db90b21
 
       - name: Run Tempo Zone tests
-        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@73e899a58d51092d694fbaf94b7a1d8c09bfea28
+        uses: wevm/actions/vendor/nick-fields/retry/v3.0.2@8963daf30237417f873c8e2f17e3bf9415e3a7b9
         with:
           command: CI=true pnpm test --run --bail=1 --project tempo-zone
           max_attempts: 3
