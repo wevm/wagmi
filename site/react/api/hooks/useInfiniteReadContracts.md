@@ -106,7 +106,7 @@ function Example({ limit = 10 }: { limit?: number } = {}) {
 ## Parameters
 
 ```ts
-import { type UseInfiniteReadContractsParameters } from 'wagmi'
+import { type UseInfiniteContractReadsParameters } from 'wagmi'
 ```
 
 ### cacheKey
@@ -352,7 +352,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseInfiniteReadContractsReturnType } from 'wagmi'
+import { type UseInfiniteContractReadsReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
