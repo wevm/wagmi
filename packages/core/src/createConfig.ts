@@ -410,11 +410,14 @@ export function createConfig<
           status: 'disconnected',
         }
 
+      const currentConnection = x.current
+        ? x.connections.get(x.current)
+        : undefined
       const nextConnection = x.connections.values().next().value as Connection
       return {
         ...x,
         connections: new Map(x.connections),
-        current: nextConnection.connector.uid,
+        current: currentConnection ? x.current : nextConnection.connector.uid,
       }
     })
   }
