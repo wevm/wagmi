@@ -1,5 +1,13 @@
 # wagmi
 
+## 3.7.10
+
+### Patch Changes
+
+- Updated dependencies [[`e6f2452`](https://github.com/wevm/wagmi/commit/e6f2452959b0e96b8b4493a3121a61bd08a8d74d)]:
+  - @wagmi/core@3.6.8
+  - @wagmi/connectors@8.2.3
+
 ## 3.7.9
 
 ### Patch Changes
