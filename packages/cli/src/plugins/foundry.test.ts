@@ -177,8 +177,10 @@ test('broadcast deployments', async () => {
         contractAddress: '0x1234567890123456789012345678901234567890',
         additionalContracts: [
           {
+            transactionType: 'CREATE',
             contractName: 'Library',
-            contractAddress: '0x0987654321098765432109876543210987654321',
+            address: '0x0987654321098765432109876543210987654321',
+            initCode: '0x',
           },
         ],
       },

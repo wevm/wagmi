@@ -196,9 +196,10 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
           }
           const additionalContracts = tx.additionalContracts || []
           for (const additional of additionalContracts) {
-            if (additional.contractName && additional.contractAddress) {
+            // Foundry writes the address of an additional contract as `address`.
+            if (additional.contractName && additional.address) {
               const contractName = additional.contractName
-              const contractAddress = additional.contractAddress
+              const contractAddress = additional.address
               if (!deployments[contractName]) {
                 deployments[contractName] = {}
               }
