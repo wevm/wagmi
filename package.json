@@ -72,7 +72,7 @@
     "vitest": "^4.1.12",
     "vitest-browser-react": "^2.0.2"
   },
-  "packageManager": "pnpm@10.34.6",
+  "packageManager": "pnpm@12.16.1",
   "devEngines": {
     "runtime": {
       "name": "node",
