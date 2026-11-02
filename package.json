@@ -3,17 +3,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/generateConnectorExports.ts && pnpm run --filter @wagmi/core --filter @wagmi/cli --filter create-wagmi build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/solid --filter @wagmi/vue build",
+    "build": "node scripts/generateConnectorExports.ts && pnpm --filter @wagmi/core --filter @wagmi/cli --filter create-wagmi run build && pnpm --filter @wagmi/connectors run build && pnpm --filter wagmi --filter @wagmi/solid --filter @wagmi/vue run build",
     "bench:types": "TYPES=true vitest bench-d.ts",
     "changeset:prepublish": "pnpm clean && pnpm version:update && node scripts/generateConnectorExports.ts && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
     "check:repo": "sherif -i viem -p engine-tests",
-    "check:types": "pnpm run --r --parallel check:types && tsgo --noEmit",
+    "check:types": "pnpm -r --parallel run check:types && tsgo --noEmit",
     "check:types:typescript": "pnpm -r --parallel --filter './packages/*' --filter './packages/register-tests/*' exec tsc --noEmit && tsc --noEmit",
     "check:unused": "pnpm clean && knip",
-    "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
+    "clean": "pnpm -r --parallel run clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
     "deps:ci": "pnpx actions-up",
     "dev": "pnpm dev:react",
@@ -34,7 +34,7 @@
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
-    "test:build": "node scripts/generateConnectorExports.ts && node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
+    "test:build": "node scripts/generateConnectorExports.ts && node scripts/generateProxyPackages.ts && pnpm -r --parallel run test:build",
     "test:cov": "vitest run --coverage",
     "test:update": "vitest --update",
     "version:update": "node scripts/updateVersion.ts",
@@ -72,7 +72,7 @@
     "vitest": "^4.1.12",
     "vitest-browser-react": "^2.0.2"
   },
-  "packageManager": "pnpm@10.34.6",
+  "packageManager": "pnpm@12.16.1",
   "devEngines": {
     "runtime": {
       "name": "node",

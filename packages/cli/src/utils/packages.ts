@@ -15,6 +15,8 @@ export async function getIsPackageInstalled(parameters: {
           return ['why', packageName]
         case 'bun':
           return ['pm', 'ls', '--all']
+        case 'pnpm':
+          return ['ls', packageName, '--filter', '.', '--json']
         default:
           return ['ls', packageName]
       }
@@ -25,6 +27,20 @@ export async function getIsPackageInstalled(parameters: {
       encoding: 'utf-8',
       stdio: 'pipe',
     })
+
+    if (packageManager === 'pnpm') {
+      const projects = JSON.parse(result) as {
+        dependencies?: Record<string, unknown>
+        devDependencies?: Record<string, unknown>
+        optionalDependencies?: Record<string, unknown>
+      }[]
+      return projects.some(
+        (project) =>
+          Object.hasOwn(project.dependencies ?? {}, packageName) ||
+          Object.hasOwn(project.devDependencies ?? {}, packageName) ||
+          Object.hasOwn(project.optionalDependencies ?? {}, packageName),
+      )
+    }
 
     // For Bun, we need to check if the package name is in the output
     if (packageManager === 'bun') return result.includes(packageName)

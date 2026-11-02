@@ -5,6 +5,20 @@ packages:
   - playgrounds/*
   - site
 
+allowBuilds:
+  '@parcel/watcher': false
+  '@reown/appkit': false
+  bufferutil: false
+  bun: false
+  cpu-features: false
+  esbuild: false
+  msw: false
+  simple-git-hooks: false
+  ssh2: false
+  utf-8-validate: false
+  vue-demi: false
+  workerd: false
+
 auditConfig:
   ignoreGhsas:
     - GHSA-g3ch-rx76-35fx # vue-template-compiler: XSS via prototype pollution (Vue 2 EOL, no patch)
