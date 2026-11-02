@@ -16,7 +16,7 @@ export async function getIsPackageInstalled(parameters: {
         case 'bun':
           return ['pm', 'ls', '--all']
         case 'pnpm':
-          return ['ls', packageName, '--json']
+          return ['ls', packageName, '--filter', '.', '--json']
         default:
           return ['ls', packageName]
       }
