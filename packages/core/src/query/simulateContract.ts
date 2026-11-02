@@ -68,16 +68,17 @@ export function simulateContractQueryOptions<
     enabled: Boolean(
       options.abi &&
         options.address &&
-        options.connector &&
+        (options.account || options.connector) &&
         options.functionName &&
         (options.query?.enabled ?? true),
     ),
     queryFn: async (context) => {
       if (!options.abi) throw new Error('abi is required')
-      if (!options.connector) throw new Error('connector is required')
       const [, { scopeKey: _, ...parameters }] = context.queryKey
       if (!parameters.address) throw new Error('address is required')
       if (!parameters.functionName) throw new Error('functionName is required')
+      if (!parameters.account && !options.connector)
+        throw new Error('account or connector is required')
       return simulateContract(config, {
         ...(parameters as any),
         abi: options.abi,
