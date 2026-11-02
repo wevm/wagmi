@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.6.8
+
+### Patch Changes
+
+- Fixed `simulateContractQueryOptions` requiring a connector when `account` is provided, which kept `useSimulateContract` disabled for an explicit `account` without a connected wallet. ([#5272](https://github.com/wevm/wagmi/pull/5272))
+
 ## 3.6.7
 
 ### Patch Changes

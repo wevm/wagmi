@@ -1,5 +1,13 @@
 # @wagmi/cli
 
+## 2.10.1
+
+### Patch Changes
+
+- Fixed `foundry` plugin `includeBroadcasts` skipping the contracts listed under a transaction's `additionalContracts`. ([#5268](https://github.com/wevm/wagmi/pull/5268))
+
+- Fixed package detection with pnpm 12 so the Hardhat plugin rejects projects without Hardhat installed. ([#5284](https://github.com/wevm/wagmi/pull/5284))
+
 ## 2.10.0
 
 ### Minor Changes
