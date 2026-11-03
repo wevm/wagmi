@@ -110,7 +110,10 @@ export async function getConnectorClient<
   const chainId = parameters.chainId ?? connection.chainId
 
   // Check connector using same chainId as connection
-  const connectorChainId = await connection.connector.getChainId()
+  // (reuse chain ID read above when connector was provided)
+  const connectorChainId = parameters.connector
+    ? connection.chainId
+    : await connection.connector.getChainId()
   if (assertChainId && connectorChainId !== chainId)
     throw new ConnectorChainMismatchError({
       connectionChainId: chainId,

@@ -1,6 +1,6 @@
 import { address, config } from '@wagmi/test'
 import type { Address } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import type { Connector } from '../createConfig.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -21,6 +21,15 @@ test('parameters: connector', async () => {
   await expect(getConnectorClient(config, { connector })).resolves.toBeDefined()
   await disconnect(config, { connector })
   await disconnect(config, { connector: connector2 })
+})
+
+test('behavior: reads connector chain id once', async () => {
+  await connect(config, { connector })
+  const spy = vi.spyOn(connector, 'getChainId')
+  await expect(getConnectorClient(config, { connector })).resolves.toBeDefined()
+  expect(spy).toHaveBeenCalledTimes(1)
+  spy.mockRestore()
+  await disconnect(config, { connector })
 })
 
 test.todo('custom connector client')
