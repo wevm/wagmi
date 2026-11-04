@@ -135,6 +135,25 @@ function App() {
 }
 ```
 
+### timeout
+
+`number | undefined`
+
+- Time to wait (in milliseconds) before throwing `WaitForTransactionReceiptTimeoutError`. Each query retry (see `query.retry`) waits the full `timeout` again.
+- Defaults to Viem's default (`180_000`). Pass `0` to wait indefinitely.
+- Includes the wait for `confirmations`, so a large `confirmations` needs a larger `timeout`.
+
+```ts [index.ts]
+import { useWaitForTransactionReceipt } from 'wagmi'
+
+function App() {
+  const result = useWaitForTransactionReceipt({
+    hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+    timeout: 60_000, // [!code focus]
+  })
+}
+```
+
 ### hash
 
 `` `0x${string}` | undefined ``
