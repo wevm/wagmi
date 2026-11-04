@@ -132,6 +132,27 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### timeout
+
+`number | undefined`
+
+- Time to wait (in milliseconds) before throwing `WaitForTransactionReceiptTimeoutError`.
+- Defaults to Viem's default (`180_000`). Pass `0` to wait indefinitely.
+- Includes the wait for `confirmations`, so a large `confirmations` needs a larger `timeout`.
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+  timeout: 60_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ## Return Type
 
 ```ts

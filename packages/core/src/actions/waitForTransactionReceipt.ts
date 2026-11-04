@@ -47,7 +47,7 @@ export async function waitForTransactionReceipt<
   config: config,
   parameters: WaitForTransactionReceiptParameters<config, chainId>,
 ): Promise<WaitForTransactionReceiptReturnType<config, chainId>> {
-  const { chainId, timeout = 0, ...rest } = parameters
+  const { chainId, timeout, ...rest } = parameters
 
   const client = config.getClient({ chainId })
   const action = getAction(
@@ -84,7 +84,7 @@ export async function waitForTransactionReceipt<
         return new Error(reason)
       },
       {
-        timeout: timeout > 0 ? Math.min(timeout, 10_000) : 10_000,
+        timeout: timeout && timeout > 0 ? Math.min(timeout, 10_000) : 10_000,
         errorInstance: new Error('unknown reason'),
       },
     )

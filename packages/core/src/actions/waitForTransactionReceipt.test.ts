@@ -1,5 +1,5 @@
 import { chain, config, testClient, wait } from '@wagmi/test'
-import { fallback, http, parseEther, type Transport } from 'viem'
+import { createClient, fallback, http, parseEther, type Transport } from 'viem'
 import { beforeEach, expect, test, vi } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
@@ -34,6 +34,31 @@ test('default', async () => {
   })
 
   await disconnect(config, { connector })
+})
+
+test('behavior: leaves default timeout to viem', async () => {
+  const timeouts: (number | undefined)[] = []
+  const config = createConfig({
+    chains: [chain.mainnet],
+    storage: null,
+    client: ({ chain }) =>
+      createClient({ chain, transport: http() }).extend(() => ({
+        async waitForTransactionReceipt(parameters: {
+          timeout?: number | undefined
+        }) {
+          timeouts.push(parameters.timeout)
+          return { status: 'success' }
+        },
+      })),
+  })
+  const hash =
+    '0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30'
+
+  await waitForTransactionReceipt(config, { hash })
+  await waitForTransactionReceipt(config, { hash, timeout: 0 })
+  await waitForTransactionReceipt(config, { hash, timeout: 5_000 })
+
+  expect(timeouts).toEqual([undefined, 0, 5_000])
 })
 
 test('behavior: transaction reverted', async () => {
