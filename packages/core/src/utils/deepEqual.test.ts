@@ -27,6 +27,14 @@ test('compares objects', () => {
   ).toBe(false)
 })
 
+test('compares values at empty property keys', () => {
+  expect(deepEqual({ '': 1 }, { '': 2 })).toBe(false)
+  expect(
+    deepEqual({ nested: { '': 'before' } }, { nested: { '': 'after' } }),
+  ).toBe(false)
+  expect(deepEqual({ '': { value: 1 } }, { '': { value: 1 } })).toBe(true)
+})
+
 test('compares arrays', () => {
   expect(deepEqual([1, 2, 3], [1, 2, 3])).toBe(true)
 
