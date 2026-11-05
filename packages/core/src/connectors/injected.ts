@@ -307,35 +307,39 @@ export function injected(parameters: InjectedParameters = {}) {
             // If no provider is found, check for async injection
             // https://github.com/wevm/references/issues/167
             // https://github.com/MetaMask/detect-provider
-            const handleEthereum = async () => {
-              if (typeof window !== 'undefined')
-                window.removeEventListener(
-                  'ethereum#initialized',
-                  handleEthereum,
-                )
-              const provider = await this.getProvider()
-              return !!provider
-            }
             const timeout =
               typeof unstable_shimAsyncInject === 'number'
                 ? unstable_shimAsyncInject
                 : 1_000
-            const res = await Promise.race([
-              ...(typeof window !== 'undefined'
-                ? [
-                    new Promise<boolean>((resolve) =>
-                      window.addEventListener(
-                        'ethereum#initialized',
-                        () => resolve(handleEthereum()),
-                        { once: true },
-                      ),
-                    ),
-                  ]
-                : []),
-              new Promise<boolean>((resolve) =>
-                setTimeout(() => resolve(handleEthereum()), timeout),
-              ),
-            ])
+            const res = await new Promise<boolean>((resolve) => {
+              let settled = false
+
+              const finish = async () => {
+                if (settled) return
+                settled = true
+
+                clearTimeout(timer)
+                if (typeof window !== 'undefined')
+                  window.removeEventListener('ethereum#initialized', onEthereum)
+
+                try {
+                  resolve(!!(await this.getProvider()))
+                } catch {
+                  resolve(false)
+                }
+              }
+              const onEthereum = () => {
+                void finish()
+              }
+              const timer = setTimeout(() => {
+                void finish()
+              }, timeout)
+
+              if (typeof window !== 'undefined')
+                window.addEventListener('ethereum#initialized', onEthereum, {
+                  once: true,
+                })
+            })
             if (res) return true
           }
 
