@@ -132,6 +132,32 @@ test('behavior: syncConnectedChain', async () => {
   expect(config.getClient().chain.id).toBe(optimism.id)
 })
 
+test('behavior: keeps current connection when another connector disconnects', async () => {
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [mock({ accounts }), mock({ accounts }), mock({ accounts })],
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  const [connector1, connector2, connector3] = config.connectors
+  await connect(config, { connector: connector1! })
+  await connect(config, { connector: connector2! })
+  await connect(config, { connector: connector3! })
+
+  connector1!.emitter.emit('disconnect')
+
+  expect(config.state.current).toBe(connector3!.uid)
+  expect(config.state.connections.has(connector1!.uid)).toBe(false)
+
+  connector3!.emitter.emit('disconnect')
+
+  expect(config.state.current).toBe(connector2!.uid)
+  expect(config.state.connections.has(connector3!.uid)).toBe(false)
+
+  await disconnect(config, { connector: connector2! })
+})
+
 test('behavior: migrate for current version', async () => {
   const state = {
     'wagmi.store': JSON.stringify({
