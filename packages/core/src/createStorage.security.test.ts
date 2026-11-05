@@ -1,5 +1,8 @@
+import { http } from 'viem'
+import { mainnet } from 'viem/chains'
 import { afterEach, expect, test, vi } from 'vitest'
 
+import { createConfig } from './createConfig.js'
 import { getDefaultStorage } from './createStorage.js'
 
 afterEach(() => vi.unstubAllGlobals())
@@ -18,6 +21,21 @@ test('falls back when access to localStorage is denied', () => {
   expect(storage.getItem('wagmi.store')).toBeNull()
   expect(() => storage.setItem('wagmi.store', 'value')).not.toThrow()
   expect(() => storage.removeItem('wagmi.store')).not.toThrow()
+})
+
+test('creates a config when access to default localStorage is denied', () => {
+  vi.stubGlobal('window', {
+    get localStorage() {
+      throw new DOMException('Access is denied', 'SecurityError')
+    },
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    transports: { [mainnet.id]: http() },
+    multiInjectedProviderDiscovery: false,
+  })
+  expect(config.state.status).toBe('disconnected')
 })
 
 test('uses available localStorage', () => {
