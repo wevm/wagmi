@@ -109,7 +109,7 @@ export function serialize(
         value = { __type: 'bigint', value: value_.toString() }
       if (value instanceof Map)
         value = { __type: 'Map', value: Array.from(value_.entries()) }
-      return replacer?.(key, value) ?? value
+      return replacer ? replacer(key, value) : value
     }, circularReplacer),
     indent ?? undefined,
   )
