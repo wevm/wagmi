@@ -68,6 +68,26 @@ const circularObject = Object.assign(
 circularObject.deeply.nested.reference = circularObject
 
 describe('stringify', () => {
+  it.each([null, undefined, false, 0, ''])(
+    'preserves a custom replacer result of %s',
+    (replacement) => {
+      const replacer = (key: string, value: any) =>
+        key === 'target' ? replacement : value
+      expect(serialize({ target: 'secret', keep: 1 }, replacer)).toBe(
+        JSON.stringify({ target: 'secret', keep: 1 }, replacer),
+      )
+    },
+  )
+
+  it.each([null, undefined])(
+    'preserves a nullish root replacer result of %s',
+    (replacement) => {
+      expect(serialize('secret', () => replacement)).toBe(
+        JSON.stringify('secret', () => replacement),
+      )
+    },
+  )
+
   describe('handling of object types', () => {
     it('should handle simple objects', () => {
       const result = serialize(simpleObject)
