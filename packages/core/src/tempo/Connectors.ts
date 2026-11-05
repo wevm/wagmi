@@ -288,6 +288,10 @@ function _setup(parameters: setup.Parameters) {
       async disconnect() {
         const provider = await getProvider()
 
+        if (accountsChanged) {
+          provider.removeListener('accountsChanged', accountsChanged as never)
+          accountsChanged = undefined
+        }
         if (chainChanged) {
           provider.removeListener('chainChanged', chainChanged)
           chainChanged = undefined
