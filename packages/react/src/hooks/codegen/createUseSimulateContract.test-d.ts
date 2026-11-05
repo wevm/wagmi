@@ -193,3 +193,64 @@ test('functionName with overloads', () => {
     | undefined
   >(result4.data?.result)
 })
+
+test('narrows data for functions with matching argument shapes', () => {
+  const abiSameArgsDifferentReturns = [
+    {
+      type: 'function',
+      name: 'foo',
+      stateMutability: 'nonpayable',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'bar',
+      stateMutability: 'nonpayable',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [
+        { name: 'art', type: 'uint256' },
+        { name: 'rate', type: 'uint256' },
+      ],
+    },
+  ] as const
+  const useSimulateContractSameArgs = createUseSimulateContract({
+    abi: abiSameArgsDifferentReturns,
+  })
+
+  {
+    const result = useSimulateContractSameArgs({
+      functionName: 'foo',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<bigint | undefined>(result.data?.result)
+  }
+  {
+    const result = useSimulateContractSameArgs({
+      functionName: 'bar',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<readonly [bigint, bigint] | undefined>(result.data?.result)
+  }
+
+  useSimulateContractSameArgs({
+    // @ts-expect-error invalid functionName
+    functionName: 'baz',
+  })
+
+  useSimulateContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error wrong args for foo (expects bytes32)
+    args: [123n],
+  })
+
+  useSimulateContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error abi not allowed on generated hook
+    abi: abiSameArgsDifferentReturns,
+  })
+})
