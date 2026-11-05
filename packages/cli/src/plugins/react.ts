@@ -6,7 +6,10 @@ import { getAddressDocString } from '../utils/getAddressDocString.js'
 
 export type ReactConfig = Compute<
   {
-    abiItemHooks?: boolean | undefined
+    abiItemHooks?:
+      | boolean
+      | ((options: { contractName: string }) => boolean)
+      | undefined
   } & (
     | {
         /** @deprecated */
@@ -33,9 +36,12 @@ export function react(config: ReactConfig = {}): ReactResult {
       const pure = '/*#__PURE__*/'
 
       const hookNames = new Set<string>()
-      const isAbiItemHooksEnabled = config.abiItemHooks ?? true
 
       for (const contract of contracts) {
+        const isAbiItemHooksEnabled = getIsAbiItemHooksEnabled(
+          config,
+          contract.name,
+        )
         let hasReadFunction = false
         let hasWriteFunction = false
         let hasEvent = false
@@ -289,6 +295,12 @@ function genDocString(
   return `/**
  * ${description}
  */`
+}
+
+function getIsAbiItemHooksEnabled(config: ReactConfig, contractName: string) {
+  if (typeof config.abiItemHooks === 'function')
+    return config.abiItemHooks({ contractName })
+  return config.abiItemHooks ?? true
 }
 
 function getHookName(
