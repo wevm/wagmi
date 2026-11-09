@@ -38,14 +38,14 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/.github/actions/pnpm@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks
 
       - name: Create version pull request
         id: changesets
-        uses: wevm/actions/vendor/changesets/action/v1@6d24d44bb98809270f8d2a19d584f29aeb384be5 # upstream v1.9.0
+        uses: wevm/actions/vendor/changesets/action/v1@31d7c5bc5f75932a367cf341ca5e26818eb9ec9d # upstream v1.9.0
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
@@ -71,14 +71,14 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/.github/actions/pnpm@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks
 
       - name: Publish to npm
         id: publish
-        uses: wevm/actions/vendor/changesets/action/v1@6d24d44bb98809270f8d2a19d584f29aeb384be5 # upstream v1.9.0
+        uses: wevm/actions/vendor/changesets/action/v1@31d7c5bc5f75932a367cf341ca5e26818eb9ec9d # upstream v1.9.0
         with:
           createGithubReleases: true
           publish: pnpm changeset:publish
@@ -101,7 +101,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/.github/actions/pnpm@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           node-version: 24.22.1
           skip-cache: true # avoid cache poisoning attacks

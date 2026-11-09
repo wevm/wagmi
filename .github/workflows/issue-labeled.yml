@@ -9,7 +9,7 @@ on:
 jobs:
   issue-labeled:
     if: ${{ github.repository_owner == 'wevm' }}
-    uses: wevm/actions/.github/workflows/issue-labeled.yml@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+    uses: wevm/actions/.github/workflows/issue-labeled.yml@b518cf981b50a4c745a8b7335fc693f34b108a75
     with:
       needs-reproduction-body: |
         Hello @${{ github.event.issue.user.login }}. 

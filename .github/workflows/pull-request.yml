@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/.github/actions/pnpm@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           node-version: 24.22.1
 
@@ -55,12 +55,12 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/.github/actions/pnpm@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           node-version: 24.22.1
 
       - name: Report build size
-        uses: wevm/actions/vendor/preactjs/compressed-size-action/2.8.0@8963daf30237417f873c8e2f17e3bf9415e3a7b9
+        uses: wevm/actions/vendor/preactjs/compressed-size-action/2.8.0@b518cf981b50a4c745a8b7335fc693f34b108a75
         with:
           pattern: 'packages/**/dist/**'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
