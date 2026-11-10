@@ -42,7 +42,10 @@ export function getCapabilitiesQueryOptions<
         throw new Error('connector is required')
       const [, { connectorUid: _, scopeKey: __, ...parameters }] =
         context.queryKey
-      const capabilities = await getCapabilities(config, parameters)
+      const capabilities = await getCapabilities(config, {
+        ...parameters,
+        connector: options.connector,
+      })
       return capabilities
     },
     queryKey: getCapabilitiesQueryKey(options),

@@ -1,11 +1,18 @@
+import { QueryClient } from '@tanstack/query-core'
 import { accounts, chain, config } from '@wagmi/test'
 import { parseEther, parseGwei } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { expect, test } from 'vitest'
+import { afterEach, expect, test } from 'vitest'
 
+import { connect } from '../actions/connect.js'
+import { disconnect } from '../actions/disconnect.js'
 import { prepareTransactionRequestQueryOptions } from './prepareTransactionRequest.js'
 
 const targetAccount = accounts[0]
+
+const queryClient = new QueryClient()
+
+afterEach(() => queryClient.clear())
 
 test('default', () => {
   expect(
@@ -277,4 +284,23 @@ test('parameters: parameters', () => {
       ],
     }
   `)
+})
+
+test('behavior: connector', async () => {
+  const connector = config.connectors[0]!
+  const connector2 = config.connectors[1]!
+  await connect(config, { connector })
+  await connect(config, { connector: connector2 })
+  expect(config.state.current).toBe(connector2.uid)
+
+  const options = prepareTransactionRequestQueryOptions(config, {
+    connector,
+    to: targetAccount,
+  })
+  const request = await queryClient.fetchQuery(options)
+  expect(request.from).toBe(accounts[0])
+  expect(request).not.toHaveProperty('connectorUid')
+
+  await disconnect(config, { connector })
+  await disconnect(config, { connector: connector2 })
 })
