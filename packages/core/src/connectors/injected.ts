@@ -298,49 +298,35 @@ export function injected(parameters: InjectedParameters = {}) {
           if (!connected) return false
         }
 
-        const provider = await this.getProvider()
-        if (!provider) {
-          if (
-            unstable_shimAsyncInject !== undefined &&
-            unstable_shimAsyncInject !== false
-          ) {
-            // If no provider is found, check for async injection
-            // https://github.com/wevm/references/issues/167
-            // https://github.com/MetaMask/detect-provider
-            const handleEthereum = async () => {
+        let provider = await this.getProvider()
+        if (
+          !provider &&
+          unstable_shimAsyncInject !== undefined &&
+          unstable_shimAsyncInject !== false
+        ) {
+          // If no provider is found, check for async injection
+          // https://github.com/wevm/references/issues/167
+          // https://github.com/MetaMask/detect-provider
+          const timeout =
+            typeof unstable_shimAsyncInject === 'number'
+              ? unstable_shimAsyncInject
+              : 1_000
+          provider = await new Promise<Provider | undefined>((resolve) => {
+            const handleEthereum = () => {
+              clearTimeout(timeoutId)
               if (typeof window !== 'undefined')
                 window.removeEventListener(
                   'ethereum#initialized',
                   handleEthereum,
                 )
-              const provider = await this.getProvider()
-              return !!provider
+              resolve(this.getProvider())
             }
-            const timeout =
-              typeof unstable_shimAsyncInject === 'number'
-                ? unstable_shimAsyncInject
-                : 1_000
-            const res = await Promise.race([
-              ...(typeof window !== 'undefined'
-                ? [
-                    new Promise<boolean>((resolve) =>
-                      window.addEventListener(
-                        'ethereum#initialized',
-                        () => resolve(handleEthereum()),
-                        { once: true },
-                      ),
-                    ),
-                  ]
-                : []),
-              new Promise<boolean>((resolve) =>
-                setTimeout(() => resolve(handleEthereum()), timeout),
-              ),
-            ])
-            if (res) return true
-          }
-
-          throw new ProviderNotFoundError()
+            const timeoutId = setTimeout(handleEthereum, timeout)
+            if (typeof window !== 'undefined')
+              window.addEventListener('ethereum#initialized', handleEthereum)
+          })
         }
+        if (!provider) throw new ProviderNotFoundError()
 
         // Use retry strategy as some injected wallets (e.g. MetaMask) fail to
         // immediately resolve JSON-RPC requests on page load.
