@@ -41,7 +41,6 @@ auditConfig:
     - GHSA-hqr4-qq8f-hg3x # stream-json: awaiting Solana/Jayson migration
     - GHSA-mjw6-4jj6-33hc # stream-json: awaiting Solana/Jayson migration
     - GHSA-vfj7-8cjw-p6xm # braces: stack-exhaustion DoS (no patch)
-    - GHSA-86w9-cpqp-85rv # node-forge: RSA signature verification (no patch, transitive via nuxt cli)
     - GHSA-hp3w-g68c-fv3c # sprintf-js: unbounded precision DoS (no patch, transitive via changesets)
     # Zod 3 has no patched release. WalletConnect 2.25.0 uses AppKit 1.8.19's
     # core QR client (no auth-frame provider) and disables email/social login;
@@ -170,7 +169,7 @@ overrides:
   minimatch@>=9.0.0 <11.0.1: 11.0.1
   nanoid@<3.3.18: 3.3.18
   nitropack@<2.13.4: 2.13.4
-  node-forge@<1.4.1: 1.4.1
+  node-forge@<1.4.3: 1.4.3
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
   postcss@<8.5.23: 8.5.23

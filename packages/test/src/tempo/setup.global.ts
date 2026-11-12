@@ -63,7 +63,7 @@ function buildCommand(port: number, blockTime: string): string[] {
     authrpc: { port: port + 30 },
     datadir,
     dev: [true, { blockTime }],
-    engine: { disablePrecompileCache: true, legacyStateRoot: true },
+    engine: { disablePrecompileCache: true },
     faucet: {
       address: [
         '0x20c0000000000000000000000000000000000000',
