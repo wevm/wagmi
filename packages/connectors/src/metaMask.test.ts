@@ -102,6 +102,32 @@ test('falls back to SDK when no EIP-6963 MetaMask provider is announced', async 
   expect(mocks.createEVMClient).toHaveBeenCalledTimes(1)
 })
 
+test('retries SDK initialization after a failed attempt', async () => {
+  const { metaMask } = await import('./metaMask.js')
+  const connector = config._internal.connectors.setup(metaMask())
+  const error = new Error('Failed to initialize SDK.')
+  mocks.createEVMClient.mockRejectedValueOnce(error)
+
+  await expect(connector.getProvider()).rejects.toThrow(error)
+  await expect(connector.getProvider()).resolves.toBe(mocks.sdkProvider)
+
+  expect(mocks.createEVMClient).toHaveBeenCalledTimes(2)
+})
+
+test('creates one SDK client for concurrent calls', async () => {
+  const { metaMask } = await import('./metaMask.js')
+  const connector = config._internal.connectors.setup(metaMask())
+
+  const [provider1, provider2] = await Promise.all([
+    connector.getProvider(),
+    connector.getProvider(),
+  ])
+
+  expect(provider1).toBe(mocks.sdkProvider)
+  expect(provider2).toBe(mocks.sdkProvider)
+  expect(mocks.createEVMClient).toHaveBeenCalledTimes(1)
+})
+
 test('forces skipAutoAnnounce when loading the SDK', async () => {
   const { metaMask } = await import('./metaMask.js')
   // wagmi already surfaces the native MetaMask provider via MIPD/EIP-6963, so
