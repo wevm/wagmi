@@ -565,10 +565,18 @@ test('behavior: background account change keeps the active connection', async ()
     chains: [mainnet],
     connectors: [
       injected({
-        target: { id: 'walletA', name: 'Wallet A', provider: providerA },
+        target: {
+          id: 'walletA',
+          name: 'Wallet A',
+          provider: providerA as unknown as EIP1193Provider,
+        },
       }),
       injected({
-        target: { id: 'walletB', name: 'Wallet B', provider: providerB },
+        target: {
+          id: 'walletB',
+          name: 'Wallet B',
+          provider: providerB as unknown as EIP1193Provider,
+        },
       }),
     ],
     multiInjectedProviderDiscovery: false,
