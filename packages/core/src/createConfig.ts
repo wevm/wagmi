@@ -369,7 +369,7 @@ export function createConfig<
       if (!connector) return x
 
       if (connector.emitter.listenerCount('connect'))
-        connector.emitter.off('connect', change)
+        connector.emitter.off('connect', connect)
       if (!connector.emitter.listenerCount('change'))
         connector.emitter.on('change', change)
       if (!connector.emitter.listenerCount('disconnect'))
