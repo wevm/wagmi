@@ -52,6 +52,7 @@ export function useWatchContractEvent<
   > = {} as any,
 ): UseWatchContractEventReturnType {
   const { enabled = true, onLogs, config: _, ...rest } = parameters
+  const hasOnLogs = Boolean(onLogs)
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })
@@ -76,7 +77,7 @@ export function useWatchContractEvent<
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onLogsRef.current) return
+    if (!hasOnLogs) return
     return watchContractEvent(config, {
       ...(rest as any),
       chainId,
@@ -87,6 +88,7 @@ export function useWatchContractEvent<
     chainId,
     config,
     enabled,
+    hasOnLogs,
     ///
     abiRef.current,
     addressRef.current,
