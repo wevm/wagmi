@@ -104,7 +104,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
   }
 
   let provider_: Provider | undefined
-  let providerPromise: Promise<typeof provider_>
+  let providerPromise: Promise<typeof provider_> | undefined
   const NAMESPACE = 'eip155'
 
   let accountsChanged: WalletConnectConnector['onAccountsChanged'] | undefined
@@ -300,7 +300,13 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
       if (!provider_) {
         if (!providerPromise) providerPromise = initProvider()
-        provider_ = await providerPromise
+        const promise = providerPromise
+        try {
+          provider_ = await promise
+        } catch (error) {
+          if (providerPromise === promise) providerPromise = undefined
+          throw error
+        }
         provider_?.events.setMaxListeners(Number.POSITIVE_INFINITY)
       }
       if (chainId) await this.switchChain?.({ chainId })
