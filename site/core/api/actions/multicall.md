@@ -50,6 +50,10 @@ const result = await multicall(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+::: warning
+`multicall` needs Multicall3 on the chain (or [`multicallAddress`](#multicalladdress)), deployed at the block being read.
+:::
+
 ## Parameters
 
 ```ts
@@ -200,7 +204,10 @@ const result = await multicall(config, {
 
 `boolean`
 
-Whether or not the Hook should throw if a call reverts. If set to `true` (default), and a call reverts, then `multicall` will fail silently and its error will be logged in the results array. Defaults to `true`.
+Whether to return failed calls in the results array instead of throwing. Defaults to `true`.
+
+- When `true`, returns `{ status: 'success', result }` or `{ status: 'failure', error, result: undefined }` for each call.
+- When `false`, returns the results directly and throws if a call fails.
 
 ::: code-group
 ```tsx [index.tsx]

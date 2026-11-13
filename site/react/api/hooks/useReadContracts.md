@@ -64,6 +64,10 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+::: warning
+See [`readContracts`](/core/api/actions/readContracts) for multicall fallback behavior.
+:::
+
 ## Parameters
 
 ```ts
@@ -219,7 +223,10 @@ function App() {
 
 `boolean`
 
-Whether or not the Hook should throw if a call reverts. If set to `true` (default), and a call reverts, then `useReadContracts` will fail silently and its error will be logged in the results array. Defaults to `true`.
+Whether to return failed calls in the results array instead of throwing. Defaults to `true`.
+
+- When `true`, `data` contains `{ status: 'success', result }` or `{ status: 'failure', error, result: undefined }` for each call.
+- When `false`, `data` contains the results directly and the query fails if a call fails.
 
 ::: code-group
 ```tsx [index.tsx]
