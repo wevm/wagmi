@@ -9,6 +9,7 @@ import type {
   QueryParameter,
   ScopeKeyParameter,
   UnionCompute,
+  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type {
   ReadContractData,
@@ -46,7 +47,7 @@ export type CreateUseReadContractParameters<
 }
 
 /** Call-level options from ReadContractParameters (excludes abi, address, functionName, args). */
-type ReadContractCallOptions<config extends Config> = Omit<
+type ReadContractCallOptions<config extends Config> = UnionStrictOmit<
   ReadContractParameters<Abi, string, readonly unknown[], config>,
   'abi' | 'address' | 'functionName' | 'args'
 >
