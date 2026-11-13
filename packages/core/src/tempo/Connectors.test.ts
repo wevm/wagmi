@@ -96,6 +96,54 @@ describe('tempoWallet', () => {
     expect(await connector.getAccounts()).toEqual([])
     expect(await connector.isAuthorized()).toBe(false)
   })
+
+  test('disconnect does not publish a connected state with empty addresses', async () => {
+    const config = createConfig({
+      chains: [tempoLocal],
+      connectors: [],
+      storage: null,
+      transports: {
+        [tempoLocal.id]: http(),
+      },
+    })
+
+    const address = accounts[0]!.address
+    const connector = config._internal.connectors.setup(
+      tempoWallet({
+        dialog: createTempoWalletDialog(address),
+        storage: AccountsStorage.memory({
+          key: 'tempo-wallet-disconnect-empty-test',
+        }),
+      }),
+    )
+
+    await connect(config, { connector })
+    expect(getConnection(config).status).toBe('connected')
+
+    // The provider clears its accounts on `wallet_disconnect` and emits
+    // `accountsChanged([])`; that event must not overwrite the live
+    // connection with `connected` + empty addresses mid-disconnect
+    // (wevm/wagmi#5269).
+    const seen: Array<{ status: string; addresses: readonly unknown[] }> = []
+    config.subscribe(
+      () => getConnection(config),
+      (connection) =>
+        seen.push({
+          status: connection.status,
+          addresses: connection.addresses,
+        }),
+    )
+
+    await disconnect(config, { connector })
+    expect(getConnection(config).status).toBe('disconnected')
+    expect(
+      seen.filter(
+        (connection) =>
+          connection.status === 'connected' &&
+          connection.addresses.length === 0,
+      ),
+    ).toEqual([])
+  })
 })
 
 describe('getProvider', () => {
