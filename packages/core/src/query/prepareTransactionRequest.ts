@@ -56,13 +56,15 @@ export function prepareTransactionRequestQueryOptions<
       (options.to || hasCalls) && (options.query?.enabled ?? true),
     ),
     queryFn: async (context) => {
-      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      const [, { connectorUid: _, scopeKey: __, ...parameters }] =
+        context.queryKey
       const hasCalls =
         Array.isArray(parameters.calls) && parameters.calls.length > 0
       if (!parameters.to && !hasCalls)
         throw new Error('to or calls is required')
       return prepareTransactionRequest(config, {
         ...(parameters as any),
+        connector: options.connector,
       }) as unknown as Promise<
         PrepareTransactionRequestQueryFnData<config, chainId, request>
       >
