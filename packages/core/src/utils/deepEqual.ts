@@ -34,9 +34,9 @@ export function deepEqual(a: any, b: any) {
     for (i = length; i-- !== 0; ) if (!Object.hasOwn(b, keys[i]!)) return false
 
     for (i = length; i-- !== 0; ) {
-      const key = keys[i]
+      const key = keys[i]!
 
-      if (key && !deepEqual(a[key], b[key])) return false
+      if (!deepEqual(a[key], b[key])) return false
     }
 
     return true
