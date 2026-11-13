@@ -112,3 +112,20 @@ test('bigint', () => {
   const deserializedCache = deserialize(serialize({ bigint }))
   expect(deserializedCache).toEqual({ bigint })
 })
+
+test.each([null, undefined, false, 0, ''])(
+  'preserves a custom reviver result of %s',
+  (replacement) => {
+    const json = '{"target":"secret","keep":1}'
+    const reviver = (key: string, value: any) =>
+      key === 'target' ? replacement : value
+    expect(deserialize(json, reviver)).toEqual(JSON.parse(json, reviver))
+  },
+)
+
+test.each([null, undefined])(
+  'preserves a nullish root reviver result of %s',
+  (replacement) => {
+    expect(deserialize('"secret"', () => replacement)).toBe(replacement)
+  },
+)

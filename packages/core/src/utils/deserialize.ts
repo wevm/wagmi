@@ -5,6 +5,6 @@ export function deserialize<type>(value: string, reviver?: Reviver): type {
     let value = value_
     if (value?.__type === 'bigint') value = BigInt(value.value)
     if (value?.__type === 'Map') value = new Map(value.value)
-    return reviver?.(key, value) ?? value
+    return reviver ? reviver(key, value) : value
   })
 }
