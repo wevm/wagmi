@@ -10,7 +10,7 @@ const includeInfiniteQueryResult = false
 
 ---
 
-[TanStack Query query docs](https://tanstack.com/query/v5/docs/react/reference/useQuery)
+[TanStack Query query docs](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery)
 
 ### data
 
