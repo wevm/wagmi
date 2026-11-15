@@ -10,7 +10,7 @@ import {
 import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
 import { render } from '@wagmi/test/react'
 import * as React from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { WagmiProvider } from './context.js'
 import { useConnection } from './hooks/useConnection.js'
@@ -173,6 +173,56 @@ test('mock reconnect: multiple ssr providers with independent configs', async ()
     </QueryClientProvider>,
   )
   await expect.element(screen.getByText('a: connected')).toBeInTheDocument()
+  await expect.element(screen.getByText('b: connected')).toBeInTheDocument()
+  screen.unmount()
+})
+
+test('behavior: re-renders do not reconnect again', async () => {
+  const config = createIsolatedConfig()
+  const connector = config.connectors[0]!
+  const connect = vi.spyOn(connector, 'connect')
+  const queryClient = new QueryClient()
+  const app = (label: string) => (
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider config={config} reconnectOnMount>
+        <ConnectionStatus name={label} />
+      </WagmiProvider>
+    </QueryClientProvider>
+  )
+
+  const screen = await render(app('render 0'))
+  await expect
+    .element(screen.getByText('render 0: connected'))
+    .toBeInTheDocument()
+  const listeners = connector.emitter.listenerCount('change')
+
+  for (let i = 1; i <= 3; i++) {
+    await screen.rerender(app(`render ${i}`))
+    await expect
+      .element(screen.getByText(`render ${i}: connected`))
+      .toBeInTheDocument()
+  }
+
+  expect(connect).toHaveBeenCalledTimes(1)
+  expect(connector.emitter.listenerCount('change')).toBe(listeners)
+  screen.unmount()
+})
+
+test('behavior: hydrates a new config', async () => {
+  const configA = createIsolatedConfig()
+  const configB = createIsolatedConfig()
+  const queryClient = new QueryClient()
+  const app = (config: typeof configA, label: string) => (
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider config={config} reconnectOnMount>
+        <ConnectionStatus name={label} />
+      </WagmiProvider>
+    </QueryClientProvider>
+  )
+
+  const screen = await render(app(configA, 'a'))
+  await expect.element(screen.getByText('a: connected')).toBeInTheDocument()
+  await screen.rerender(app(configB, 'b'))
   await expect.element(screen.getByText('b: connected')).toBeInTheDocument()
   screen.unmount()
 })

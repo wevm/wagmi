@@ -17,8 +17,13 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
     reconnectOnMount,
   })
 
-  // Hydrate for non-SSR
-  if (!config._internal.ssr) onMount()
+  // Hydrate for non-SSR, once per config. Running `onMount` on every render
+  // would reconnect again and re-attach connector listeners each time.
+  const hydratedConfig = useRef<HydrateProps['config'] | undefined>(undefined)
+  if (!config._internal.ssr && hydratedConfig.current !== config) {
+    hydratedConfig.current = config
+    onMount()
+  }
 
   // Hydrate for SSR
   const active = useRef(true)
