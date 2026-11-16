@@ -59,6 +59,7 @@ auditConfig:
 autoInstallPeers: false
 
 catalog:
+  '@1shotapi/ows-provider': 0.9.0
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@metamask/connect-evm': 2.1.0

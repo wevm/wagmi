@@ -103,6 +103,10 @@ export function getSidebar() {
                 link: '/react/api/connectors/mock',
               },
               {
+                text: 'oneShotWallet',
+                link: '/react/api/connectors/oneShotWallet',
+              },
+              {
                 text: 'safe',
                 link: '/react/api/connectors/safe',
               },
@@ -473,6 +477,10 @@ export function getSidebar() {
                 link: '/vue/api/connectors/mock',
               },
               {
+                text: 'oneShotWallet',
+                link: '/vue/api/connectors/oneShotWallet',
+              },
+              {
                 text: 'safe',
                 link: '/vue/api/connectors/safe',
               },
@@ -735,6 +743,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/core/api/connectors/mock',
+              },
+              {
+                text: 'oneShotWallet',
+                link: '/core/api/connectors/oneShotWallet',
               },
               {
                 text: 'safe',
@@ -1158,6 +1170,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/solid/api/connectors/mock',
+              },
+              {
+                text: 'oneShotWallet',
+                link: '/solid/api/connectors/oneShotWallet',
               },
               {
                 text: 'safe',

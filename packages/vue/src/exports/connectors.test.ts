@@ -11,6 +11,7 @@ test('exports', () => {
       "baseAccount",
       "coinbaseWallet",
       "metaMask",
+      "oneShotWallet",
       "safe",
       "version",
       "walletConnect",

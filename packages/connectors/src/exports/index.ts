@@ -12,6 +12,10 @@ export {
   coinbaseWallet,
 } from '../coinbaseWallet.js'
 export { type MetaMaskParameters, metaMask } from '../metaMask.js'
+export {
+  type OneShotWalletParameters,
+  oneShotWallet,
+} from '../oneShotWallet.js'
 export { type SafeParameters, safe } from '../safe.js'
 export { version } from '../version.js'
 export {

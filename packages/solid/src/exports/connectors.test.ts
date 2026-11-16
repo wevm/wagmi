@@ -10,6 +10,7 @@ test('exports', () => {
       "injected",
       "metaMask",
       "mock",
+      "oneShotWallet",
       "safe",
       "tempoWallet",
       "version",
