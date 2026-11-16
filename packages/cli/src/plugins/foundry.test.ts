@@ -55,6 +55,52 @@ test('validates without project', async () => {
   await expect(foundry().validate?.()).resolves.toBeUndefined()
 })
 
+test.skipIf(process.platform === 'win32')(
+  'passes a project path with spaces to forge as one argument',
+  async () => {
+    const dir = await createTempDir()
+    const project = resolve(dir, 'my project')
+    await fs.mkdir(project)
+    const forgePath = resolve(dir, 'forge')
+    await fs.writeFile(
+      forgePath,
+      [
+        '#!/bin/sh',
+        'printf \'%s\\n\' "$@" >> "$(dirname "$0")/args.log"',
+        'prev=""',
+        'for arg in "$@"; do',
+        '  if [ "$prev" = "--root" ]; then root="$arg"; fi',
+        '  prev="$arg"',
+        'done',
+        'if [ "$1" = "build" ]; then mkdir -p "$root/out"; fi',
+        '',
+      ].join('\n'),
+      { mode: 0o755 },
+    )
+
+    await expect(
+      foundry({
+        project,
+        forge: { clean: true, path: forgePath },
+      }).contracts?.(),
+    ).resolves.toEqual([])
+
+    const args = await fs.readFile(resolve(dir, 'args.log'), 'utf-8')
+    expect(args.trim().split('\n')).toEqual([
+      'config',
+      '--json',
+      '--root',
+      project,
+      'clean',
+      '--root',
+      project,
+      'build',
+      '--root',
+      project,
+    ])
+  },
+)
+
 test('contracts', async () => {
   await expect(
     foundry({
