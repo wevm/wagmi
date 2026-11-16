@@ -2509,7 +2509,7 @@ export function useWatchAdminRole<
   useEffect(() => {
     if (!enabled) return
     if (!onRoleAdminUpdated) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchAdminRole(config, {
       ...rest,
       chainId,
@@ -2569,7 +2569,7 @@ export function useWatchApprove<
   useEffect(() => {
     if (!enabled) return
     if (!onApproval) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchApprove(config, {
       ...rest,
       chainId,
@@ -2629,7 +2629,7 @@ export function useWatchBurn<
   useEffect(() => {
     if (!enabled) return
     if (!onBurn) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchBurn(config, {
       ...rest,
       chainId,
@@ -2746,7 +2746,7 @@ export function useWatchMint<
   useEffect(() => {
     if (!enabled) return
     if (!onMint) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchMint(config, {
       ...rest,
       chainId,
@@ -2806,7 +2806,7 @@ export function useWatchRole<
   useEffect(() => {
     if (!enabled) return
     if (!onRoleUpdated) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchRole(config, {
       ...rest,
       chainId,
@@ -2866,7 +2866,7 @@ export function useWatchTransfer<
   useEffect(() => {
     if (!enabled) return
     if (!onTransfer) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchTransfer(config, {
       ...rest,
       chainId,
@@ -2929,7 +2929,7 @@ export function useWatchUpdateQuoteToken<
   useEffect(() => {
     if (!enabled) return
     if (!onUpdateQuoteToken) return
-    if (!token) return
+    if (token === undefined) return
     return Actions.token.watchUpdateQuoteToken(config, {
       ...rest,
       chainId,

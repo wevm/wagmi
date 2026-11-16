@@ -43,6 +43,21 @@ describe('getPool', () => {
         }
       `)
     })
+
+    test('token id 0n', () => {
+      expect(
+        ammActions.getPool.queryOptions(config, {
+          userToken: 0n,
+          validatorToken: 1n,
+        }).enabled,
+      ).toBe(true)
+      expect(
+        ammActions.getPool.queryOptions(config, {
+          userToken: 1n,
+          validatorToken: 0n,
+        }).enabled,
+      ).toBe(true)
+    })
   })
 })
 
