@@ -77,9 +77,22 @@ export async function readContracts<
   } catch (error) {
     if (error instanceof ContractFunctionExecutionError) throw error
 
+    const {
+      batchSize: _batchSize,
+      chainId: _chainId,
+      contracts: _contracts,
+      deployless: _deployless,
+      multicallAddress: _multicallAddress,
+      ...callParameters
+    } = rest as typeof rest & { chainId?: number | undefined }
     const promises = () =>
       contracts.map((contract) =>
-        readContract(config, { ...contract, blockNumber, blockTag }),
+        readContract(config, {
+          ...callParameters,
+          ...contract,
+          blockNumber,
+          blockTag,
+        }),
       )
     if (allowFailure)
       return (await Promise.allSettled(promises())).map((result) => {
