@@ -1,5 +1,13 @@
-import { accounts, addresses, config, renderHook } from '@wagmi/test/tempo'
-import { type Address, parseUnits } from 'viem'
+import { createConfig } from '@wagmi/core'
+import {
+  accounts,
+  addresses,
+  config,
+  renderHook,
+  tempoLocal,
+} from '@wagmi/test/tempo'
+import { type Address, custom, numberToHex, parseUnits } from 'viem'
+import { TokenIds } from 'viem/tempo'
 import { describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
@@ -1199,4 +1207,45 @@ describe.skip('flaky: merge unblock', () => {
   describe.todo('useBurnBlocked')
 
   describe.todo('useBurnBlockedSync')
+})
+
+describe('token id 0n', () => {
+  test.each([
+    { hook: hooks.useWatchAdminRole, name: 'onRoleAdminUpdated' },
+    { hook: hooks.useWatchApprove, name: 'onApproval' },
+    { hook: hooks.useWatchBurn, name: 'onBurn' },
+    { hook: hooks.useWatchMint, name: 'onMint' },
+    { hook: hooks.useWatchRole, name: 'onRoleUpdated' },
+    { hook: hooks.useWatchTransfer, name: 'onTransfer' },
+    { hook: hooks.useWatchUpdateQuoteToken, name: 'onUpdateQuoteToken' },
+  ])('$hook.name subscribes', async ({ hook, name }) => {
+    const methods: string[] = []
+    const config = createConfig({
+      chains: [tempoLocal],
+      pollingInterval: 25,
+      storage: null,
+      transports: {
+        [tempoLocal.id]: custom({
+          async request({ method }) {
+            methods.push(method)
+            if (method === 'eth_chainId') return numberToHex(tempoLocal.id)
+            if (method === 'eth_blockNumber') return '0x1'
+            if (method === 'eth_newFilter') return '0x1'
+            return []
+          },
+        }),
+      },
+    })
+
+    const { unmount } = await renderHook(() =>
+      hook({
+        config,
+        [name]() {},
+        token: TokenIds.pathUsd,
+      } as never),
+    )
+
+    await vi.waitUntil(() => methods.includes('eth_newFilter'))
+    unmount()
+  })
 })

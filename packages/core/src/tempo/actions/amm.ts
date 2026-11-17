@@ -75,7 +75,9 @@ export namespace getPool {
     return {
       ...query,
       enabled: Boolean(
-        rest.userToken && rest.validatorToken && (query?.enabled ?? true),
+        rest.userToken !== undefined &&
+          rest.validatorToken !== undefined &&
+          (query?.enabled ?? true),
       ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {

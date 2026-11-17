@@ -1,6 +1,7 @@
 import { connect } from '@wagmi/core'
 import { accounts, addresses, config, queryClient } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
+import { TokenIds } from 'viem/tempo'
 import { describe, expect, test, vi } from 'vitest'
 import * as token from './token.js'
 
@@ -1305,5 +1306,27 @@ describe.skip('flaky: merge unblock', () => {
       expect(events[0]?.to).toBe(account2.address)
       expect(events[0]?.amount).toBe(parseUnits('5', 6))
     })
+  })
+})
+
+describe('token id 0n', () => {
+  test('enables queries', () => {
+    const parameters = {
+      account: account.address,
+      role: 'issuer',
+      spender: account2.address,
+      token: TokenIds.pathUsd,
+    } as const
+    expect(token.getAllowance.queryOptions(config, parameters).enabled).toBe(
+      true,
+    )
+    expect(token.getBalance.queryOptions(config, parameters).enabled).toBe(true)
+    expect(token.getMetadata.queryOptions(config, parameters).enabled).toBe(
+      true,
+    )
+    expect(token.getRoleAdmin.queryOptions(config, parameters).enabled).toBe(
+      true,
+    )
+    expect(token.hasRole.queryOptions(config, parameters).enabled).toBe(true)
   })
 })

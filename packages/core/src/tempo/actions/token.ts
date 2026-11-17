@@ -769,7 +769,10 @@ export namespace getAllowance {
     return {
       ...query,
       enabled: Boolean(
-        rest.account && rest.spender && rest.token && (query?.enabled ?? true),
+        rest.account &&
+          rest.spender &&
+          rest.token !== undefined &&
+          (query?.enabled ?? true),
       ),
       queryKey: queryKey(rest),
       async queryFn(context) {
@@ -862,7 +865,9 @@ export namespace getBalance {
     const { query, ...rest } = parameters
     return {
       ...query,
-      enabled: Boolean(rest.account && rest.token && (query?.enabled ?? true)),
+      enabled: Boolean(
+        rest.account && rest.token !== undefined && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
@@ -954,7 +959,7 @@ export namespace getMetadata {
     const { query, ...rest } = parameters
     return {
       ...query,
-      enabled: Boolean(rest.token && (query?.enabled ?? true)),
+      enabled: Boolean(rest.token !== undefined && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
@@ -1047,7 +1052,9 @@ export namespace getRoleAdmin {
     const { query, ...rest } = parameters
     return {
       ...query,
-      enabled: Boolean(rest.token && rest.role && (query?.enabled ?? true)),
+      enabled: Boolean(
+        rest.token !== undefined && rest.role && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
@@ -1260,7 +1267,10 @@ export namespace hasRole {
     return {
       ...query,
       enabled: Boolean(
-        rest.token && rest.role && rest.account && (query?.enabled ?? true),
+        rest.token !== undefined &&
+          rest.role &&
+          rest.account &&
+          (query?.enabled ?? true),
       ),
       queryKey: queryKey(rest),
       async queryFn(context) {
