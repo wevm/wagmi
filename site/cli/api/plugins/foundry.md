@@ -74,7 +74,7 @@ export default defineConfig({
 
 ### deployments
 
-`{ [key: string]: address?: Address | Record<chainId, Address> | undefined } | undefined`
+`{ [key: string]: address?: Address | Record<chainId, Address> | { artifact: string; address?: Address | Record<chainId, Address> | undefined } | undefined } | undefined`
 
 Mapping of addresses to attach to artifacts.
 
@@ -89,6 +89,30 @@ export default defineConfig({
         Counter: { // [!code focus]
           1: '0x314159265dd8dbb310642f98f50c066173c1259b', // [!code focus]
           5: '0x112234455c3a32fd11230c42e7bccd4a84e02010', // [!code focus]
+        }, // [!code focus]
+      }, // [!code focus]
+    }),
+  ],
+})
+```
+
+A deployment entry can also alias an artifact's ABI under a different contract name. This is useful when multiple contracts share the same ABI but have different addresses (e.g. different ERC20 tokens).
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      deployments: { // [!code focus]
+        dai: { // [!code focus]
+          artifact: 'ERC20', // [!code focus]
+          address: { 1: '0x6b175474e89094c44da98b954eedeac495271d0f' }, // [!code focus]
+        }, // [!code focus]
+        weth: { // [!code focus]
+          artifact: 'ERC20', // [!code focus]
+          address: { 1: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' }, // [!code focus]
         }, // [!code focus]
       }, // [!code focus]
     }),

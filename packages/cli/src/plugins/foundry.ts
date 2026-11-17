@@ -61,7 +61,24 @@ export type FoundryConfig = {
    */
   includeBroadcasts?: boolean | undefined
   /** Mapping of addresses to attach to artifacts. */
-  deployments?: { [key: string]: ContractConfig['address'] } | undefined
+  deployments?:
+    | {
+        [key: string]:
+          | ContractConfig['address']
+          | {
+              /**
+               * Name of the artifact whose ABI the contract uses.
+               *
+               * Use this to create a contract under a different name that
+               * shares another artifact's ABI (e.g. multiple ERC20 tokens
+               * with different addresses).
+               */
+              artifact: string
+              /** Contract address or addresses. */
+              address: ContractConfig['address']
+            }
+      }
+    | undefined
   /** Artifact files to exclude. */
   exclude?: string[] | undefined
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
@@ -127,7 +144,19 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     namePrefix = '',
   } = config
 
-  let allDeployments: { [key: string]: ContractConfig['address'] } = deployments
+  let allDeployments: NonNullable<FoundryConfig['deployments']> = deployments
+
+  function isAliasDeployment(deployment: unknown): deployment is {
+    artifact: string
+    address: ContractConfig['address']
+  } {
+    return (
+      typeof deployment === 'object' &&
+      deployment !== null &&
+      'artifact' in deployment &&
+      typeof (deployment as { artifact: unknown }).artifact === 'string'
+    )
+  }
 
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
@@ -137,14 +166,24 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   async function getContract(
     artifactPath: string,
-    contractDeployments: {
-      [key: string]: ContractConfig['address']
-    } = allDeployments,
+    contractDeployments: NonNullable<
+      FoundryConfig['deployments']
+    > = allDeployments,
   ) {
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
+    const artifactName = getContractName(artifactPath, false)
+    const deployment = contractDeployments[artifactName]
+    // A plain address attaches to this artifact. An alias that points back
+    // to this same artifact also attaches its address here; aliases that
+    // point to another artifact create a separate contract (see contracts()).
+    let address: ContractConfig['address']
+    if (deployment === undefined) address = undefined
+    else if (!isAliasDeployment(deployment)) address = deployment
+    else if (deployment.artifact === artifactName) address = deployment.address
+    else address = undefined
     return {
       abi: artifact.abi,
-      address: contractDeployments[getContractName(artifactPath, false)],
+      address,
       name: getContractName(artifactPath),
     }
   }
@@ -278,6 +317,33 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         const contract = await getContract(artifactPath, allDeployments)
         if (!contract.abi?.length) continue
         contracts.push(contract)
+      }
+      // A deployment can alias an artifact's ABI under a different contract
+      // name (e.g. two ERC20 tokens sharing one artifact). Emit one contract
+      // per alias, reusing the source artifact's ABI.
+      const artifactPathsByName = new Map(
+        artifactPaths.map((artifactPath) => [
+          getContractName(artifactPath, false),
+          artifactPath,
+        ]),
+      )
+      for (const [name, deployment] of Object.entries(allDeployments)) {
+        if (!isAliasDeployment(deployment)) continue
+        // An alias that points back to an artifact of the same name is
+        // already attached to that artifact's contract above.
+        if (deployment.artifact === name) continue
+        const artifactPath = artifactPathsByName.get(deployment.artifact)
+        if (!artifactPath)
+          throw new Error(
+            `Artifact "${deployment.artifact}" not found for deployment "${name}".`,
+          )
+        const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
+        if (!artifact.abi?.length) continue
+        contracts.push({
+          abi: artifact.abi,
+          address: deployment.address,
+          name: `${namePrefix}${name}`,
+        })
       }
       return contracts
     },
