@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises'
 import { createFixture } from 'fs-fixture'
 import { dirname, resolve } from 'pathe'
 import { afterEach, expect, test, vi } from 'vitest'
@@ -90,3 +91,62 @@ test('contracts', async () => {
       ]
     `)
 }, 10_000)
+
+test('deployments alias multiple contracts to one artifact', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'artifacts')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    contractName: 'ERC20',
+    abi: [
+      {
+        inputs: [
+          { internalType: 'address', name: 'to', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        name: 'transfer',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const result = await hardhat({
+    project: dir,
+    commands: { build: false, clean: false, rebuild: false },
+    deployments: {
+      dai: {
+        artifact: 'ERC20',
+        address: { 31337: '0x1111111111111111111111111111111111111111' },
+      },
+      weth: {
+        artifact: 'ERC20',
+        address: { 31337: '0x2222222222222222222222222222222222222222' },
+      },
+    },
+    include: ['ERC20.json'],
+  }).contracts?.()
+
+  const names = (result ?? []).map((c) => c.name).sort()
+  expect(names).toEqual(['ERC20', 'dai', 'weth'])
+
+  const dai = result?.find((c) => c.name === 'dai')
+  expect(dai?.abi).toEqual(erc20Artifact.abi)
+  expect(dai?.address).toEqual({
+    '31337': '0x1111111111111111111111111111111111111111',
+  })
+
+  const weth = result?.find((c) => c.name === 'weth')
+  expect(weth?.abi).toEqual(erc20Artifact.abi)
+  expect(weth?.address).toEqual({
+    '31337': '0x2222222222222222222222222222222222222222',
+  })
+})

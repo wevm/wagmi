@@ -22,7 +22,24 @@ export type HardhatConfig = {
    */
   artifacts?: string | undefined
   /** Mapping of addresses to attach to artifacts. */
-  deployments?: { [key: string]: ContractConfig['address'] } | undefined
+  deployments?:
+    | {
+        [key: string]:
+          | ContractConfig['address']
+          | {
+              /**
+               * Name of the artifact whose ABI the contract uses.
+               *
+               * Use this to create a contract under a different name that
+               * shares another artifact's ABI (e.g. multiple ERC20 tokens
+               * with different addresses).
+               */
+              artifact: string
+              /** Contract address or addresses. */
+              address: ContractConfig['address']
+            }
+      }
+    | undefined
   /** Artifact files to exclude. */
   exclude?: string[] | undefined
   /** Commands to run */
@@ -80,15 +97,37 @@ export function hardhat(config: HardhatConfig): HardhatResult {
     sources = 'contracts',
   } = config
 
+  function isAliasDeployment(deployment: unknown): deployment is {
+    artifact: string
+    address: ContractConfig['address']
+  } {
+    return (
+      typeof deployment === 'object' &&
+      deployment !== null &&
+      'artifact' in deployment &&
+      typeof (deployment as { artifact: unknown }).artifact === 'string'
+    )
+  }
+
   function getContractName(artifact: { contractName: string }) {
     return `${namePrefix}${artifact.contractName}`
   }
 
   async function getContract(artifactPath: string) {
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
+    const deployment = deployments[artifact.contractName]
+    // A plain address attaches to this artifact. An alias that points back
+    // to this same artifact also attaches its address here; aliases that
+    // point to another artifact create a separate contract (see contracts()).
+    let address: ContractConfig['address']
+    if (deployment === undefined) address = undefined
+    else if (!isAliasDeployment(deployment)) address = deployment
+    else if (deployment.artifact === artifact.contractName)
+      address = deployment.address
+    else address = undefined
     return {
       abi: artifact.abi,
-      address: deployments[artifact.contractName],
+      address,
       name: getContractName(artifact),
     }
   }
@@ -144,6 +183,32 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         const contract = await getContract(artifactPath)
         if (!contract.abi?.length) continue
         contracts.push(contract)
+      }
+      // A deployment can alias an artifact's ABI under a different contract
+      // name (e.g. two ERC20 tokens sharing one artifact). Emit one contract
+      // per alias, reusing the source artifact's ABI.
+      const artifactPathsByName = new Map<string, string>()
+      for (const artifactPath of artifactPaths) {
+        const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
+        artifactPathsByName.set(artifact.contractName, artifactPath)
+      }
+      for (const [name, deployment] of Object.entries(deployments)) {
+        if (!isAliasDeployment(deployment)) continue
+        // An alias that points back to an artifact of the same name is
+        // already attached to that artifact's contract above.
+        if (deployment.artifact === name) continue
+        const artifactPath = artifactPathsByName.get(deployment.artifact)
+        if (!artifactPath)
+          throw new Error(
+            `Artifact "${deployment.artifact}" not found for deployment "${name}".`,
+          )
+        const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
+        if (!artifact.abi?.length) continue
+        contracts.push({
+          abi: artifact.abi,
+          address: deployment.address,
+          name: `${namePrefix}${name}`,
+        })
       }
       return contracts
     },

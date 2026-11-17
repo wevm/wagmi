@@ -409,3 +409,169 @@ test('watch callbacks use broadcast deployments', async () => {
     },
   })
 })
+
+test('deployments alias multiple contracts to one artifact', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [
+          { internalType: 'address', name: 'to', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        name: 'transfer',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const result = await foundry({
+    forge: { build: false, clean: false, rebuild: false },
+    deployments: {
+      dai: {
+        artifact: 'ERC20',
+        address: { 31337: '0x1111111111111111111111111111111111111111' },
+      },
+      weth: {
+        artifact: 'ERC20',
+        address: { 31337: '0x2222222222222222222222222222222222222222' },
+      },
+    },
+    include: ['ERC20.json'],
+  }).contracts?.()
+
+  // The base artifact is still emitted, plus one contract per alias.
+  const names = (result ?? []).map((c) => c.name).sort()
+  expect(names).toEqual(['ERC20', 'dai', 'weth'])
+
+  const dai = result?.find((c) => c.name === 'dai')
+  expect(dai?.abi).toEqual(erc20Artifact.abi)
+  expect(dai?.address).toEqual({
+    '31337': '0x1111111111111111111111111111111111111111',
+  })
+
+  const weth = result?.find((c) => c.name === 'weth')
+  expect(weth?.abi).toEqual(erc20Artifact.abi)
+  expect(weth?.address).toEqual({
+    '31337': '0x2222222222222222222222222222222222222222',
+  })
+})
+
+test('deployments alias accepts a single address', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const result = await foundry({
+    forge: { build: false, clean: false, rebuild: false },
+    deployments: {
+      usdc: {
+        artifact: 'ERC20',
+        address: '0x3333333333333333333333333333333333333333',
+      },
+    },
+    include: ['ERC20.json'],
+  }).contracts?.()
+
+  const usdc = result?.find((c) => c.name === 'usdc')
+  expect(usdc?.abi).toEqual(erc20Artifact.abi)
+  expect(usdc?.address).toEqual('0x3333333333333333333333333333333333333333')
+})
+
+test('deployments alias to a missing artifact throws', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify({ abi: [{ name: 'transfer', type: 'function' }] }, null, 2),
+  )
+
+  await expect(
+    foundry({
+      forge: { build: false, clean: false, rebuild: false },
+      deployments: {
+        dai: {
+          artifact: 'Missing',
+          address: { 31337: '0x1111111111111111111111111111111111111111' },
+        },
+      },
+      include: ['ERC20.json'],
+    }).contracts?.(),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(
+    `[Error: Artifact "Missing" not found for deployment "dai".]`,
+  )
+})
+
+test('deployments alias to the same artifact attaches its address', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const result = await foundry({
+    forge: { build: false, clean: false, rebuild: false },
+    deployments: {
+      ERC20: {
+        artifact: 'ERC20',
+        address: { 31337: '0x1111111111111111111111111111111111111111' },
+      },
+    },
+    include: ['ERC20.json'],
+  }).contracts?.()
+
+  // No duplicate contract: the alias address lands on the artifact itself.
+  expect((result ?? []).map((c) => c.name)).toEqual(['ERC20'])
+  expect(result?.[0]?.address).toEqual({
+    '31337': '0x1111111111111111111111111111111111111111',
+  })
+})
