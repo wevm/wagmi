@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 3.6.10
+
+### Patch Changes
+
+- Fixed `injected` connector `unstable_shimAsyncInject` leaving its `ethereum#initialized` listener and timeout behind, and authorizing late-injected providers without checking accounts. ([#5297](https://github.com/wevm/wagmi/pull/5297))
+
+- Fixed wallet-initiated connections leaving the `connect` listener attached, so a later account change on that connector was handled as a new connection and could replace the active connector. ([#5265](https://github.com/wevm/wagmi/pull/5265))
+
 ## 3.6.9
 
 ### Patch Changes
