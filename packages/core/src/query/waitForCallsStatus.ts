@@ -41,6 +41,7 @@ export function waitForCallsStatusQueryOptions<
       if (!parameters.id) throw new Error('id is required')
       const status = await waitForCallsStatus(config, {
         ...parameters,
+        connector: options.connector,
         id: parameters.id,
       })
       return status

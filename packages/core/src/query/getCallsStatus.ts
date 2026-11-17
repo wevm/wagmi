@@ -37,7 +37,10 @@ export function getCallsStatusQueryOptions<
         throw new Error('connector is required')
       const [, { connectorUid: _, scopeKey: __, ...parameters }] =
         context.queryKey
-      const status = await getCallsStatus(config, parameters)
+      const status = await getCallsStatus(config, {
+        ...parameters,
+        connector: options.connector,
+      })
       return status
     },
     queryKey: getCallsStatusQueryKey(options),
