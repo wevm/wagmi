@@ -158,6 +158,40 @@ test('falls back to readContract if multicall is not available', async () => {
   `)
 })
 
+test('falls back to readContract with call parameters', async () => {
+  // Runtime code that returns `msg.sender` for any call.
+  const code = '0x3360005260206000f3'
+  const target = '0x00000000000000000000000000000000deadbeef'
+  const account = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+  const results = await readContracts(config, {
+    account,
+    contracts: [
+      {
+        abi: [
+          {
+            type: 'function',
+            name: 'sender',
+            inputs: [],
+            outputs: [{ type: 'address' }],
+            stateMutability: 'view',
+          },
+        ],
+        address: target,
+        functionName: 'sender',
+      },
+    ],
+    stateOverride: [{ address: target, code }],
+  })
+  expect(results).toMatchInlineSnapshot(`
+    [
+      {
+        "result": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+        "status": "success",
+      },
+    ]
+  `)
+})
+
 test('multichain', async () => {
   const config = createConfig({
     chains: [mainnet, mainnet2, optimism],
