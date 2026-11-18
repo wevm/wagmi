@@ -36,6 +36,7 @@ export function useWatchBlockNumber<
   parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {
   const { enabled = true, onBlockNumber, config: _, ...rest } = parameters
+  const hasOnBlockNumber = Boolean(onBlockNumber)
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })
@@ -50,7 +51,7 @@ export function useWatchBlockNumber<
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onBlockNumberRef.current) return
+    if (!hasOnBlockNumber) return
     return watchBlockNumber(config, {
       ...(rest as any),
       chainId,
@@ -62,6 +63,7 @@ export function useWatchBlockNumber<
     chainId,
     config,
     enabled,
+    hasOnBlockNumber,
     ///
     rest.emitMissed,
     rest.emitOnBegin,

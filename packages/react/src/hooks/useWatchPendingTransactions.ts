@@ -39,6 +39,7 @@ export function useWatchPendingTransactions<
   > = {} as any,
 ): UseWatchPendingTransactionsReturnType {
   const { enabled = true, onTransactions, config: _, ...rest } = parameters
+  const hasOnTransactions = Boolean(onTransactions)
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })
@@ -53,7 +54,7 @@ export function useWatchPendingTransactions<
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onTransactionsRef.current) return
+    if (!hasOnTransactions) return
     return watchPendingTransactions(config, {
       ...(rest as any),
       chainId,
@@ -65,6 +66,7 @@ export function useWatchPendingTransactions<
     chainId,
     config,
     enabled,
+    hasOnTransactions,
     ///
     rest.batch,
     rest.poll,

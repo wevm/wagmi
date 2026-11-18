@@ -1,4 +1,9 @@
-import { connect, disconnect, sendTransaction } from '@wagmi/core'
+import {
+  connect,
+  disconnect,
+  sendTransaction,
+  watchPendingTransactions,
+} from '@wagmi/core'
 import {
   accounts,
   config,
@@ -11,7 +16,88 @@ import { parseEther } from 'viem'
 import type { OnTransactionsParameter } from 'viem/actions'
 import { expect, test, vi } from 'vitest'
 
-import { useWatchPendingTransactions } from './useWatchPendingTransactions.js'
+import {
+  type UseWatchPendingTransactionsParameters,
+  useWatchPendingTransactions,
+} from './useWatchPendingTransactions.js'
+
+vi.mock('@wagmi/core', { spy: true })
+
+test('behavior: subscribes when a callback is added', async () => {
+  const watch = vi.mocked(watchPendingTransactions)
+  const unwatch = vi.fn()
+  watch.mockClear()
+
+  await watch.withImplementation(
+    () => unwatch,
+    async () => {
+      const { rerender, unmount } = await renderHook(
+        (props) =>
+          useWatchPendingTransactions({ onTransactions: props?.callback }),
+        {
+          initialProps: {
+            callback:
+              undefined as UseWatchPendingTransactionsParameters['onTransactions'],
+          },
+        },
+      )
+
+      expect(watch).not.toHaveBeenCalled()
+
+      const callback = vi.fn()
+      await rerender({ callback })
+      expect(watch).toHaveBeenCalledTimes(1)
+      const options = watch.mock.calls[0]![1]
+      options.onTransactions([])
+      expect(callback).toHaveBeenCalledTimes(1)
+
+      const nextCallback = vi.fn()
+      await rerender({ callback: nextCallback })
+      expect(watch).toHaveBeenCalledTimes(1)
+      expect(unwatch).not.toHaveBeenCalled()
+      options.onTransactions([])
+      expect(callback).toHaveBeenCalledTimes(1)
+      expect(nextCallback).toHaveBeenCalledTimes(1)
+
+      await unmount()
+      expect(unwatch).toHaveBeenCalledTimes(1)
+    },
+  )
+})
+
+test('behavior: unsubscribes when a callback is removed', async () => {
+  const watch = vi.mocked(watchPendingTransactions)
+  const unwatch = vi.fn()
+  watch.mockClear()
+
+  await watch.withImplementation(
+    () => unwatch,
+    async () => {
+      const { rerender, unmount } = await renderHook(
+        (props) =>
+          useWatchPendingTransactions({ onTransactions: props?.callback }),
+        {
+          initialProps: {
+            callback:
+              vi.fn() as UseWatchPendingTransactionsParameters['onTransactions'],
+          },
+        },
+      )
+
+      expect(watch).toHaveBeenCalledTimes(1)
+
+      await rerender({ callback: undefined })
+      expect(unwatch).toHaveBeenCalledTimes(1)
+      expect(watch).toHaveBeenCalledTimes(1)
+
+      await rerender({ callback: vi.fn() })
+      expect(watch).toHaveBeenCalledTimes(2)
+
+      await unmount()
+      expect(unwatch).toHaveBeenCalledTimes(2)
+    },
+  )
+})
 
 const connector = config.connectors[0]!
 
