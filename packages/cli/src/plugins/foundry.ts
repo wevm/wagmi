@@ -1,4 +1,4 @@
-import { execSync, spawn, spawnSync } from 'node:child_process'
+import { execFileSync, spawn, spawnSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
@@ -229,7 +229,6 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       ['config', '--json', '--root', project],
       {
         encoding: 'utf-8',
-        shell: true,
       },
     )
     if (result.error) throw result.error
@@ -250,12 +249,12 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   return {
     async contracts() {
       if (clean)
-        execSync(`${forgeExecutable} clean --root ${project}`, {
+        execFileSync(forgeExecutable, ['clean', '--root', project], {
           encoding: 'utf-8',
           stdio: 'pipe',
         })
       if (build)
-        execSync(`${forgeExecutable} build --root ${project}`, {
+        execFileSync(forgeExecutable, ['build', '--root', project], {
           encoding: 'utf-8',
           stdio: 'pipe',
         })
@@ -290,7 +289,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          execSync(`${forgeExecutable} --version`, {
+          execFileSync(forgeExecutable, ['--version'], {
             encoding: 'utf-8',
             stdio: 'pipe',
           })
