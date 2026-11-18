@@ -13,7 +13,7 @@ const TVariables = 'TVariables'
 
 ### mutation
 
-TanStack Query parameters. See the [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/react/reference/useMutation) for more info.
+TanStack Query parameters. See the [TanStack Query mutation docs](https://tanstack.com/query/latest/docs/framework/react/reference/useMutation) for more info.
 
 ::: info Wagmi does not support passing all TanStack Query parameters
 TanStack Query parameters, like `mutationFn` and `mutationKey`, are used internally to make Wagmi work and you cannot override them. Check out the [source](https://github.com/wevm/wagmi/blob/main/packages/react/src/utils/query.ts#L30) to see what parameters are not supported. All parameters listed below are supported.

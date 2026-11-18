@@ -14,7 +14,7 @@ const includeInfiniteQueryOptions = false
 
 ### query
 
-TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.com/query/v5/docs/react/reference/useQuery) for more info.
+TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.com/query/latest/docs/framework/react/reference/useQuery) for more info.
 
 ::: info Wagmi does not support passing all TanStack Query parameters
 TanStack Query parameters, like `queryFn` and `queryKey`, are used internally to make Wagmi work and you cannot override them. Check out the [source](https://github.com/wevm/wagmi/blob/main/packages/react/src/types/properties.ts#L27) to see what parameters are not supported. All parameters listed below are supported.

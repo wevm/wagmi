@@ -63,7 +63,7 @@ Before going to production, it is highly recommended to set an [`appName`](#appn
 import { type BaseAccountParameters } from '{{connectorsPackageName}}'
 ```
 
-Check out the [Base Account SDK docs](https://www.base.org/build/base-account) for more info.
+Check out the [Base Account SDK docs](https://docs.base.org/base-account) for more info.
 
 ### appName
 

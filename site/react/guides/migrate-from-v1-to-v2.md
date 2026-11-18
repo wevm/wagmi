@@ -13,7 +13,7 @@ const viemVersion = packageJson.peerDependencies.viem
 
 ## Overview
 
-Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
+Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
 To get started, install the latest version of Wagmi and it's required peer dependencies.
 
@@ -47,7 +47,7 @@ The Wagmi v1 docs are still available at [1.x.wagmi.sh/react](https://1.x.wagmi.
 
 ### Moved TanStack Query to peer dependencies
 
-Wagmi uses [TanStack Query](https://tanstack.com/query/v5/docs/react) to manage async state, handling requests, caching, and more. With Wagmi v1, TanStack Query was an internal implementation detail. With Wagmi v2, TanStack Query is a peer dependency. A lot of Wagmi users also use TanStack Query in their apps so making it a peer dependency gives them more control and removes some custom Wagmi code internally.
+Wagmi uses [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview) to manage async state, handling requests, caching, and more. With Wagmi v1, TanStack Query was an internal implementation detail. With Wagmi v2, TanStack Query is a peer dependency. A lot of Wagmi users also use TanStack Query in their apps so making it a peer dependency gives them more control and removes some custom Wagmi code internally.
 
 If you don't normally use TanStack Query, all you need to do is set it up and mostly forget about it (we'll provide guidance around version updates).
 
