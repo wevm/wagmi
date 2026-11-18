@@ -52,11 +52,12 @@ export async function disconnect(
       }
 
     // switch over to another connection
+    const currentConnection = x.current ? connections.get(x.current) : undefined
     const nextConnection = connections.values().next().value as Connection
     return {
       ...x,
       connections: new Map(connections),
-      current: nextConnection.connector.uid,
+      current: currentConnection ? x.current : nextConnection.connector.uid,
     }
   })
 
