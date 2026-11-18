@@ -8,7 +8,7 @@ import type {
   ConfigParameter,
   QueryParameter,
   ScopeKeyParameter,
-  UnionExactPartial,
+  UnionCompute,
 } from '@wagmi/core/internal'
 import type {
   SimulateContractData,
@@ -44,6 +44,12 @@ export type CreateUseSimulateContractParameters<
     | undefined
 }
 
+/** Call-level options from SimulateContractParameters (excludes abi, address, functionName, args). */
+type SimulateContractCallOptions<config extends Config> = Omit<
+  SimulateContractParameters<Abi, string, readonly unknown[], config>,
+  'abi' | 'address' | 'functionName' | 'args'
+>
+
 export type CreateUseSimulateContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
@@ -57,28 +63,28 @@ export type CreateUseSimulateContractReturnType<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, name, args, config, chainId>,
 >(
-  parameters?: {
-    abi?: undefined
-    address?: address extends undefined ? Address : undefined
-    functionName?: functionName extends undefined ? name : undefined
-    chainId?: address extends Record<number, Address>
-      ?
-          | keyof address
-          | (chainId extends keyof address ? chainId : never)
-          | undefined
-      : chainId | number | undefined
-  } & UnionExactPartial<
-    // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
-    SimulateContractParameters<abi, name, args, config, chainId>
-  > &
-    ScopeKeyParameter &
-    ConfigParameter<config> &
-    QueryParameter<
-      SimulateContractQueryFnData<abi, name, args, config, chainId>,
-      SimulateContractErrorType,
-      selectData
-      // TODO: Add `SimulateContractQueryKey<abi, name, args, config, chainId>` as 4th type param (currently causes TS2589)
-    >,
+  parameters?: UnionCompute<
+    {
+      abi?: undefined
+      address?: address extends undefined ? Address : undefined
+      functionName?: functionName extends undefined ? name : undefined
+      args?: args | undefined
+      chainId?: address extends Record<number, Address>
+        ?
+            | keyof address
+            | (chainId extends keyof address ? chainId : never)
+            | undefined
+        : chainId | number | undefined
+    } & Partial<SimulateContractCallOptions<config>> &
+      ScopeKeyParameter &
+      ConfigParameter<config> &
+      QueryParameter<
+        SimulateContractQueryFnData<abi, name, args, config, chainId>,
+        SimulateContractErrorType,
+        selectData
+        // TODO: Add `SimulateContractQueryKey<abi, name, args, config, chainId>` as 4th type param (currently causes TS2589)
+      >
+  >,
 ) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
 export function createUseSimulateContract<
