@@ -196,12 +196,6 @@ import { type WatchPendingTransactionsReturnType } from '@wagmi/core'
 
 Function to unsubscribe from pending transaction listener.
 
-## Error
-
-```ts
-import { type WatchPendingTransactionsError } from '@wagmi/core'
-```
-
 ## Viem
 
 - [`watchPendingTransactions`](https://viem.sh/docs/actions/public/watchPendingTransactions)
