@@ -96,6 +96,41 @@ describe('tempoWallet', () => {
     expect(await connector.getAccounts()).toEqual([])
     expect(await connector.isAuthorized()).toBe(false)
   })
+
+  test('behavior: disconnect does not emit connected state without address', async () => {
+    const config = createConfig({
+      chains: [tempoLocal],
+      connectors: [],
+      storage: null,
+      transports: {
+        [tempoLocal.id]: http(),
+      },
+    })
+
+    const address = accounts[0]!.address
+    const connector = config._internal.connectors.setup(
+      tempoWallet({
+        dialog: createTempoWalletDialog(address),
+        storage: AccountsStorage.memory({ key: 'tempo-wallet-test' }),
+      }),
+    )
+
+    await connect(config, { connector })
+
+    const states: { status: string; address: string | undefined }[] = []
+    const unsubscribe = config.subscribe(
+      () => getConnection(config),
+      (connection) =>
+        states.push({ status: connection.status, address: connection.address }),
+    )
+    await disconnect(config, { connector })
+    unsubscribe()
+
+    expect(
+      states.filter((state) => state.status === 'connected' && !state.address),
+    ).toEqual([])
+    expect(getConnection(config).status).toBe('disconnected')
+  })
 })
 
 describe('getProvider', () => {
