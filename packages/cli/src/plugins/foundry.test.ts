@@ -160,6 +160,78 @@ test('contracts without project', async () => {
     `)
 })
 
+test('contracts skips duplicate artifacts with identical abi', async () => {
+  const dir = await createTempDir()
+  const counterArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'increment',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  // Foundry can emit the same contract under both `out/` and `out/src/`
+  for (const path of ['out/Counter.sol', 'out/src/Counter.sol']) {
+    await fs.mkdir(resolve(dir, path), { recursive: true })
+    await fs.writeFile(
+      resolve(dir, path, 'Counter.json'),
+      JSON.stringify(counterArtifact, null, 2),
+    )
+  }
+
+  await expect(
+    foundry({ project: dir, forge: { build: false } }).contracts?.(),
+  ).resolves.toMatchInlineSnapshot(`
+      [
+        {
+          "abi": [
+            {
+              "inputs": [],
+              "name": "increment",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+          ],
+          "address": undefined,
+          "name": "Counter",
+        },
+      ]
+    `)
+})
+
+test('contracts throws on duplicate artifacts with different abi', async () => {
+  const dir = await createTempDir()
+  const functionNames = {
+    'out/Counter.sol': 'increment',
+    'out/src/Counter.sol': 'decrement',
+  }
+  for (const [path, name] of Object.entries(functionNames)) {
+    await fs.mkdir(resolve(dir, path), { recursive: true })
+    await fs.writeFile(
+      resolve(dir, path, 'Counter.json'),
+      JSON.stringify({
+        abi: [
+          {
+            inputs: [],
+            name,
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+      }),
+    )
+  }
+
+  await expect(
+    foundry({ project: dir, forge: { build: false } }).contracts?.(),
+  ).rejects.toThrowError('Contract name "Counter" must be unique.')
+})
+
 test('broadcast deployments', async () => {
   const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
