@@ -111,14 +111,16 @@ export async function getConnectorClient<
 
   // Check connector using same chainId as connection
   // (reuse chain ID read above when connector was provided)
-  const connectorChainId = parameters.connector
-    ? connection.chainId
-    : await connection.connector.getChainId()
-  if (assertChainId && connectorChainId !== chainId)
-    throw new ConnectorChainMismatchError({
-      connectionChainId: chainId,
-      connectorChainId,
-    })
+  if (assertChainId) {
+    const connectorChainId = parameters.connector
+      ? connection.chainId
+      : await connection.connector.getChainId()
+    if (connectorChainId !== chainId)
+      throw new ConnectorChainMismatchError({
+        connectionChainId: chainId,
+        connectorChainId,
+      })
+  }
 
   // If connector has custom `getClient` implementation
   type Return = GetConnectorClientReturnType<config, chainId>

@@ -82,6 +82,36 @@ test('behavior: connector is on different chain', async () => {
   await disconnect(config, { connector })
 })
 
+test('behavior: skips connector chain id read when not asserting', async () => {
+  await connect(config, { connector })
+  const spy = vi.spyOn(connector, 'getChainId')
+  await expect(
+    getConnectorClient(config, { assertChainId: false }),
+  ).resolves.toBeDefined()
+  expect(spy).not.toHaveBeenCalled()
+  spy.mockRestore()
+  await disconnect(config, { connector })
+})
+
+test('behavior: connector is on different chain, not asserting', async () => {
+  await connect(config, { chainId: 1, connector })
+  config.setState((state) => {
+    const uid = state.current!
+    const connection = state.connections.get(uid)!
+    return {
+      ...state,
+      connections: new Map(state.connections).set(uid, {
+        ...connection,
+        chainId: 456,
+      }),
+    }
+  })
+  await expect(
+    getConnectorClient(config, { assertChainId: false }),
+  ).resolves.toBeDefined()
+  await disconnect(config, { connector })
+})
+
 test('behavior: account does not exist on connector', async () => {
   await connect(config, { connector })
   await expect(
