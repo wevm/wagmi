@@ -124,17 +124,17 @@ export default defineConfig({
 #### clean
 
 - Remove build artifacts and cache directories on start up.
-- Defaults to `'${packageManger} hardhat clean'`.
+- Defaults to `false`. Set to `true` to run `'${packageManager} hardhat clean'`, or pass a custom command.
 
 #### build
 
-- Build Foundry project before fetching artifacts.
-- Defaults to `'${packageManger} hardhat compile'`.
+- Build Hardhat project before fetching artifacts.
+- Defaults to `'${packageManager} hardhat compile'`.
 
 #### rebuild
 
 - Command to run when watched file or directory is changed. Used for setting up [`watch`](/cli/api/commands/generate#w-watch) mode.
-- Defaults to `'${packageManger} hardhat compile'`.
+- Defaults to `'${packageManager} hardhat compile'`.
 
 ### include
 
