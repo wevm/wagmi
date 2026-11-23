@@ -31,19 +31,21 @@ export type HardhatConfig = {
         /**
          * Remove build artifacts and cache directories on start up.
          *
-         * @default `${packageManger} hardhat clean`
+         * Set to `true` to run `${packageManager} hardhat clean`, or pass a custom command.
+         *
+         * @default false
          */
         clean?: string | boolean | undefined
         /**
          * Build Hardhat project before fetching artifacts.
          *
-         * @default `${packageManger} hardhat compile`
+         * @default `${packageManager} hardhat compile`
          */
         build?: string | boolean | undefined
         /**
          * Command to run when watched file or directory is changed.
          *
-         * @default `${packageManger} hardhat compile`
+         * @default `${packageManager} hardhat compile`
          */
         rebuild?: string | boolean | undefined
       }
